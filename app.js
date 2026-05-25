@@ -592,7 +592,7 @@
       'btn.more': 'Saber Más &rarr;',
       
       'ad.label': 'PATROCINADO',
-      'ad.title1': 'Tu Negocio Aquí',
+      'ad.title1': 'Anuncia Tu Negocio',
       'ad.desc1': 'Haz que tu negocio destaque frente a miles de turistas en Criptana 360. Contáctanos para más información.',
       'ad.title2': 'Anuncia Tu Negocio',
       'ad.desc2': 'Aparece en las primeras posiciones de nuestra guía oficial y atrae tráfico natural a tu establecimiento.',
@@ -764,7 +764,7 @@
       'btn.more': 'Learn More &rarr;',
       
       'ad.label': 'SPONSORED',
-      'ad.title1': 'Your Business Here',
+      'ad.title1': 'Advertise Your Business',
       'ad.desc1': 'Make your business stand out to thousands of tourists on Criptana 360. Contact us for more information.',
       'ad.title2': 'Advertise Your Business',
       'ad.desc2': 'Appear in the top positions of our official guide and attract natural traffic to your establishment.',
