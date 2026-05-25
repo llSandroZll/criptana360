@@ -582,7 +582,7 @@
       'directory.title': 'Lugares Imprescindibles',
       
       'tab.monumentos': '📍 Monumentos y Lugares',
-      'tab.restaurantes': '🍽️ Gastronomía manchega',
+      'tab.restaurantes': '🍽️ Gastronomía Manchega',
       'tab.bodegas': '🍷 Bodegas de Prestigio',
       
       'tag.monumento': 'Monumento',
