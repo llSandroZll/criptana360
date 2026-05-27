@@ -1062,6 +1062,7 @@ a {
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
   padding: 1.8rem 0;
+  overflow: hidden; /* Prevents any child from bleeding out */
 }
 
 .bodeboca-banner-card {
@@ -1069,20 +1070,24 @@ a {
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
+  width: 100%;
   background: var(--surface);
   border: 1px solid var(--border-light);
-  border-radius: 10px;
-  padding: 2rem 2.5rem;
-  box-shadow: 0 4px 18px rgba(11, 79, 200, 0.04);
-  flex-wrap: wrap; /* ← KEY: wraps to column on narrow screens */
+  border-radius: 12px;
+  padding: 2.2rem 2.8rem;
+  box-shadow: 0 4px 22px rgba(11, 79, 200, 0.04);
+  overflow: hidden;      /* Hard stop — nothing bleeds past the card */
+  flex-wrap: wrap;
+  box-sizing: border-box;
 }
 
 .bodeboca-banner-body {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  flex: 1 1 320px;
-  min-width: 0; /* Prevents overflow */
+  flex: 1 1 auto;        /* No hard minimum — shrinks freely on small screens */
+  min-width: 0;          /* Critical: allows flex child to shrink below content size */
+  overflow: hidden;
 }
 
 .bodeboca-overline {
@@ -1092,6 +1097,7 @@ a {
   text-transform: uppercase;
   color: var(--cream-dim);
   opacity: 0.7;
+  word-break: break-word;
 }
 
 .bodeboca-tag {
@@ -1106,18 +1112,22 @@ a {
 
 .bodeboca-title {
   font-family: var(--font-display);
-  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  font-size: clamp(1.05rem, 4vw, 1.55rem); /* Scales down aggressively on phone */
   font-weight: 800;
   color: var(--cream);
   line-height: 1.25;
   margin-top: 0.15rem;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .bodeboca-desc {
   font-size: 0.84rem;
   color: var(--cream-dim);
-  line-height: 1.6;
-  max-width: 580px;
+  line-height: 1.65;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  max-width: 100%; /* No fixed max-width that could cause overflow */
 }
 
 .bodeboca-banner-cta {
@@ -1127,8 +1137,8 @@ a {
 .bodeboca-btn {
   display: inline-flex;
   align-items: center;
-  white-space: nowrap;
-  padding: 0.9rem 1.8rem;
+  justify-content: center;
+  padding: 0.95rem 2rem;
   background: var(--anil-blue);
   color: #FFFFFF;
   font-family: var(--font-body);
@@ -1139,6 +1149,8 @@ a {
   border-radius: 6px;
   transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
   text-decoration: none;
+  white-space: normal;   /* Allow button text to wrap if needed */
+  text-align: center;
 }
 
 .bodeboca-btn:hover {
@@ -1147,20 +1159,39 @@ a {
   box-shadow: 0 8px 25px rgba(11, 79, 200, 0.22);
 }
 
-/* On mobile, full-width button */
-@media (max-width: 640px) {
+/* ── Tablet & Mobile: stack vertically, center align, full-width button ── */
+@media (max-width: 850px) {
+  .bodeboca-banner-section {
+    padding: 1.4rem 0;
+  }
+  .bodeboca-banner-section .section-inner {
+    padding: 0 1.25rem; /* Slightly tighter side gutters */
+  }
   .bodeboca-banner-card {
     flex-direction: column;
-    align-items: flex-start;
-    padding: 1.5rem;
+    align-items: center;
+    text-align: center;
+    padding: 1.8rem 1.5rem;
     gap: 1.25rem;
+    border-radius: 10px;
+  }
+  .bodeboca-banner-body {
+    align-items: center;
+    text-align: center;
+  }
+  .bodeboca-tag {
+    align-self: center;
   }
   .bodeboca-banner-cta {
     width: 100%;
+    display: flex;
+    justify-content: center;
   }
   .bodeboca-btn {
     width: 100%;
-    justify-content: center;
+    max-width: 340px; /* Fits comfortably and doesn't get ridiculously stretched */
+    padding: 1rem 1.2rem;
+    font-size: 0.72rem;
   }
 }
 
