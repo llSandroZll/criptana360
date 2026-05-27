@@ -1056,7 +1056,130 @@ a {
   text-decoration: underline;
 }
 
+/* ─── Bodeboca Wine Affiliate Banner ─────────────────────────────── */
+.bodeboca-banner-section {
+  background: var(--bg-cave);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 1.8rem 0;
+}
+
+.bodeboca-banner-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  padding: 2rem 2.5rem;
+  box-shadow: 0 4px 18px rgba(11, 79, 200, 0.04);
+  flex-wrap: wrap; /* ← KEY: wraps to column on narrow screens */
+}
+
+.bodeboca-banner-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1 1 320px;
+  min-width: 0; /* Prevents overflow */
+}
+
+.bodeboca-overline {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+  opacity: 0.7;
+}
+
+.bodeboca-tag {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--anil-blue);
+  align-self: flex-start;
+}
+
+.bodeboca-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  font-weight: 800;
+  color: var(--cream);
+  line-height: 1.25;
+  margin-top: 0.15rem;
+}
+
+.bodeboca-desc {
+  font-size: 0.84rem;
+  color: var(--cream-dim);
+  line-height: 1.6;
+  max-width: 580px;
+}
+
+.bodeboca-banner-cta {
+  flex-shrink: 0;
+}
+
+.bodeboca-btn {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  padding: 0.9rem 1.8rem;
+  background: var(--anil-blue);
+  color: #FFFFFF;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-radius: 6px;
+  transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+  text-decoration: none;
+}
+
+.bodeboca-btn:hover {
+  background: #093FA0;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(11, 79, 200, 0.22);
+}
+
+/* On mobile, full-width button */
+@media (max-width: 640px) {
+  .bodeboca-banner-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.5rem;
+    gap: 1.25rem;
+  }
+  .bodeboca-banner-cta {
+    width: 100%;
+  }
+  .bodeboca-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Sunset mode overrides */
+body.sunset-mode .bodeboca-banner-card {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+body.sunset-mode .bodeboca-btn {
+  background: #3E7CFC;
+}
+
+body.sunset-mode .bodeboca-btn:hover {
+  background: #1A5EE6;
+}
+
 /* Responsive breakdowns */
+
 @media (max-width: 1024px) {
   .directory-explorer-grid {
     grid-template-columns: 1fr;

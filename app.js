@@ -352,6 +352,12 @@
         trackCriptanaEvent('click_ad_banner', 'b2b_monetization', 'Sponsorship Ad Button');
       }
 
+      // 3b. Track Bodeboca affiliate click (conversion event)
+      const bodebocaBtn = e.target.closest('#bodeboca-cta-btn');
+      if (bodebocaBtn) {
+        trackCriptanaEvent('click_affiliate_link', 'affiliate_revenue', 'Bodeboca D.O. La Mancha', 1);
+      }
+
       // 4. Track Call Button Click in Drawer
       const callBtn = e.target.closest('.drawer-actions a[href^="tel:"]');
       if (callBtn) {
@@ -591,6 +597,12 @@
       
       'btn.more': 'Saber Más &rarr;',
       
+      // Bodeboca Wine Affiliate Banner
+      'bodeboca.tag': 'RECOMENDACIÓN CRIPTANA 360',
+      'bodeboca.title': 'Compra los Mejores Vinos D.O. La Mancha Online',
+      'bodeboca.desc': '¿Quieres degustar el auténtico sabor de Campo de Criptana en tu propia casa? Disfruta de la mayor selección de vinos de La Mancha, tintos crianza y blancos premium con descuentos exclusivos en Bodeboca.',
+      'bodeboca.btn': 'COMPRAR VINOS EN BODEBOCA →',
+
       'ad.label': 'PATROCINADO',
       'ad.title1': 'Anuncia Tu Negocio',
       'ad.desc1': 'Haz que tu negocio destaque frente a miles de turistas en Criptana 360. Contáctanos para más información.',
@@ -763,6 +775,12 @@
       
       'btn.more': 'Learn More &rarr;',
       
+      // Bodeboca Wine Affiliate Banner
+      'bodeboca.tag': 'CRIPTANA 360 RECOMMENDATION',
+      'bodeboca.title': 'Buy the Best D.O. La Mancha Wines Online',
+      'bodeboca.desc': 'Want to enjoy the authentic taste of Campo de Criptana at home? Browse the largest selection of La Mancha wines, aged reds and premium whites with exclusive discounts on Bodeboca.',
+      'bodeboca.btn': 'BUY WINES ON BODEBOCA →',
+
       'ad.label': 'SPONSORED',
       'ad.title1': 'Advertise Your Business',
       'ad.desc1': 'Make your business stand out to thousands of tourists on Criptana 360. Contact us for more information.',
