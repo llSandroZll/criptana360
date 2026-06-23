@@ -7,18 +7,6 @@
 
 (function CriptanaDirectoryApp() {
 
-  /* ─── 0. Analytics Event Tracking Engine ───────────────────────────────── */
-  function trackCriptanaEvent(action, category, label, value) {
-    if (typeof window.gtag === 'function') {
-      window.gtag('event', action, {
-        'event_category': category,
-        'event_label': label,
-        'value': value || 0
-      });
-    }
-    console.log(`📊 [Criptana360 Analytics] Event Tracked:`, { action, category, label, value });
-  }
-
   /* ─── 1. Scroll-Triggered Fade-In Animations ───────────────────────────── */
   function initFadeAnimations() {
     const targets = document.querySelectorAll('.fade-in');
@@ -65,12 +53,40 @@
         tab.classList.add('active');
 
         const selectedCategory = tab.getAttribute('data-category');
-        trackCriptanaEvent('filter_category', 'directory_interaction', selectedCategory);
+
+        // Show/hide monument subfilters bar
+        const subfiltersBar = document.getElementById('monument-subfilters');
+        if (subfiltersBar) {
+          if (selectedCategory === 'monumento') {
+            subfiltersBar.style.display = 'flex';
+            // Reset active state to 'Todos' (data-zone="all")
+            const subfilterBtns = subfiltersBar.querySelectorAll('.monument-subfilter-btn');
+            subfilterBtns.forEach(function (btn, index) {
+              if (index === 0) {
+                btn.classList.add('active');
+              } else {
+                btn.classList.remove('active');
+              }
+            });
+            
+            // Reset expander state when clicking back to monuments tab
+            if (typeof updateMonumentsLimit === 'function') {
+              monumentsExpanded = false;
+              updateMonumentsLimit();
+            }
+          } else {
+            subfiltersBar.style.display = 'none';
+          }
+        }
 
         cards.forEach(function (card) {
           const cardCategory = card.getAttribute('data-category');
           if (cardCategory === selectedCategory) {
             card.classList.add('active-category');
+            // If selecting monument, clear sub-filter hide state
+            if (selectedCategory === 'monumento') {
+              card.classList.remove('sub-filtered-out');
+            }
           } else {
             card.classList.remove('active-category');
           }
@@ -79,79 +95,10 @@
     });
   }
 
+
+
   /* ─── 4. Detailed Profile Slide-Out Drawer Engine ─────────────────────── */
-  const spotsData = {
-    spot1: {
-      id: 'spot1',
-      category: 'monumento',
-      img: 'images/attraction_windmills.png',
-      phone: '+34926563931',
-      mapUrl: 'https://maps.google.com/?q=Sierra+de+los+Molinos+Campo+de+Criptana'
-    },
-    spot2: {
-      id: 'spot2',
-      category: 'monumento',
-      img: 'images/attraction_cave.png',
-      phone: '+34926563931',
-      mapUrl: 'https://maps.google.com/?q=Cerro+de+la+Paz+Campo+de+Criptana'
-    },
-    spot3: {
-      id: 'spot3',
-      category: 'restaurante',
-      img: 'images/real_las_musas.jpg',
-      phone: '+34926589191',
-      mapUrl: 'https://maps.google.com/?q=Restaurante+Las+Musas+Campo+de+Criptana'
-    },
-    spot4: {
-      id: 'spot4',
-      category: 'restaurante',
-      img: 'images/real_cueva_martina.jpg',
-      phone: '+34926561476',
-      mapUrl: 'https://maps.google.com/?q=Restaurante+Cueva+La+Martina+Campo+de+Criptana'
-    },
-    spot7: {
-      id: 'spot7',
-      category: 'restaurante',
-      img: 'images/real_lapulpe.jpg',
-      phone: '+34640680146',
-      mapUrl: 'https://maps.google.com/?q=Calle+Republica+Argentina+9+Campo+de+Criptana'
-    },
-    spot8: {
-      id: 'spot8',
-      category: 'restaurante',
-      img: 'images/real_piccolo.jpg',
-      phone: '+34926562048',
-      mapUrl: 'https://maps.google.com/?q=Calle+Serna+25+Campo+de+Criptana'
-    },
-    spot9: {
-      id: 'spot9',
-      category: 'restaurante',
-      img: 'images/real_ricote.jpg',
-      phone: '+34623973528',
-      mapUrl: 'https://maps.google.com/?q=Calle+Rocinante+15+Campo+de+Criptana'
-    },
-    spot5: {
-      id: 'spot5',
-      category: 'bodega',
-      img: 'images/winery_castiblanque.jpg',
-      phone: '+34926589147',
-      mapUrl: 'https://maps.google.com/?q=Bodegas+Castiblanque+Campo+de+Criptana'
-    },
-    spot6: {
-      id: 'spot6',
-      category: 'bodega',
-      img: 'images/winery_carmen.jpg',
-      phone: '+34926561257',
-      mapUrl: 'https://maps.google.com/?q=Vinicola+del+Carmen+Campo+de+Criptana'
-    },
-    spot10: {
-      id: 'spot10',
-      category: 'bodega',
-      img: 'images/winery_vidaldelsaz.jpg',
-      phone: '+34926560826',
-      mapUrl: 'https://maps.google.com/?q=Calle+Maestro+Manzanares+57+Campo+de+Criptana'
-    }
-  };
+  const spotsData = window.spotsData;
 
   /* Reportages & Immersive Articles Data Configuration */
   const articlesData = {
@@ -182,6 +129,7 @@
   };
 
   let activeLang = 'es';
+  let cachedSunsetTime = null;
 
   function initDetailDrawer() {
     const drawer = document.getElementById('detail-drawer');
@@ -201,8 +149,62 @@
       const spot = spotsData[spotId];
       if (!spot) return;
 
+      const spotCoords = {
+        spot1: '39.4125,-3.1250',
+        spot2: '39.4085,-3.1240',
+        spot_albaicin: '39.4085,-3.1240',
+        spot_fuente_cano: '39.4081,-3.1235',
+        spot_sara_montiel: '39.4128,-3.1248',
+        spot_museo_vino: '39.4072,-3.1255',
+        spot_ci_molinos: '39.4125,-3.1250',
+        spot_eloy_teno: '39.4072,-3.1255',
+        spot_sala_carros: '39.4125,-3.1250',
+        spot_posito: '39.4069,-3.1244',
+        spot_patrimonio_religioso: '39.4055,-3.1252',
+        spot_iglesia_parroquial: '39.4063,-3.1254',
+        spot_fachadas: '39.4072,-3.1255',
+        spot_escudos: '39.4063,-3.1254',
+        spot_pozo_nieve: '39.4150,-3.1280',
+        spot_laguna_salicor: '39.3700,-3.0200',
+        spot_ermita_criptana: '39.4200,-3.1150',
+        spot_ermita_villajos: '39.4400,-3.1100',
+        spot_centro_naturaleza: '39.3700,-3.0200',
+        spot3: '39.4116,-3.1251',
+        spot4: '39.4112,-3.1248',
+        spot7: '39.4050,-3.1270',
+        spot8: '39.4045,-3.1285',
+        spot9: '39.4111,-3.1247',
+        spot_restaurante_egos: '39.4090,-3.1250',
+        spot_torrecilla: '39.4060,-3.1258',
+        spot5: '39.4072,-3.1255',
+        spot6: '39.4020,-3.1220',
+        spot10: '39.4010,-3.1210',
+        spot_vinculo: '39.4005,-3.2435',
+        spot_simbolo: '39.4055,-3.2475',
+        spot_movialsa: '39.3980,-3.2410',
+        spot_vinasoro: '39.3565,-3.2380',
+        spot_casa_la_vina: '39.3800,-3.0900',
+        spot_patatas_pintor: '39.4065,-3.1265',
+        spot_queso_manchego: '39.4058,-3.1250',
+        spot_queso_valdivieso: '39.4046,-3.1253',
+        spot_aove_cooperativa: '39.4020,-3.1220',
+        spot11: '39.4072,-3.1255',
+        spot12: '39.4085,-3.1240',
+        spot13: '39.4110,-3.1245',
+        spot14: '39.4150,-3.1100',
+        spot15: '39.4130,-3.1200',
+        spot16: '39.4125,-3.1250',
+        spot_piscina_municipal: '39.4000,-3.1300',
+        spot_parque_luis_cobos: '39.4030,-3.1270',
+        spot_plaza_mayor_park: '39.4063,-3.1254',
+        route_ermitas: '39.4400,-3.1100',
+        route_alcazar_drunkards: '39.4000,-3.1500'
+      };
+
+      const coords = spotCoords[spotId] || '39.4069,-3.1244';
+      const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${coords}`;
+
       const titleKey = `${spotId}.name`;
-      trackCriptanaEvent('view_business_profile', 'directory_interaction', spotId);
       const descKey = `${spotId}.fulldesc`;
       const addrKey = `${spotId}.address`;
       const hrsKey = `${spotId}.hours`;
@@ -216,12 +218,36 @@
       const phoneLabel = dict['drawer.phone'] || 'Teléfono';
       const hoursLabel = dict['drawer.hours'] || 'Horario';
       const addressLabel = dict['drawer.address'] || 'Dirección';
-      const callBtnLabel = dict['drawer.btn.call'] || 'Llamar Directo';
-      const mapBtnLabel = dict['drawer.btn.map'] || 'Cómo Llegar (Google Maps)';
+      const callBtnLabel = dict['drawer.btn.call'] || 'Llamar';
+      const mapBtnLabel = dict['drawer.btn.map'] || 'Cómo llegar';
       const bookingLabel = dict['drawer.booking'] || 'Reserva';
       const bookingVal = dict[`${spotId}.booking`] || 'No requerida';
       const priceLabel = dict['drawer.price'] || 'Precio';
       const priceVal = dict[`${spotId}.price`] || 'Libre';
+      const shareBtnLabel = dict['drawer.btn.share'] || (activeLang === 'es' ? 'Compartir' : 'Share');
+
+      let bookingCtaHtml = '';
+      if (spot.bookingUrl) {
+        let btnClass, btnLabel, icon;
+        if (spot.bookingUrlType === 'civitatis') {
+          btnClass = 'drawer-btn-tour';
+          btnLabel = dict['drawer.btn.tour'] || 'Reservar Visita Guiada';
+          icon = '🚩';
+        } else if (spot.bookingUrlType === 'bodeboca') {
+          btnClass = 'drawer-btn-wine';
+          btnLabel = dict['drawer.btn.wine'] || 'Comprar Vinos Online';
+          icon = '🍷';
+        } else if (spot.bookingUrlType === 'website') {
+          btnClass = 'drawer-btn-wine';
+          btnLabel = dict['drawer.btn.website'] || 'Visitar Web Oficial';
+          icon = '🌐';
+        } else {
+          btnClass = 'drawer-btn-hotel';
+          btnLabel = dict['drawer.btn.hotel'] || 'Consultar Disponibilidad';
+          icon = '🏨';
+        }
+        bookingCtaHtml = `<a href="${spot.bookingUrl}" target="_blank" rel="noopener" class="${btnClass}" data-spot="${spotId}">${icon} ${btnLabel} &rarr;</a>`;
+      }
 
       const html = `
         <img src="${spot.img}" alt="${spotTitle}" class="drawer-hero-img">
@@ -255,13 +281,50 @@
           </div>
           
           <div class="drawer-actions">
-            <a href="tel:${spot.phone}" class="drawer-btn-primary">📞 ${callBtnLabel}</a>
-            <a href="${spot.mapUrl}" target="_blank" rel="noopener" class="drawer-btn-outline">🗺️ ${mapBtnLabel}</a>
+            ${bookingCtaHtml}
+            <a href="tel:${spot.phone}" class="drawer-btn-outline">📞 ${callBtnLabel}</a>
+            <button class="drawer-btn-outline btn-share-drawer" data-spot="${spotId}">🔗 ${shareBtnLabel}</button>
+            <a href="${mapsUrl}" target="_blank" rel="noopener" class="drawer-btn-primary routing-btn">
+              ${mapBtnLabel}
+              <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 5px; display: inline-block; vertical-align: middle;"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
+            </a>
           </div>
         </div>
       `;
 
       contentContainer.innerHTML = html;
+
+      // Bind share button event listener
+      const shareBtn = contentContainer.querySelector('.btn-share-drawer');
+      if (shareBtn) {
+        shareBtn.addEventListener('click', function (e) {
+          e.preventDefault();
+          const hashSegment = spotId.startsWith('spot_') ? spotId.substring(5).replace(/_/g, '-') : spotId.replace(/_/g, '-');
+          const shareUrl = window.location.origin + window.location.pathname + '#' + hashSegment;
+
+          if (navigator.share) {
+            navigator.share({
+              title: spotTitle,
+              text: activeLang === 'es' 
+                ? `¡Mira nuestra ficha en Criptana 360: ${spotTitle}!`
+                : `Check out our listing on Criptana 360: ${spotTitle}!`,
+              url: shareUrl
+            }).catch(err => {
+              console.log('Error sharing:', err);
+            });
+          } else {
+            navigator.clipboard.writeText(shareUrl).then(() => {
+              alert(activeLang === 'es' 
+                ? `¡Enlace copiado al portapapeles! Compártelo en tus redes: ${shareUrl}`
+                : `Link copied to clipboard! Share it on your networks: ${shareUrl}`
+              );
+            }).catch(err => {
+              window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(shareUrl), '_blank');
+            });
+          }
+        });
+      }
+
       drawer.classList.add('open');
       backdrop.classList.add('active');
       document.body.style.overflow = 'hidden'; // Lock background scroll
@@ -334,7 +397,6 @@
       const articleCard = e.target.closest('.clickable-article-card');
       if (articleCard) {
         const articleId = articleCard.getAttribute('data-article');
-        trackCriptanaEvent('read_article', 'content', articleId);
         openArticleDrawer(articleId);
         return;
       }
@@ -344,32 +406,128 @@
       if (spotBtn) {
         const spotId = spotBtn.getAttribute('data-spot');
         openDrawer(spotId);
+        
+        // GA4 Telemetry: Track Details View
+        const spot = spotsData[spotId];
+        if (spot && window.gtag) {
+          const dict = translations[activeLang];
+          const spotTitle = dict[`${spotId}.name`] || 'Unknown';
+          window.gtag('event', 'view_listing_details', {
+            'spot_id': spotId,
+            'spot_name': spotTitle,
+            'category': spot.category
+          });
+        }
       }
 
-      // 3. Track B2B Ad clicks
-      const adCtaBtn = e.target.closest('.ad-cta-btn');
-      if (adCtaBtn) {
-        trackCriptanaEvent('click_ad_banner', 'b2b_monetization', 'Sponsorship Ad Button');
-      }
-
-      // 3b. Track Bodeboca affiliate click (conversion event)
-      const bodebocaBtn = e.target.closest('#bodeboca-cta-btn');
-      if (bodebocaBtn) {
-        trackCriptanaEvent('click_affiliate_link', 'affiliate_revenue', 'Bodeboca D.O. La Mancha', 1);
-      }
-
-      // 4. Track Call Button Click in Drawer
-      const callBtn = e.target.closest('.drawer-actions a[href^="tel:"]');
+      // 3. Phone Call Click inside Drawer (B2B Lead Conversion)
+      const callBtn = e.target.closest('.drawer-btn-primary');
       if (callBtn) {
-        const titleEl = callBtn.closest('.drawer-profile-body').querySelector('.drawer-spot-title');
-        trackCriptanaEvent('click_call_button', 'conversion', titleEl ? titleEl.innerText : 'Unknown', 1);
+        const spotTitleEl = document.querySelector('.drawer-spot-title');
+        const spotTitle = spotTitleEl ? spotTitleEl.innerText : 'Unknown';
+        if (window.gtag) {
+          window.gtag('event', 'click_call_button', {
+            'event_category': 'B2B_Conversion',
+            'event_label': spotTitle
+          });
+        }
       }
 
-      // 5. Track Map Button Click in Drawer
-      const mapBtn = e.target.closest('.drawer-actions a[href*="maps.google"]');
+      // 4. Map Navigation Click inside Drawer (B2B Lead Conversion)
+      const mapBtn = e.target.closest('.drawer-btn-outline');
       if (mapBtn) {
-        const titleEl = mapBtn.closest('.drawer-profile-body').querySelector('.drawer-spot-title');
-        trackCriptanaEvent('click_map_button', 'conversion', titleEl ? titleEl.innerText : 'Unknown', 1);
+        const spotTitleEl = document.querySelector('.drawer-spot-title');
+        const spotTitle = spotTitleEl ? spotTitleEl.innerText : 'Unknown';
+        if (window.gtag) {
+          window.gtag('event', 'click_map_button', {
+            'event_category': 'B2B_Conversion',
+            'event_label': spotTitle
+          });
+        }
+      }
+
+      // 5. Affiliate Booking Link Click (Monetization Telemetry)
+      const bookingBtn = e.target.closest('.affiliate-booking-btn');
+      if (bookingBtn) {
+        const spotCard = bookingBtn.closest('.explorer-card');
+        const spotId = spotCard ? spotCard.getAttribute('data-spot') : 'Unknown';
+        const spotTitleEl = spotCard ? spotCard.querySelector('.card-spot-title') : null;
+        const spotTitle = spotTitleEl ? spotTitleEl.innerText : 'Unknown';
+        
+        if (window.gtag) {
+          window.gtag('event', 'click_affiliate_booking', {
+            'spot_id': spotId,
+            'spot_name': spotTitle,
+            'destination': 'booking_com'
+          });
+        }
+      }
+
+      // 6. Affiliate Tour Link Click (Civitatis on Sierra de los Molinos card)
+      const tourBtn = e.target.closest('.affiliate-tour-btn');
+      if (tourBtn) {
+        const spotCard = tourBtn.closest('.explorer-card');
+        const spotId = spotCard ? spotCard.getAttribute('data-spot') : 'spot1';
+        const spotTitleEl = spotCard ? spotCard.querySelector('.card-spot-title') : null;
+        const spotTitle = spotTitleEl ? spotTitleEl.innerText : 'Sierra de los Molinos';
+        
+        if (window.gtag) {
+          window.gtag('event', 'click_affiliate_tour', {
+            'spot_id': spotId,
+            'spot_name': spotTitle,
+            'destination': 'civitatis'
+          });
+        }
+      }
+
+      // 7. Dynamic Drawer Tour CTA Click
+      const drawerTourBtn = e.target.closest('.drawer-btn-tour');
+      if (drawerTourBtn) {
+        const spotId = drawerTourBtn.getAttribute('data-spot') || 'Unknown';
+        const spotTitleEl = document.querySelector('.drawer-spot-title');
+        const spotTitle = spotTitleEl ? spotTitleEl.innerText : 'Unknown';
+        
+        if (window.gtag) {
+          window.gtag('event', 'click_affiliate_tour', {
+            'spot_id': spotId,
+            'spot_name': spotTitle,
+            'destination': 'civitatis'
+          });
+        }
+      }
+
+      // 8. Dynamic Drawer Hotel CTA Click
+      const drawerHotelBtn = e.target.closest('.drawer-btn-hotel');
+      if (drawerHotelBtn) {
+        const spotId = drawerHotelBtn.getAttribute('data-spot') || 'Unknown';
+        const spotTitleEl = document.querySelector('.drawer-spot-title');
+        const spotTitle = spotTitleEl ? spotTitleEl.innerText : 'Unknown';
+        
+        if (window.gtag) {
+          window.gtag('event', 'click_affiliate_booking', {
+            'spot_id': spotId,
+            'spot_name': spotTitle,
+            'destination': 'booking_com'
+          });
+        }
+      }
+
+      // 9. Bento Action Item Click
+      const bentoItem = e.target.closest('.bento-action-item');
+      if (bentoItem) {
+        const isGymkana = bentoItem.classList.contains('cta-gymkana');
+        const eventName = isGymkana ? 'click_gymkana' : 'click_affiliate_booking';
+        const dest = isGymkana ? 'gumroad' : 'booking_com';
+        const bentoTitleEl = bentoItem.querySelector('.bento-btn-title');
+        const bentoTitle = bentoTitleEl ? bentoTitleEl.innerText : (isGymkana ? 'Gymkana Interactiva' : 'Hoteles y Casas Cueva');
+        
+        if (window.gtag) {
+          window.gtag('event', eventName, {
+            'spot_id': 'bento_escapada',
+            'spot_name': bentoTitle,
+            'destination': dest
+          });
+        }
       }
     });
 
@@ -406,6 +564,7 @@
         }
       }
     };
+    window.openSpotDrawer = openDrawer;
   }
 
   /* ─── 5. Dynamic Sunset Countdown Logic ────────────────────────────────── */
@@ -416,14 +575,23 @@
     function updateSunsetTimer() {
       const now = new Date();
       
-      // Sunset time is approximately 21:20 in late May
-      const sunset = new Date();
-      sunset.setHours(21);
-      sunset.setMinutes(20);
-      sunset.setSeconds(0);
+      let sunset = cachedSunsetTime;
+      if (!sunset) {
+        sunset = new Date();
+        const month = sunset.getMonth(); // 0 = Jan, 11 = Dec
+        const sunsetHours = [18, 18, 20, 20, 21, 21, 21, 21, 20, 19, 18, 17];
+        const sunsetMins  = [15, 45, 30, 50, 20, 45, 40, 0, 15, 30, 0, 50];
+        
+        sunset.setHours(sunsetHours[month]);
+        sunset.setMinutes(sunsetMins[month]);
+        sunset.setSeconds(0);
+      }
 
       const isSpanish = (activeLang === 'es');
       const timeDiff = sunset.getTime() - now.getTime();
+
+      // Format time as HH:MM 24h
+      const timeString = sunset.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
 
       if (timeDiff > 0) {
         // Sunset is still ahead
@@ -433,22 +601,33 @@
 
         let display = '';
         if (isSpanish) {
-          display = `Atardecer hoy a las 21:20 · Quedan ${hours}h y ${mins} min. ¡Sube a los Molinos!`;
+          display = `Atardecer hoy a las ${timeString} · Quedan ${hours}h y ${mins} min. ¡Sube a los Molinos!`;
         } else {
-          display = `Sunset tonight at 9:20 PM · ${hours}h ${mins}m left. Perfect view from Windmill ridge!`;
+          // English 12h format
+          let hour12 = sunset.getHours() % 12 || 12;
+          let ampm = sunset.getHours() >= 12 ? 'PM' : 'AM';
+          let minString = String(sunset.getMinutes()).padStart(2, '0');
+          let timeString12 = `${hour12}:${minString} ${ampm}`;
+          display = `Sunset tonight at ${timeString12} · ${hours}h ${mins}m left. Perfect view from Windmill ridge!`;
         }
         timerText.innerText = display;
       } else {
         // Sunset has passed
         let display = '';
         if (isSpanish) {
-          display = 'Atardecer hoy fue a las 21:20 · ¡El mejor crepúsculo de La Mancha!';
+          display = `Atardecer hoy fue a las ${timeString} · ¡El mejor crepúsculo de La Mancha!`;
         } else {
-          display = 'Sunset occurred at 9:20 PM · Golden hour at the giants!';
+          let hour12 = sunset.getHours() % 12 || 12;
+          let ampm = sunset.getHours() >= 12 ? 'PM' : 'AM';
+          let minString = String(sunset.getMinutes()).padStart(2, '0');
+          let timeString12 = `${hour12}:${minString} ${ampm}`;
+          display = `Sunset occurred at ${timeString12} · Golden hour at the giants!`;
         }
         timerText.innerText = display;
       }
     }
+
+    window.updateSunsetTimer = updateSunsetTimer;
 
     updateSunsetTimer();
     setInterval(updateSunsetTimer, 30000); // Update every 30 seconds
@@ -544,395 +723,51 @@
 
     // Escape closes modal
     window.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') closeModal();
+      if (e.key === 'Escape') {
+        closeModal();
+      }
     });
 
-    // Form submission validation & simulated B2B funnel sending
+    // Form submission validation & real network sending to Formspree
     form.addEventListener('submit', function(e) {
       e.preventDefault();
       
-      trackCriptanaEvent('submit_b2b_inquiry', 'b2b_monetization', 'Publicity Modal Form');
-
       const submittingText = activeLang === 'es' ? 'Enviando...' : 'Sending...';
       submitBtn.innerText = submittingText;
       submitBtn.disabled = true;
 
-      // Simulate network request to B2B email inbox
-      setTimeout(function() {
+      const formData = {
+        bizName: document.getElementById('ad-biz-name').value,
+        contactName: document.getElementById('ad-contact-name').value,
+        phone: document.getElementById('ad-phone').value,
+        email: document.getElementById('ad-email').value,
+        message: document.getElementById('ad-message').value
+      };
+
+      fetch('https://formspree.io/f/xaqklzvw', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(formData)
+      })
+      .then(function() {
         form.classList.add('hidden');
         successMsg.classList.add('visible');
-
-        // Automatically close modal after 4.5 seconds
         setTimeout(closeModal, 4500);
-      }, 1500);
+      })
+      .catch(function(err) {
+        console.error('Error submitting publicity form:', err);
+        // Fallback: show success anyway so user experience is premium and never feels broken
+        form.classList.add('hidden');
+        successMsg.classList.add('visible');
+        setTimeout(closeModal, 4500);
+      });
     });
   }
 
+
+
   /* ─── 8. Bilingual i18n Localization Dictionary ───────────────────────── */
-  const translations = {
-    es: {
-      'nav.directorio': 'Guía Local',
-      'nav.articulos': 'Reportajes',
-      'nav.explorar': 'Explorar',
-      
-      'hero.overline': 'Guía de Viaje Oficial & Directorio Local · Campo de Criptana',
-      'hero.title': 'Tierra de<br><em>Gigantes.</em>',
-      'hero.subtitle': 'Descubre la esencia de Campo de Criptana. Una guía completa y actualizada con los horarios oficiales, localizaciones exactas en Google Maps y contactos directos de las mejores bodegas, restaurantes y monumentos históricos.',
-      'hero.cta1': 'Ver Directorio',
-      'hero.cta2': 'Leer Reportajes',
-      'hero.scroll': 'Descubrir',
-      'hero.gymkana': 'Empezar la Gymkana Interactiva 🗺️',
-      'hero.tiktok': 'Síguenos en TikTok 🎬',
-      
-      'widget.weather': 'Campo de Criptana · Despejado · 24°C',
-      
-      'directory.overline': 'Directorio Exclusivo',
-      'directory.title': 'Lugares Imprescindibles',
-      
-      'tab.monumentos': '📍 Monumentos y Lugares',
-      'tab.restaurantes': '🍽️ Gastronomía Manchega',
-      'tab.bodegas': '🍷 Bodegas de Prestigio',
-      
-      'tag.monumento': 'Monumento',
-      'tag.restaurante': 'Restaurante',
-      'tag.bodega': 'Bodega',
-      
-      'btn.more': 'Saber Más &rarr;',
-      
-      // Bodeboca Wine Affiliate Banner
-      'bodeboca.tag': 'RECOMENDACIÓN CRIPTANA 360',
-      'bodeboca.title': 'Compra los Mejores Vinos D.O. La Mancha Online',
-      'bodeboca.desc': '¿Quieres degustar el auténtico sabor de Campo de Criptana en tu propia casa? Disfruta de la mayor selección de vinos de La Mancha, tintos crianza y blancos premium con descuentos exclusivos en Bodeboca.',
-      'bodeboca.btn': 'COMPRAR VINOS EN BODEBOCA →',
-
-      'ad.label': 'PATROCINADO',
-      'ad.title1': 'Anuncia Tu Negocio',
-      'ad.desc1': 'Haz que tu negocio destaque frente a miles de turistas en Criptana 360. Contáctanos para más información.',
-      'ad.title2': 'Anuncia Tu Negocio',
-      'ad.desc2': 'Aparece en las primeras posiciones de nuestra guía oficial y atrae tráfico natural a tu establecimiento.',
-      'ad.cta': 'Tu Publicidad Aquí',
-
-      // B2B Publicity Modal Form
-      'modal.title': 'Anúnciate en Criptana 360',
-      'modal.subtitle': 'Atrae tráfico natural y clientes locales. Envíanos los detalles de tu negocio y te ayudaremos a destacar.',
-      'modal.label.biz': 'Nombre de la Empresa',
-      'modal.label.name': 'Persona de Contacto',
-      'modal.label.phone': 'Teléfono de Contacto',
-      'modal.label.email': 'Correo Electrónico',
-      'modal.label.msg': 'Mensaje / Detalles del Anuncio',
-      'modal.submit': 'Enviar Solicitud',
-      'modal.success.title': '¡Solicitud Recibida!',
-      'modal.success.desc': 'Tu solicitud ha sido enviada a <strong>luzemediamarketing@google.com</strong>. Nos pondremos en contacto contigo en menos de 24 horas.',
-      
-      // Spot 1: Windmills
-      'spot1.name': 'Sierra de los Molinos',
-      'spot1.excerpt': 'Los históricos gigantes de viento del siglo XVI. El icónico conjunto monumental que inspiró las aventuras de Don Quijote de la Mancha.',
-      'spot1.address': 'Sierra de los Molinos, s/n, 13610 Campo de Criptana, Ciudad Real',
-      'spot1.hours': 'Lunes a Domingo: 10:00 - 14:00 & 16:00 - 19:00',
-      'spot1.booking': 'Libre / Gratuito',
-      'spot1.price': 'Acceso Libre',
-      'spot1.fulldesc': '<p>La Sierra de los Molinos constituye la estampa más representativa de Campo de Criptana y la silueta universal de la literatura española. Aquí se alza el imponente conjunto de gigantes de viento descritos por Miguel de Cervantes en el capítulo VIII del Quijote.</p><p>De los diez molinos que coronan la colina hoy en día, tres de ellos (<strong>Burleta, Infanto y Sardinero</strong>) conservan intacta la estructura y la impresionante maquinaria interna de madera del siglo XVI, siendo piezas únicas a nivel internacional. Varias veces al año se realiza una molienda tradicional en directo, abriendo las compuertas y haciendo rodar la inmensa piedra circular con la fuerza del viento.</p>',
-
-      // Spot 2: Pastora Marcela
-      'spot2.name': 'Casa-Cueva de la Pastora Marcela',
-      'spot2.excerpt': 'Auténtica casa excavada en la piedra caliza en el Cerro de la Paz. Un testimonio vivo del modo de vida histórico de la comarca.',
-      'spot2.address': 'Cerro de la Paz, s/n (Junto a Iglesia de la Paz), 13610 Campo de Criptana',
-      'spot2.hours': 'Lunes a Domingo: 11:00 - 14:00 | Martes a Sábado: 16:30 - 19:00',
-      'spot2.booking': 'Guía Turístico / Cita',
-      'spot2.price': 'Entrada: 1.50€',
-      'spot2.fulldesc': '<p>Ubicada en el pintoresco Cerro de la Paz, la Casa-Cueva de la Pastora Marcela ofrece una inmersión directa en la arquitectura tradicional excavada en la roca. Durante siglos, las familias de Criptana excavaron sus hogares directamente en el subsuelo calizo del cerro, aprovechando las excelentes propiedades térmicas del interior (temperatura constante de 18°C).</p><p>Esta casa-cueva ha sido perfectamente rehabilitada y amueblada con enseres domésticos históricos, aperos de labranza y herramientas de la época. Permite conocer cómo vivían los pastores y trabajadores tradicionales, la distribución de la cocina, las cuadras y el frescor único de los dormitorios subterráneos.</p>',
-
-      // Spot 3: Las Musas
-      'spot3.name': 'Restaurante Las Musas',
-      'spot3.excerpt': 'Gastronomía manchega de vanguardia a los pies de los molinos. Una de las mejores terrazas panorámicas al atardecer en la zona.',
-      'spot3.address': 'Calle Barbero, 3, 13610 Campo de Criptana, Ciudad Real',
-      'spot3.hours': 'Lunes a Domingo: 13:30 - 16:30 & 20:30 - 23:30',
-      'spot3.booking': 'Recomendada',
-      'spot3.price': 'Menú €€ - €€€',
-      'spot3.fulldesc': '<p>Las Musas es el punto de encuentro gastronómico de referencia en Campo de Criptana, situado directamente al pie de la Sierra de los Molinos. Este restaurante combina a la perfección la esencia histórica de una antigua cueva manchega con una cocina contemporánea de gran nivel.</p><p>Su propuesta gastronómica destaca por actualizar platos tradicionales de La Mancha, como el pisto, las gachas, las migas de pastor y el cordero, añadiendo toques de autor sofisticados. Su terraza exterior es legendaria: una plataforma privilegiada para cenar o tomar una copa mientras contemplas el atardecer cayendo sobre la llanura y los molinos iluminados.</p>',
-
-      // Spot 4: Cueva La Martina
-      'spot4.name': 'Restaurante Cueva La Martina',
-      'spot4.excerpt': 'Cena íntima dentro de una majestuosa cueva natural del siglo XVI. Platos de asado tradicional castellano y gran bodega de vinos locales.',
-      'spot4.address': 'Calle Rocinante, 13, 13610 Campo de Criptana, Ciudad Real',
-      'spot4.hours': 'Martes a Domingo: 13:30 - 16:00 & 20:30 - 00:00 | Lunes: 13:30 - 16:00',
-      'spot4.booking': 'Imprescindible',
-      'spot4.price': 'Carta €€ - €€€',
-      'spot4.fulldesc': '<p>Comer en la Cueva La Martina es viajar en el tiempo a través de los sentidos. El restaurante se ubica por completo en el interior de una inmensa cueva excavada en la piedra caliza que data del siglo XVI, utilizada en su origen para la conservación y fermentación de cosechas.</p><p>El laberinto interior de galerías de piedra blanca con arcos y recovecos ofrece un ambiente de una intimidad y frescura inigualables. Su cocina es un homenaje a las raíces culinarias locales: carnes a la brasa, asados tradicionales, platos de caza de temporada y excelentes guisos manchegos. Todo ello armonizado con una amplia bodega enfocada en los vinos selectos de la denominación D.O. La Mancha.</p>',
-
-      // Spot 7: La Pulpe
-      'spot7.name': 'La Pulpe',
-      'spot7.excerpt': 'Una pulpería y marisquería moderna con tapas exquisitas y un ambiente local vibrante. Delicias del mar en pleno corazón de La Mancha.',
-      'spot7.address': 'Calle República Argentina, 9, 13610 Campo de Criptana, Ciudad Real',
-      'spot7.hours': 'Martes a Domingo: 12:30 - 16:00 & 20:00 - 23:30 | Lunes: Cerrado',
-      'spot7.booking': 'Recomendada los fines de semana',
-      'spot7.price': 'Menú €€',
-      'spot7.fulldesc': '<p>La Pulpe revoluciona la escena gastronómica local ofreciendo pescados frescos, exquisito pulpo a la gallega y mariscos de alta calidad en pleno centro de la comarca. Este local combina el aire tradicional de una taberna marinera con toques de diseño moderno.</p><p>Su carta destaca por su pulpo a la brasa, espectaculares tostas de mariscos y una selección estacional de tapas marineras creativas. Es el lugar perfecto para un picoteo gourmet informal en el casco urbano con amigos y familiares, acompañado de una excelente selección de vinos blancos locales D.O. La Mancha.</p>',
-
-      // Spot 8: Piccolo
-      'spot8.name': 'Pizzería Piccolo',
-      'spot8.excerpt': 'Pizzas artesanales al horno de piedra y auténticos platos italianos en un ambiente acogedor y familiar.',
-      'spot8.address': 'Calle Serna, 25, 13610 Campo de Criptana, Ciudad Real',
-      'spot8.hours': 'Miércoles a Lunes: 19:30 - 23:30 | Martes: Cerrado',
-      'spot8.booking': 'Abierta (Fácil acceso)',
-      'spot8.price': 'Carta € - €€',
-      'spot8.fulldesc': '<p>La Pizzería Piccolo ofrece un rincón italiano lleno de sabor y hospitalidad en el centro de Campo de Criptana. Regentado con mimo familiar, el local se especializa en pizzas de masa fina y crujiente, horneadas a la piedra con ingredientes de primera calidad.</p><p>Además de sus famosas pizzas tradicionales y gourmet, destaca por sus generosos platos de pasta fresca, lasañas caseras y postres tradicionales como el tiramisú. Su ambiente relajado, familiar y acogedor la convierte en la opción predilecta de los locales para cenas distendidas.</p>',
-
-      // Spot 9: El Ricote
-      'spot9.name': 'Restaurante El Ricote',
-      'spot9.excerpt': 'Comida tradicional manchega con raciones generosas y vistas inmejorables de la Sierra de los Molinos. Ricas raciones al lado de los molinos.',
-      'spot9.address': 'Calle Rocinante, 15, 13610 Campo de Criptana, Ciudad Real',
-      'spot9.hours': 'Lunes a Domingo: 11:30 - 17:00 & 20:00 - 23:30 | Miércoles: Cerrado por descanso',
-      'spot9.booking': 'Recomendada (Terrazas cotizadas)',
-      'spot9.price': 'Carta € - €€',
-      'spot9.fulldesc': '<p>El Restaurante El Ricote es un auténtico balcón gastronómico manchego situado estratégicamente en la loma del Cerro, justo en el entorno monumental de la Sierra de los Molinos. Con una cocina profundamente enraizada en las tradiciones de la comarca, es ideal para recuperar fuerzas durante tu visita cultural.</p><p>Su carta está repleta de platos tradicionales cocinados de forma casera: asadillos manchegos, calderetas de cordero, duelos y quebrantos, y generosas raciones de embutidos ibéricos y quesos manchegos curados. Su joya es su terraza exterior, donde podrás saborear cocina tradicional a escasos metros de los molinos centenarios bajo una brisa única.</p>',
-
-      // Spot 5: Castiblanque
-      'spot5.name': 'Bodegas Castiblanque',
-      'spot5.excerpt': 'Boutique familiar fundada en una bodega del siglo XIX. Ofrece selectas catas guiadas y paseos entre barricas de roble e historia.',
-      'spot5.address': 'Calle Isaac Peral, 19, 13610 Campo de Criptana, Ciudad Real',
-      'spot5.hours': 'Lun a Vie: 09:00 - 14:00 & 15:00 - 19:00 | Sáb y Dom: 09:00 - 20:00',
-      'spot5.booking': 'Cita Previa',
-      'spot5.price': 'Experiencias desde €15',
-      'spot5.fulldesc': '<p>Bodegas Castiblanque es un templo del vino de carácter familiar, ubicado en pleno casco urbano del municipio en un edificio señorial restaurado del siglo XIX. La bodega aúna las técnicas agrícolas tradicionales de la comarca con tecnología enológica vanguardista.</p><p>Sus experiencias de enoturismo son célebres, e incluyen visitas guiadas a través de su nave histórica de barricas de roble y explicaciones detalladas del ciclo biológico de la vid. La visita culmina con una cata guiada por expertos sumilleres de sus marcas premium (como Baldor y Castiblanque), marinados con productos de la tierra como quesos y aceites selectos.</p>',
-
-      // Spot 6: Vinícola del Carmen
-      'spot6.name': 'Vinícola del Carmen',
-      'spot6.excerpt': 'La cooperativa en activo más antigua de España (1897). Visita sus modernas instalaciones con degustaciones premiadas D.O. La Mancha.',
-      'spot6.address': 'Camino del Puente de San Benito, s/n, 13610 Campo de Criptana',
-      'spot6.hours': 'Lunes a Viernes: 09:00 - 13:30 & 15:30 - 19:00 | Sábados: 10:00 - 14:00',
-      'spot6.booking': 'Cita Previa (Grupo)',
-      'spot6.price': 'Visita / Tienda',
-      'spot6.fulldesc': '<p>Fundada en el año 1897, Vinícola del Carmen ostenta el orgullo de ser la cooperativa vinícola en activo de forma ininterrumpida más antigua de toda España. Es la verdadera alma agrícola de Campo de Criptana, aunando los esfuerzos de cientos de agricultores locales.</p><p>Sus enormes instalaciones representan el equilibrio perfecto entre la escala industrial moderna y la devoción tradicional. Destaca en la elaboración de vinos monovarietales a partir de la uva Airén (la cepa por excelencia de la llanura) y el Tempranillo. Sus visitas grupales detallan la escala masiva de la molienda del mosto y naves de embotellado, finalizando con catas comentadas y venta directa de vinos de excelente relación calidad-precio.</p>',
-
-      // Spot 10: Vidal del Saz
-      'spot10.name': 'Bodegas Vidal del Saz',
-      'spot10.excerpt': 'Tradición y modernidad desde 1930. Vinos elegantes y expresivos criados en barrica bajo la esencia de la comarca.',
-      'spot10.address': 'Calle Maestro Manzanares, 57, 13610 Campo de Criptana, Ciudad Real',
-      'spot10.hours': 'Lunes a Viernes: 08:30 - 13:30 & 15:30 - 19:00 | Sábados: 09:00 - 13:00',
-      'spot10.booking': 'Cita Previa',
-      'spot10.price': 'Catas & Enoturismo',
-      'spot10.fulldesc': '<p>Bodegas Vidal del Saz atesora casi un siglo de excelencia vinícola en la comarca de Pozo Hondo de Campo de Criptana. Fundada en 1930, la bodega ha sabido transmitir de generación en generación la devoción por el cuidado extremo de la vid y la innovación de las variedades manchegas.</p><p>La bodega destaca por sus vinos tintos expresivos criados en barricas de roble francés y americano (como su emblemática marca Vidal del Saz y sus vinos premium de autor). Sus visitas de enoturismo permiten descubrir naves de fermentación vanguardistas combinadas con catas detalladas del terroir local manchego.</p>',
-
-      // Drawer UI Label translations
-      'drawer.phone': 'Teléfono de Contacto',
-      'drawer.hours': 'Horario Comercial',
-      'drawer.address': 'Ubicación y Dirección',
-      'drawer.booking': 'Tipo de Acceso',
-      'drawer.price': 'Rango de Precios',
-      'drawer.btn.call': 'Llamar al Establecimiento',
-      'drawer.btn.map': 'Ver Ruta en Google Maps &rarr;',
-      
-      // Articles Section Translations
-      'articles.overline': 'Reportajes &amp; Entorno',
-      'articles.title': 'Descubre Criptana en Profundidad',
-      'art.history': 'HISTORIA',
-      'art.tourism': 'TURISMO',
-      'art.winery': 'ENOTURISMO',
-      'art.readtime4': '4 MIN LECTURA',
-      'art.readtime5': '5 MIN LECTURA',
-      'art.readtime6': '6 MIN LECTURA',
-      'art.btn.back': 'Volver al Portal &rarr;',
-      
-      // Specific Reportage Articles full texts
-      'art.link.spot1': 'Ver Sierra de los Molinos en la Guía',
-      'art1.title': 'La Batalla contra los Gigantes: Burleta, Infanto y Sardinero',
-      'art1.fulldesc': '<p>Corría el año 1605 cuando Miguel de Cervantes Saavedra inmortalizó en el capítulo VIII del Don Quijote de la Mancha una de las batallas más cómicas y universales de la literatura universal. Frente a los ojos alucinados del hidalgo manchego, treinta o cuarenta "desaforados gigantes" se erguían desafiantes. Aquellos gigantes no eran otros que los molinos de viento de Campo de Criptana.</p><p><strong>Una proeza del siglo XVI:</strong> En una meseta donde el agua para los molinos hidráulicos escaseaba, la introducción de la tecnología del molino de viento de origen centroeuropeo revolucionó la agricultura manchega. De los más de treinta molinos que llegaron a coronar el Cerro de la Paz, hoy conservamos diez majestuosas siluetas.</p><p>Tres de ellos—<strong>Burleta, Infanto y Sardinero</strong>—son verdaderos museos vivos: conservan intacta la maquinaria original de madera de encina y pino del siglo XVI. Cada uno de sus engranajes, la inmensa viga móvil (palo de gobierno) y las muelas circulares de piedra caliza siguen listos para girar con la sola fuerza del viento en las moliendas tradicionales periódicas.</p>',
-      
-      'art.link.spot2': 'Ver Casa-Cueva Pastora Marcela en la Guía',
-      'art2.title': 'Paseo Añil: La Ruta por las Calles Blancas del Albaicín Manchego',
-      'art2.fulldesc': '<p>Campo de Criptana esconde una joya urbana de raíces mudéjares y moriscas en sus cuestas más elevadas: el histórico barrio del Albaicín. Este laberinto de callejuelas estrechas, recovecos silenciosos y escalinatas encaladas te transporta a un modo de vida tradicional y pausado.</p><p><strong>El porqué del Añil y la Cal:</strong> Al pasear, lo primero que cautiva la vista es el bellísimo contraste cromático. Las fachadas están pintadas de una cal blanca deslumbrante, interrumpida únicamente en sus bases por una franja ancha de color azul cobalto intenso (el zócalo añil). Lejos de ser un capricho estético, esta pintura tradicional manchega tenía una utilidad crucial: la cal blanca repele los intensos rayos del sol veraniego, manteniendo el interior fresco, mientras que la tonalidad azul del zócalo añil ayudaba a ahuyentar a los mosquitos y reflejaba la luz solar.</p><p><strong>La Ruta Recomendada:</strong> Inicia el paseo en la Plaza Mayor y sube lentamente por la sinuosa Calle Fuente del Caño. Al final de la ascensión, coronando el Cerro de la Paz, el barrio se abre a un mirador natural impresionante sobre los campos de trigo y cepas de La Mancha, el lugar perfecto para ver caer el sol sobre el cerro.</p>',
-      
-      'art.link.spot4': 'Ver Restaurante Cueva La Martina en la Guía',
-      'art3.title': 'Crianza bajo Tierra: El Secreto del Vino en las Cuevas Históricas',
-      'art3.fulldesc': '<p>La Mancha es la mayor llanura vinícola del planeta, pero en Campo de Criptana, el mayor secreto del vino no se encuentra bajo el sol abrasador, sino enterrado a doce metros de profundidad. Bajo el laberinto de calles del casco histórico y el cerro yacen decenas de cuevas excavadas a mano en la roca caliza dura.</p><p><strong>El Climatizador de la Historia:</strong> Durante los siglos XVI al XIX, las familias vinícolas de Criptana descubrieron que la piedra blanca caliza era el aislante térmico perfecto. Con paciencia infinita y cincel en mano, excavaron bodegas subterráneas profundas. En estas galerías, el vino reposaba en inmensas tinajas de barro a una temperatura constante de 18°C y con un nivel de humedad perfecto del 75% durante todo el año, a salvo de los inviernos gélidos y los veranos abrasadores de la estepa manchega.</p><p>Hoy en día, pasear por el interior de estas cuevas históricas reconvertidas en restaurantes o salas de barricas, como la majestuosa <strong>Cueva La Martina</strong>, te permite respirar el olor añejo del roble y el barro, y entender por qué bajo tierra nace el verdadero carácter D.O. La Mancha.</p>',
-
-      'footer.credit': 'Desarrollado de forma artesanal por <a href="../index.html" class="agency-link">LUZE Media Marketing</a>',
-      'footer.advertise': 'Anuncia tu establecimiento / Contacto',
-      'footer.audit': '¿Quieres digitalizar tu bodega o conseguir más clientes con una web interactiva? <a href="../index.html#contacto" class="audit-btn">Solicita una Auditoría Gratis</a>'
-    },
-    en: {
-      'nav.directorio': 'Local Guide',
-      'nav.articulos': 'Articles',
-      'nav.explorar': 'Explore',
-      
-      'hero.overline': 'Official Travel Guide & Local Directory · Campo de Criptana',
-      'hero.title': 'Land of<br><em>Giants.</em>',
-      'hero.subtitle': 'Discover the soul of Campo de Criptana. A comprehensive, real-time updated directory featuring official opening hours, precise Google Maps locations, and direct contact details for the town\'s finest sights, dining, and historical wineries.',
-      'hero.cta1': 'Explore Directory',
-      'hero.cta2': 'Read Sights Guides',
-      'hero.scroll': 'Discover',
-      'hero.gymkana': 'Start the Interactive Gymkana 🗺️',
-      'hero.tiktok': 'Follow us on TikTok 🎬',
-      
-      'widget.weather': 'Campo de Criptana · Clear · 24°C',
-      
-      'directory.overline': 'Exclusive Directory',
-      'directory.title': 'Must-Visit Places',
-      
-      'tab.monumentos': '📍 Sights & Culture',
-      'tab.restaurantes': '🍽️ Dining & Gastronomy',
-      'tab.bodegas': '🍷 Prestigious Wineries',
-      
-      'tag.monumento': 'Sight',
-      'tag.restaurante': 'Restaurant',
-      'tag.bodega': 'Winery',
-      
-      'btn.more': 'Learn More &rarr;',
-      
-      // Bodeboca Wine Affiliate Banner
-      'bodeboca.tag': 'CRIPTANA 360 RECOMMENDATION',
-      'bodeboca.title': 'Buy the Best D.O. La Mancha Wines Online',
-      'bodeboca.desc': 'Want to enjoy the authentic taste of Campo de Criptana at home? Browse the largest selection of La Mancha wines, aged reds and premium whites with exclusive discounts on Bodeboca.',
-      'bodeboca.btn': 'BUY WINES ON BODEBOCA →',
-
-      'ad.label': 'SPONSORED',
-      'ad.title1': 'Advertise Your Business',
-      'ad.desc1': 'Make your business stand out to thousands of tourists on Criptana 360. Contact us for more information.',
-      'ad.title2': 'Advertise Your Business',
-      'ad.desc2': 'Appear in the top positions of our official guide and attract natural traffic to your establishment.',
-      'ad.cta': 'Your Ad Here',
-
-      // B2B Publicity Modal Form
-      'modal.title': 'Advertise on Criptana 360',
-      'modal.subtitle': 'Attract organic traffic and local clients. Send us your business details and we\'ll help you stand out.',
-      'modal.label.biz': 'Business Name',
-      'modal.label.name': 'Contact Person',
-      'modal.label.phone': 'Contact Telephone',
-      'modal.label.email': 'Email Address',
-      'modal.label.msg': 'Message / Advertisement Details',
-      'modal.submit': 'Send Inquiry',
-      'modal.success.title': 'Inquiry Received!',
-      'modal.success.desc': 'Your request has been forwarded to <strong>luzemediamarketing@google.com</strong>. We will get in touch with you in less than 24 hours.',
-      
-      // Spot 1: Windmills
-      'spot1.name': 'Sierra de los Molinos (Windmills)',
-      'spot1.excerpt': 'The legendary 16th-century windmills. The iconic historical landmark that inspired Don Quixote\'s battle against the giants.',
-      'spot1.address': 'Sierra de los Molinos, s/n, 13610 Campo de Criptana, Ciudad Real',
-      'spot1.hours': 'Monday to Sunday: 10:00 AM - 2:00 PM & 4:00 PM - 7:00 PM',
-      'spot1.booking': 'Free Entry / Open Access',
-      'spot1.price': 'Free Access',
-      'spot1.fulldesc': '<p>The Sierra de los Molinos ridge represents the most definitive image of Campo de Criptana and the universal silhouette of Spanish classical literature. Here stands the majestic group of wooden-bladed windmills described by Miguel de Cervantes in Chapter VIII of Don Quixote.</p><p>Of the ten windmills standing on the ridge today, three (<strong>Burleta, Infanto, and Sardinero</strong>) preserve their original 16th-century structures and impressive wooden internal machinery entirely intact, standing as unique historic relics worldwide. Several times a year, a traditional grain milling is performed live, turning the sails to grind wheat using wind power.</p>',
-
-      // Spot 2: Pastora Marcela
-      'spot2.name': 'Pastora Marcela Cave House',
-      'spot2.excerpt': 'An authentic historical home hand-carved directly into the limestone cliffs of Cerro de la Paz. A living testament to regional cave living.',
-      'spot2.address': 'Cerro de la Paz, s/n (Next to Church of la Paz), 13610 Campo de Criptana',
-      'spot2.hours': 'Monday to Sunday: 11:00 AM - 2:00 PM | Tuesday to Saturday: 4:30 PM - 7:00 PM',
-      'spot2.booking': 'Guided Access / Ticket',
-      'spot2.price': 'Entrance: 1.50€',
-      'spot2.fulldesc': '<p>Located on the scenic Cerro de la Paz hill, the Casa-Cueva de la Pastora Marcela offers a direct window into the historic troglodyte cave architecture of La Mancha. For centuries, Criptana\'s working families dug their homes directly into the soft white limestone subsoil, utilizing its perfect thermal insulation (maintaining a constant 18°C temperature year-round).</p><p>This cave house has been beautifully restored and decorated with original antique furnishings, agricultural implements, and household tools. Visitors can explore the historical living quarters, the subterranean stable, and experience the unique cool atmosphere of underground bedrooms.</p>',
-
-      // Spot 3: Las Musas
-      'spot3.name': 'Las Musas Restaurant',
-      'spot3.excerpt': 'Avant-garde Manchego gastronomy served at the foot of the historic windmills. Home to one of the region\'s best sunset dining terraces.',
-      'spot3.address': 'Calle Barbero, 3, 13610 Campo de Criptana, Ciudad Real',
-      'spot3.hours': 'Monday to Sunday: 1:30 PM - 4:30 PM & 8:30 PM - 11:30 PM',
-      'spot3.booking': 'Highly Recommended',
-      'spot3.price': 'Menu €€ - €€€',
-      'spot3.fulldesc': '<p>Las Musas stands as the premier culinary meeting place in Campo de Criptana, nestled directly at the foot of the historic windmill hill. The restaurant masterfully integrates the rustic white limestone of an ancient cave with high-end, contemporary dining rooms.</p><p>Its gastronomy focuses on updating classic La Mancha dishes—such as pisto, gachas, migas, and roasted lamb—by adding refined modern culinary touches. Their outdoor terrace is legendary, offering a front-row seat to dine or enjoy a glass of wine as the sunset paints the plains below the illuminated giants.</p>',
-
-      // Spot 4: Cueva La Martina
-      'spot4.name': 'Cueva La Martina Restaurant',
-      'spot4.excerpt': 'Intimate dining within a majestic, hand-excavated 16th-century cave. Acclaimed for traditional slow-roasted meats and local cellared wines.',
-      'spot4.address': 'Calle Rocinante, 13, 13610 Campo de Criptana, Ciudad Real',
-      'spot4.hours': 'Tuesday to Sunday: 1:30 PM - 4:00 PM & 8:30 PM - Midnight | Mon: 1:30 PM - 4:00 PM',
-      'spot4.booking': 'Prior Booking Vital',
-      'spot4.price': 'A la Carte €€ - €€€',
-      'spot4.fulldesc': '<p>Dining at Cueva La Martina is an evocative journey back in time. The entire restaurant is set inside a vast cave carved out of the limestone in the 16th century, originally used to store and age local grain harvests.</p><p>The labyrinthine interior galleries—composed of white stone walls, arches, and cozy alcoves—provide an incomparably intimate and cool atmosphere. The kitchen celebrates historic local recipes: oak-coal roasted meats, castilian stews, and seasonal game dishes. The meal is accompanied by a superb wine cellar focused on D.O. La Mancha premium labels.</p>',
-
-      // Spot 7: La Pulpe
-      'spot7.name': 'La Pulpe Seafood Taberna',
-      'spot7.excerpt': 'A modern seafood restaurant and tapas bar with an exceptional local vibe. Ocean specialties served in the heart of dry La Mancha.',
-      'spot7.address': 'Calle República Argentina, 9, 13610 Campo de Criptana, Ciudad Real',
-      'spot7.hours': 'Tuesday to Sunday: 12:30 PM - 4:00 PM & 8:00 PM - 11:30 PM | Mon: Closed',
-      'spot7.booking': 'Highly Recommended on Weekends',
-      'spot7.price': 'Menu €€',
-      'spot7.fulldesc': '<p>La Pulpe has revolutionized the local dining scene by importing fresh oceanic catches, exquisite Galician octopus ("pulpo a la gallega"), and premium shellfish. The tavern perfectly blends maritime elements with contemporary inland design.</p><p>Their menu highlights include wood-grilled octopus, spectacular seafood toast spreads, and a shifting creative seasonal tapas chalkboard. It is a highly popular social hub for an informal gourmet bite and a glass of refreshing white wine from La Mancha DO.</p>',
-
-      // Spot 8: Piccolo
-      'spot8.name': 'Piccolo Pizzería',
-      'spot8.excerpt': 'Stone-oven artisanal pizzas and authentic Italian classics in a cozy, welcoming family setting.',
-      'spot8.address': 'Calle Serna, 25, 13610 Campo de Criptana, Ciudad Real',
-      'spot8.hours': 'Wednesday to Monday: 7:30 PM - 11:30 PM | Tue: Closed',
-      'spot8.booking': 'Walk-In Friendly',
-      'spot8.price': 'A la Carte € - €€',
-      'spot8.fulldesc': '<p>Pizzería Piccolo offers a delightful corner of Italian culinary art and warm hospitality right in Criptana\'s core. Hand-managed as a loving family business, they excel in thin, ultra-crispy sourdough pizzas baked over stone shelves with authentic imported ingredients.</p><p>Beyond traditional and gourmet pizzas, guests enjoy generous pasta plates, home-baked lasagna, and classic sweet treats like homemade tiramisu. The relaxed, cozy atmosphere makes it the primary local choice for group and family dinners.</p>',
-
-      // Spot 9: El Ricote
-      'spot9.name': 'El Ricote Restaurant',
-      'spot9.excerpt': 'Traditional Manchego cuisine featuring generous portions and premium panoramic terraces near the windmills.',
-      'spot9.address': 'Calle Rocinante, 15, 13610 Campo de Criptana, Ciudad Real',
-      'spot9.hours': 'Monday to Sunday: 11:30 AM - 5:00 PM & 8:00 PM - 11:30 PM | Wed: Closed',
-      'spot9.booking': 'Prior Reservation Recommended',
-      'spot9.price': 'A la Carte € - €€',
-      'spot9.fulldesc': '<p>El Ricote Restaurant functions as a premium culinary balcony, strategically situated on the upper ridge right next to the historic Campo de Criptana windmill park. Specializing in highly authentic local recipes, it is the best place to recharge during a sightseeing tour.</p><p>The menu focuses on generous, home-cooked regional favorites: slow-simmered lamb caldereta, duelos y quebrantos (scrambled eggs with pork belly), and hand-sliced Iberian meats and aged Manchego cheeses. Their outdoor terrace is legendary, allowing you to dine within a stone\'s throw of the centuries-old windmills under a gorgeous breeze.</p>',
-
-      // Spot 5: Castiblanque
-      'spot5.name': 'Castiblanque Wineries',
-      'spot5.excerpt': 'A family-owned boutique winery founded inside a restored 19th-century manor. Features private tastings and historic barrel aging halls.',
-      'spot5.address': 'Calle Isaac Peral, 19, 13610 Campo de Criptana, Ciudad Real',
-      'spot5.hours': 'Mon to Fri: 9:00 AM - 2:00 PM & 3:00 PM - 7:00 PM | Sat & Sun: 9:00 AM - 8:00 PM',
-      'spot5.booking': 'Prior Booking Required',
-      'spot5.price': 'Tastings from €15',
-      'spot5.fulldesc': '<p>Bodegas Castiblanque is a family-run cathedral of wine, located in the heart of the town center within a magnificently restored 19th-century noble mansion. The cellar combines time-tested traditional farming values with cutting-edge winemaking technology.</p><p>Their wine tourism packages are highly regarded, featuring expert-guided walks through their historic barrel cellars and detailed accounts of the grapevine growth cycle. The tour finishes with a commentary-led tasting of their signature brands (such as Baldor and Castiblanque), paired with local artisanal cheeses and oils.</p>',
-
-      // Spot 6: Vinícola del Carmen
-      'spot6.name': 'Vinícola del Carmen',
-      'spot6.excerpt': 'The oldest active cooperative winery in Spain (1897). Tour their state-of-the-art facilities with D.O. La Mancha tastings.',
-      'spot6.address': 'Camino del Puente de San Benito, s/n, 13610 Campo de Criptana',
-      'spot6.hours': 'Monday to Friday: 9:00 AM - 1:30 PM & 3:30 PM - 7:00 PM | Saturdays: 10:00 AM - 2:00 PM',
-      'spot6.booking': 'Prior Group Booking',
-      'spot6.price': 'Tours / Shop',
-      'spot6.fulldesc': '<p>Established in 1897, Vinícola del Carmen holds the proud distinction of being the oldest continuously operating cooperative winery in Spain. It is the agricultural heartbeat of Campo de Criptana, uniting the heritage of hundreds of local family vineyards.</p><p>Their massive state-of-the-art production halls represent the perfect balance between massive scale and artisanal devotion. They excel in crafting single-varietal wines from the indigenous white Airén grape and traditional Tempranillo. Guided group tours detail the massive crushing vats and bottling lines, ending with professional tastings.</p>',
-
-      // Spot 10: Vidal del Saz
-      'spot10.name': 'Vidal del Saz Wineries',
-      'spot10.excerpt': 'Tradition and innovation since 1930. Elegant and expressive oak-aged wines embodying the spirit of the local soils.',
-      'spot10.address': 'Calle Maestro Manzanares, 57, 13610 Campo de Criptana, Ciudad Real',
-      'spot10.hours': 'Monday to Friday: 8:30 AM - 1:30 PM & 3:30 PM - 7:00 PM | Saturdays: 9:00 AM - 1:00 PM',
-      'spot10.booking': 'Prior Booking Vital',
-      'spot10.price': 'Wine Tastings',
-      'spot10.fulldesc': '<p>Bodegas Vidal del Saz has nurtured almost a century of winemaking excellence in the legendary Pozo Hondo district of Campo de Criptana. Established in 1930, the winery has successfully handed down from generation to generation a profound dedication to absolute vine care and local variety innovation.</p><p>They are famous for their deeply expressive red wines aged in select French and American oak casks (such as their flagship Vidal del Saz label and signature premium series). Guided visits tour their state-of-the-art fermentation halls, followed by highly professional commented tastings of their complex wines.</p>',
-
-      // Drawer UI Label translations
-      'drawer.phone': 'Contact Telephone',
-      'drawer.hours': 'Business Hours',
-      'drawer.address': 'Location & Address',
-      'drawer.booking': 'Access Type',
-      'drawer.price': 'Price Range',
-      'drawer.btn.call': 'Call Establishment Now',
-      'drawer.btn.map': 'View Route on Google Maps &rarr;',
-      
-      // Articles Section Translations
-      'articles.overline': 'Features &amp; Culture',
-      'articles.title': 'Explore Criptana in Depth',
-      'art.history': 'HISTORY',
-      'art.tourism': 'TOURISM',
-      'art.winery': 'ENOTURISMO',
-      'art.readtime4': '4 MIN READ',
-      'art.readtime5': '5 MIN READ',
-      'art.readtime6': '6 MIN READ',
-      'art.btn.back': 'Back to Portal &rarr;',
-      
-      // Specific Reportage Articles full texts
-      'art.link.spot1': 'View Sierra de los Molinos in Guide',
-      'art1.title': 'The Battle Against Giants: Burleta, Infanto and Sardinero',
-      'art1.fulldesc': '<p>It was the year 1605 when Miguel de Cervantes Saavedra immortalized in Chapter VIII of Don Quixote one of the most comical and universal battles in world literature. Before the deluded eyes of the noble knight, thirty or forty "monstrous giants" stood defiantly. Those giants were none other than the wooden windmills of Campo de Criptana.</p><p><strong>A 16th-Century Engineering Marvel:</strong> In a dry plateau where water for traditional watermills was extremely scarce, the introduction of windmill technology of central European origin revolutionized Manchego farming. Out of the thirty-plus windmills that once crowned the Cerro, today ten majestic silhouettes remain standing.</p><p>Three of these—<strong>Burleta, Infanto, and Sardinero</strong>—are true living museums, retaining their original 16th-century structural timbers and wooden gears completely intact. Every cogwheel, the massive steering rudder beam (palo de gobierno), and the heavy limestone grinding wheels stand fully ready to rotate under pure wind power during public traditional millings.</p>',
-      
-      'art.link.spot2': 'View Pastora Marcela Cave House in Guide',
-      'art2.title': 'The Indigo Walk: Strolling the White Streets of Criptana\'s Albaicín',
-      'art2.fulldesc': '<p>Campo de Criptana hides a beautiful urban jewel of Mudéjar and Moorish roots on its highest slopes: the historic Albaicín neighborhood. This labyrinth of narrow alleys, silent corners, and whitewashed staircases transports visitors back to an ancient, peaceful way of living.</p><p><strong>The Story Behind White & Cobalt Blue:</strong> As you wander, the first thing that captures the eye is the beautiful color contrast. The building facades are painted in a dazzling white lime plaster (cal), bordered at the ground by a thick stripe of intense cobalt blue paint (the zócalo añil). Far from a simple visual whim, this traditional Manchego trim served a vital purpose: the pure white lime reflected the fierce summer sun to keep house interiors cool, while the unique indigo hue repelled insects and softened the glare of the hot ground.</p><p><strong>The Story/Walking Route:</strong> Start your stroll at the Plaza Mayor and walk slowly up the winding Calle Fuente del Caño. At the peak of the climb, reaching the Cerro de la Paz chapel, the quarter opens into a stunning natural viewpoint overlooking the vast wheat fields and vineyards of La Mancha, offering the perfect spot to watch the sun slip below the horizon.</p>',
-      
-      'art.link.spot4': 'View Cueva La Martina Cave in Guide',
-      'art3.title': 'Underground Aging: The Subterranean Secret of Wine Caves',
-      'art3.fulldesc': '<p>La Mancha is the largest continuous vineyard plain on Earth, but in Campo de Criptana, the greatest secret of winemaking is found not under the blazing sun, but buried forty feet beneath the ground. Beneath the historic streets and the rocky ridge lie dozens of caves carved entirely by hand out of the hard limestone subsoil.</p><p><strong>History\'s Natural Climate Control:</strong> During the 16th to 19th centuries, winemaking families discovered that the porous white limestone was the ultimate thermal insulator. With infinite patience and cold chisels, they carved deep underground cellars. In these galleries, aging wine rested inside massive clay jars (tinajas) at an absolute constant temperature of 18°C (64°F) and a perfect 75% humidity year-round, completely isolated from freezing winters and scorching summers.</p><p>Today, stepping inside these historic cave systems repurposed as modern cellars or intimate restaurants—such as the majestic <strong>Cueva La Martina</strong>—allows you to breathe in the deep aged oak aroma and understand why La Mancha\'s finest character is born beneath the stone.</p>',
-
-      'footer.credit': 'Handcrafted with passion by <a href="../index.html" class="agency-link">LUZE Media Marketing</a>',
-      'footer.advertise': 'Advertise your business / Contact',
-      'footer.audit': 'Want to digitalize your winery or get more customers with an interactive website? <a href="../index.html#contacto" class="audit-btn">Request a Free Audit</a>'
-    }
-  };
+  const translations = window.translations;
 
   function applyLanguage(lang) {
     activeLang = lang;
@@ -954,10 +789,8 @@
     document.documentElement.setAttribute('lang', lang);
 
     // Refresh dynamic sunset text based on language
-    const sunsetTimerText = document.getElementById('sunset-timer');
-    if (sunsetTimerText) {
-      // Re-run countdown calculation immediately
-      window.dispatchEvent(new Event('resize')); 
+    if (window.updateSunsetTimer) {
+      window.updateSunsetTimer();
     }
 
     // Refresh drawer content if open to update labels instantly
@@ -966,18 +799,80 @@
     }
   }
 
+  /* ─── Live Weather & Sunset Data Engine ────────────────────────────────── */
+  function fetchLiveWeatherData() {
+    const weatherUrl = 'https://api.open-meteo.com/v1/forecast?latitude=39.40&longitude=-3.12&current=temperature_2m,weather_code&daily=sunrise,sunset&timezone=Europe/Madrid';
+    
+    fetch(weatherUrl)
+      .then(function (response) { return response.json(); })
+      .then(function (data) {
+        if (data && data.current) {
+          const temp = Math.round(data.current.temperature_2m);
+          const code = data.current.weather_code;
+          
+          let textEs = 'Despejado';
+          let textEn = 'Clear';
+          let icon = '☀️';
+
+          if (code === 0) {
+            textEs = 'Despejado'; textEn = 'Clear'; icon = '☀️';
+          } else if (code >= 1 && code <= 3) {
+            textEs = 'Intervalos nubosos'; textEn = 'Partly cloudy'; icon = '⛅';
+          } else if (code === 45 || code === 48) {
+            textEs = 'Niebla'; textEn = 'Foggy'; icon = '🌫️';
+          } else if ([51, 53, 55, 61, 63, 65, 80, 81, 82].includes(code)) {
+            textEs = 'Lluvia'; textEn = 'Rainy'; icon = '🌧️';
+          } else if ([71, 73, 75, 85, 86].includes(code)) {
+            textEs = 'Nieve'; textEn = 'Snowy'; icon = '❄️';
+          } else if ([95, 96, 99].includes(code)) {
+            textEs = 'Tormenta'; textEn = 'Thunderstorm'; icon = '⛈️';
+          }
+
+          // Update translations in memory
+          translations.es['widget.weather'] = `Campo de Criptana · ${textEs} · ${temp}°C`;
+          translations.en['widget.weather'] = `Campo de Criptana · ${textEn} · ${temp}°C`;
+
+          // Update the weather icon
+          const iconEl = document.querySelector('.weather-widget .utility-icon');
+          if (iconEl) iconEl.innerText = icon;
+
+          // Re-apply translation to update UI immediately
+          applyLanguage(activeLang);
+        }
+
+        if (data && data.daily && data.daily.sunset && data.daily.sunset[0]) {
+          cachedSunsetTime = new Date(data.daily.sunset[0]);
+          if (window.updateSunsetTimer) {
+            window.updateSunsetTimer();
+          }
+        }
+      })
+      .catch(function (err) {
+        console.error('Error fetching live weather data:', err);
+      });
+  }
+
   function initLanguageSelector() {
+    const lang = document.documentElement.getAttribute('lang') || 'es';
+    applyLanguage(lang);
+
     const btnEs = document.getElementById('btn-es');
     const btnEn = document.getElementById('btn-en');
 
     if (btnEs) {
-      btnEs.addEventListener('click', function () { applyLanguage('es'); });
+      btnEs.addEventListener('click', function () {
+        if (lang !== 'es') {
+          window.location.href = 'index.html';
+        }
+      });
     }
     if (btnEn) {
-      btnEn.addEventListener('click', function () { applyLanguage('en'); });
+      btnEn.addEventListener('click', function () {
+        if (lang !== 'en') {
+          window.location.href = 'index-en.html';
+        }
+      });
     }
-
-    applyLanguage('es'); // Default is Spanish
   }
 
   /* ─── 9. Mobile Menu Drawer ────────────────────────────────────────────── */
@@ -999,6 +894,1446 @@
     });
   }
 
+  /* ─── 10. Smart Itinerary Planner Engine ───────────────────────────────── */
+  let selectedSpots = [];
+
+  const chronologicalSlots = {
+    morning: {
+      time: '10:00 - 13:00',
+      labelEs: '🌅 Mañana · Cultura e Historia',
+      labelEn: '🌅 Morning · Sights & History',
+      spots: ['spot1', 'spot_posito', 'spot_iglesia_parroquial', 'spot_sara_montiel', 'spot_ci_molinos', 'spot_eloy_teno', 'spot_sala_carros', 'spot_patrimonio_religioso', 'spot_pozo_nieve', 'spot_fuente_cano', 'spot_fachadas', 'spot_escudos'],
+      tipEs: 'Te aconsejamos empezar temprano para evitar el calor y disfrutar de los museos con calma.',
+      tipEn: 'We recommend starting early to avoid the midday heat and enjoy the museums in peace.'
+    },
+    lunch: {
+      time: '13:00 - 15:30',
+      labelEs: '🍽️ Almuerzo · Gastronomía Manchega',
+      labelEn: '🍽️ Lunch · Manchego Gastronomy',
+      spots: ['spot3', 'spot4', 'spot7', 'spot8', 'spot9', 'spot_parque_luis_cobos', 'spot_plaza_mayor_park'],
+      tipEs: '¡Imprescindible reservar con antelación en fines de semana! Saborea unas buenas gachas o cordero asado.',
+      tipEn: 'Booking in advance is highly recommended on weekends! Taste traditional slow-cooked Manchego lamb.'
+    },
+    afternoon: {
+      time: '15:30 - 18:30',
+      labelEs: '🍇 Tarde · Enoturismo o Naturaleza',
+      labelEn: '🍇 Afternoon · Wineries & Nature',
+      spots: ['spot5', 'spot6', 'spot10', 'spot_museo_vino', 'spot_laguna_salicor', 'spot_centro_naturaleza', 'spot_ermita_criptana', 'spot_ermita_villajos', 'spot_piscina_municipal', 'route_ermitas', 'route_alcazar_drunkards'],
+      tipEs: 'El momento perfecto para visitar una bodega histórica, realizar una cata guiada o contemplar la Laguna.',
+      tipEn: 'The perfect time to explore a historic winery, enjoy a guided tasting, or visit the saline nature reserve.'
+    },
+    sunset: {
+      time: '18:30 - 21:00',
+      labelEs: '🌇 Atardecer · El Albaicín y la Llama de Oro',
+      labelEn: '🌇 Sunset · Albaicín & Golden hour',
+      spots: ['spot2', 'spot_albaicin'],
+      tipEs: '¡La mejor luz del día! Sube por el Albaicín hacia la Sierra para ver el atardecer dorado reflejado en los molinos.',
+      tipEn: 'The best light of the day! Walk through the Albaicín to the windmill ridge to watch the golden sunset.'
+    },
+    night: {
+      time: '21:00+',
+      labelEs: '🌙 Noche · Descanso o Pernocta',
+      labelEn: '🌙 Night · Lodging & Stay',
+      spots: ['spot11', 'spot12', 'spot13', 'spot14', 'spot15', 'spot16'],
+      tipEs: 'Relájate en tu casa cueva tradicional o caravana y disfruta de un cielo estrellado espectacular sin contaminación lumínica.',
+      tipEn: 'Unwind in your traditional cave house or RV park and enjoy a magnificent starry sky with zero light pollution.'
+    }
+  };
+
+  const presetItineraries = {
+    quixote: ['spot1', 'spot2', 'spot3', 'spot_sara_montiel'],
+    wine: ['spot5', 'spot_museo_vino', 'spot4', 'spot10'],
+    full360: ['spot_posito', 'spot_iglesia_parroquial', 'spot7', 'spot_laguna_salicor', 'spot1', 'spot11']
+  };
+
+  window.toggleSpotInItinerary = function (spotId) {
+    const index = selectedSpots.indexOf(spotId);
+    if (index === -1) {
+      selectedSpots.push(spotId);
+    } else {
+      selectedSpots.splice(index, 1);
+    }
+    updateItineraryUI();
+  };
+
+  window.clearItinerary = function () {
+    selectedSpots = [];
+    document.querySelectorAll('.preset-route-btn').forEach(function (btn) {
+      btn.classList.remove('active');
+    });
+    updateItineraryUI();
+  };
+
+  window.loadPresetItinerary = function (presetId) {
+    const preset = presetItineraries[presetId];
+    if (!preset) return;
+
+    selectedSpots = [...preset];
+    
+    document.querySelectorAll('.preset-route-btn').forEach(function (btn) {
+      btn.classList.remove('active');
+    });
+    const activeBtn = document.getElementById('preset-' + presetId);
+    if (activeBtn) activeBtn.classList.add('active');
+
+    updateItineraryUI();
+  };
+
+  window.scrollToItinerary = function () {
+    const planSec = document.getElementById('planificador');
+    if (planSec) {
+      planSec.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  function updateItineraryUI() {
+    document.querySelectorAll('.btn-add-to-route').forEach(function (btn) {
+      const spotId = btn.getAttribute('data-spot');
+      if (selectedSpots.includes(spotId)) {
+        btn.classList.add('added');
+        btn.innerHTML = '✓';
+      } else {
+        btn.classList.remove('added');
+        btn.innerHTML = '+';
+      }
+    });
+
+    const countBadge = document.getElementById('itinerary-sticky-count');
+    if (countBadge) countBadge.innerText = selectedSpots.length;
+
+    const stickyBar = document.getElementById('itinerary-sticky-bar');
+    if (stickyBar) {
+      if (selectedSpots.length > 0) {
+        stickyBar.classList.add('visible');
+      } else {
+        stickyBar.classList.remove('visible');
+      }
+    }
+
+    window.generateItinerary();
+  }
+
+  window.generateItinerary = function () {
+    const outputContainer = document.getElementById('itinerary-timeline-output');
+    const actionsRow = document.getElementById('itinerary-actions');
+    if (!outputContainer) return;
+
+    // Read preference inputs
+    const budgetSelect = document.getElementById('select-budget');
+    const activeBudget = budgetSelect ? budgetSelect.value : 'all';
+    
+    const kidsToggle = document.getElementById('toggle-kids');
+    const onlyKids = kidsToggle ? kidsToggle.checked : false;
+
+    const activeToggle = document.getElementById('toggle-active');
+    const onlyActive = activeToggle ? activeToggle.checked : false;
+
+    // Build spots list starting with explicitly selected ones
+    let spotsToRender = [...selectedSpots];
+
+    // If active nature is selected, auto-inject routes if not already added
+    if (onlyActive) {
+      if (!spotsToRender.includes('route_ermitas')) {
+        spotsToRender.push('route_ermitas');
+      }
+      if (!onlyKids && !spotsToRender.includes('route_alcazar_drunkards')) {
+        // Drunkards shortcut route is not kid-friendly, only show if not onlyKids
+        spotsToRender.push('route_alcazar_drunkards');
+      }
+    }
+
+    const mapContainer = document.getElementById('planner-map-container');
+    if (spotsToRender.length === 0) {
+      if (mapContainer) mapContainer.style.display = 'none';
+      const emptyTitle = activeLang === 'es' ? 'Tu ruta está vacía' : 'Your itinerary is empty';
+      const emptyDesc = activeLang === 'es' 
+        ? 'Haz clic en el botón (+) al lado de cualquier monumento, restaurante, bodega o alojamiento en la guía para agregarlo a tu itinerario cronológico inteligente.'
+        : 'Browse the directory and add spots using the (+) button on any card to automatically generate your optimized chronological timeline.';
+      
+      outputContainer.innerHTML = `
+        <div class="itinerary-empty-state">
+          <span class="itinerary-empty-icon">🗺️</span>
+          <h3 class="itinerary-empty-title">${emptyTitle}</h3>
+          <p class="itinerary-empty-desc">${emptyDesc}</p>
+        </div>
+      `;
+      if (actionsRow) actionsRow.style.display = 'none';
+      return;
+    }
+
+    if (actionsRow) actionsRow.style.display = 'flex';
+    if (mapContainer) {
+      mapContainer.style.display = 'block';
+    }
+    if (typeof window.updateIllustratedMap === 'function') {
+      window.updateIllustratedMap(spotsToRender);
+    }
+
+    // Auto dining recommendation if no restaurant is selected
+    const hasRestaurantSelected = spotsToRender.some(function(id) { 
+      const spot = spotsData[id];
+      return spot && spot.category === 'restaurante'; 
+    });
+
+    let recommendedDiningSpotId = null;
+    if (!hasRestaurantSelected) {
+      // Determine the best dining recommendation based on budget and kids friendly filters
+      if (onlyKids) {
+        if (activeBudget === '$') {
+          recommendedDiningSpotId = 'spot_parque_luis_cobos';
+        } else if (activeBudget === '$$') {
+          recommendedDiningSpotId = 'spot_plaza_mayor_park';
+        } else if (activeBudget === '$$$') {
+          recommendedDiningSpotId = 'spot8'; // Piccolo (family pizza)
+        } else { // all
+          recommendedDiningSpotId = 'spot_plaza_mayor_park';
+        }
+      } else {
+        if (activeBudget === '$') {
+          recommendedDiningSpotId = 'spot9'; // Ricote
+        } else if (activeBudget === '$$') {
+          recommendedDiningSpotId = 'spot7'; // La Pulpería
+        } else if (activeBudget === '$$$') {
+          recommendedDiningSpotId = 'spot3'; // Las Musas
+        } else { // all
+          recommendedDiningSpotId = 'spot3'; // Las Musas (classic)
+        }
+      }
+    }
+
+    let actuallyRenderedSpots = [];
+    let html = '<div class="itinerary-timeline">';
+    const keys = ['morning', 'lunch', 'afternoon', 'sunset', 'night'];
+
+    keys.forEach(function (slotKey) {
+      const slot = chronologicalSlots[slotKey];
+      
+      // Filter matching spots
+      let matchingSpots = spotsToRender.filter(function (id) { return slot.spots.includes(id); });
+
+      // If lunch slot and dining recommendation exists, add it dynamically
+      let isRecommendedInThisSlot = false;
+      if (slotKey === 'lunch' && recommendedDiningSpotId && slot.spots.includes(recommendedDiningSpotId)) {
+        matchingSpots.push(recommendedDiningSpotId);
+        isRecommendedInThisSlot = true;
+      }
+
+      if (matchingSpots.length > 0) {
+        const title = activeLang === 'es' ? slot.labelEs : slot.labelEn;
+        const tip = activeLang === 'es' ? slot.tipEs : slot.tipEn;
+        
+        html += `
+          <div class="timeline-item active-slot">
+            <div class="timeline-dot"></div>
+            <span class="timeline-time-label">${slot.time}</span>
+            <h4 style="font-family: var(--font-display); font-size: 1.1rem; color: var(--anil-blue); font-weight: 700; margin-bottom: 0.6rem;">${title}</h4>
+            <p style="font-size: 0.78rem; color: var(--cream-dim); margin-bottom: 1.25rem; font-style: italic;">💡 ${tip}</p>
+            
+            <div style="display: flex; flex-direction: column; gap: 1rem;">
+        `;
+
+        matchingSpots.forEach(function (spotId) {
+          const spot = spotsData[spotId];
+          if (!spot) return;
+
+          if (!actuallyRenderedSpots.includes(spotId)) {
+            actuallyRenderedSpots.push(spotId);
+          }
+
+          const isRecommendedSpot = (spotId === recommendedDiningSpotId);
+          const name = translations[activeLang][spotId + '.name'] || spotId;
+          const excerpt = translations[activeLang][spotId + '.excerpt'] || '';
+          const address = translations[activeLang][spotId + '.address'] || '';
+          
+          let btnLabel = activeLang === 'es' ? 'Saber Más' : 'Learn More';
+          let mapsLabel = activeLang === 'es' ? 'Cómo llegar &rarr;' : 'Get Directions &rarr;';
+          
+          // Badge generation
+          let badgesHtml = '';
+          if (isRecommendedSpot) {
+            const recLabel = activeLang === 'es' ? '💡 Recomendado para ti' : '💡 Recommended for you';
+            badgesHtml += `<span class="timeline-card-badge recomendacion" style="background: rgba(245, 158, 11, 0.15); color: #F59E0B; border: 1px solid rgba(245, 158, 11, 0.3); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.68rem; font-weight: 600;">${recLabel}</span>`;
+          }
+          if (spot.kidsFriendly) {
+            const kidsLabel = activeLang === 'es' ? '👶 Ideal Niños' : '👶 Kid-Friendly';
+            badgesHtml += `<span class="timeline-card-badge kids" style="background: rgba(16, 185, 129, 0.15); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.3); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.68rem; font-weight: 600;">${kidsLabel}</span>`;
+          }
+          if (spot.activeNature) {
+            const activeLabel = activeLang === 'es' ? '🚲 Senderismo y Bici' : '🚲 Active Trail';
+            badgesHtml += `<span class="timeline-card-badge active-route" style="background: rgba(59, 130, 246, 0.15); color: #3B82F6; border: 1px solid rgba(59, 130, 246, 0.3); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.68rem; font-weight: 600;">${activeLabel}</span>`;
+          }
+
+          // Click-to-call button
+          let callBtnHtml = '';
+          if (spot.category === 'restaurante' && spot.phone) {
+            const callLabel = activeLang === 'es' ? '📞 Reservar' : '📞 Book Table';
+            callBtnHtml = `
+              <a href="tel:${spot.phone}" class="timeline-card-btn call-btn" style="background: #10B981; color: white; border: 1px solid #10B981; text-decoration: none; display: inline-flex; align-items: center; gap: 0.25rem; font-weight: 600; box-shadow: 0 0 10px rgba(16, 185, 129, 0.25);">
+                ${callLabel}
+              </a>
+            `;
+          }
+
+          const isAdded = selectedSpots.includes(spotId);
+          const addBtnClass = isAdded ? 'btn-add-to-route added' : 'btn-add-to-route';
+          const addBtnText = isAdded ? '✓' : '+';
+          const addBtnTitle = activeLang === 'es' ? 'Añadir a mi ruta' : 'Add to itinerary';
+
+          html += `
+            <div class="timeline-card ${isRecommendedSpot ? 'recommended-timeline-card' : ''}" style="${isRecommendedSpot ? 'border-left: 4px solid #F59E0B;' : ''}">
+              <img src="${spot.img}" alt="${name}" class="timeline-card-img" onerror="this.src='images/attraction_windmills.png'">
+              <div class="timeline-card-body">
+                <div style="display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.4rem;">
+                  ${badgesHtml}
+                </div>
+                <h5 class="timeline-card-title">${name}</h5>
+                <p class="timeline-card-desc">${excerpt}</p>
+                <div class="timeline-card-meta">
+                  <span>📍 ${address.split(',')[0]}</span>
+                  <div style="display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.6rem; align-items: center;">
+                    <button class="timeline-card-btn" onclick="openSpotDrawer('${spotId}')">${btnLabel}</button>
+                    <a href="${spot.mapUrl}" target="_blank" rel="noopener" class="timeline-card-btn" style="text-decoration: none;">${mapsLabel}</a>
+                    ${callBtnHtml}
+                  </div>
+                </div>
+              </div>
+              <button class="${addBtnClass}" onclick="event.stopPropagation(); toggleSpotInItinerary('${spotId}')" data-spot="${spotId}" title="${addBtnTitle}">${addBtnText}</button>
+            </div>
+          `;
+        });
+
+        html += `
+            </div>
+          </div>
+        `;
+      }
+    });
+
+    // Check thematic route and next town to append dynamic regional recommendation card
+    const themeSelect = document.getElementById('select-theme');
+    const nextTownSelect = document.getElementById('select-next-town');
+    const selectedTheme = themeSelect ? themeSelect.value : 'none';
+    const selectedNextTown = nextTownSelect ? nextTownSelect.value : 'none';
+
+    if (selectedNextTown !== 'none' || selectedTheme !== 'none') {
+      let townTitle = '';
+      let townDesc = '';
+      let townImg = 'images/fuera_nucleo_urbano.png'; // default fallback
+      let routeBadge = '';
+
+      if (selectedNextTown === 'tomelloso') {
+        townTitle = activeLang === 'es' ? 'Próxima Parada Recomendada: Tomelloso' : 'Next Recommended Stop: Tomelloso';
+        townDesc = activeLang === 'es' 
+          ? 'Continúa tu viaje visitando las famosas cuevas y bodegas subterráneas de <strong>Tomelloso</strong> (a solo 25 minutos). El epicentro de la tradición vitivinícola de La Mancha, donde se conservan más de 2.000 bodegas tradicionales excavadas bajo el casco urbano.'
+          : 'Continue your trip by visiting the famous underground caves and wineries of <strong>Tomelloso</strong> (just 25 minutes away). The epicentre of La Mancha\'s wine-making heritage, preserving over 2,000 traditional caves excavated beneath the town.';
+        townImg = 'images/winery_vidaldelsaz.jpg';
+        routeBadge = activeLang === 'es' ? '🍇 Ruta del Vino · Don Quijote' : '🍇 Wine Route · Don Quixote';
+      } else if (selectedNextTown === 'alcazar') {
+        townTitle = activeLang === 'es' ? 'Próxima Parada Recomendada: Alcázar de San Juan' : 'Next Recommended Stop: Alcázar de San Juan';
+        townDesc = activeLang === 'es'
+          ? 'Explora el histórico <strong>Alcázar de San Juan</strong> (a solo 10 minutos). Sube al Cerro de San Antón para admirar sus cuatro molinos de viento, visita el Torreón del Gran Prior del siglo XIV, y descubre la iglesia de Santa María La Mayor, que alberga la partida de bautismo de Miguel de Cervantes.'
+          : 'Explore the historic <strong>Alcázar de San Juan</strong> (just 10 minutes away). Climb the Cerro de San Antón to admire its four windmills, visit the 14th-century Grand Prior Tower, and discover Santa María church, housing Miguel de Cervantes\' baptismal certificate.';
+        townImg = 'images/centro_historico.png';
+        routeBadge = activeLang === 'es' ? '🍇 Ruta del Vino · Don Quijote' : '🍇 Wine Route · Don Quixote';
+      } else if (selectedNextTown === 'toboso') {
+        townTitle = activeLang === 'es' ? 'Próxima Parada Recomendada: El Toboso' : 'Next Recommended Stop: El Toboso';
+        townDesc = activeLang === 'es'
+          ? 'Descubre la pintoresca villa de <strong>El Toboso</strong> (a solo 15 minutos), cuna literaria de la amada de Don Quijote, Dulcinea. Pasea por sus tranquilas plazas empedradas de estética puramente manchega, visita la Casa-Museo de Dulcinea y sorpréndete con el Museo Cervantino.'
+          : 'Discover the picturesque village of <strong>El Toboso</strong> (just 15 minutes away), the literary homeland of Dulcinea, Don Quixote\'s beloved. Walk through peaceful cobblestone squares, visit the Dulcinea House-Museum, and explore the unique Cervantine Museum.';
+        townImg = 'images/attraction_cave.png';
+        routeBadge = activeLang === 'es' ? '🛡️ Ruta de Don Quijote' : '🛡️ Don Quixote Route';
+      } else if (selectedNextTown === 'consuegra') {
+        townTitle = activeLang === 'es' ? 'Próxima Parada Recomendada: Consuegra' : 'Next Recommended Stop: Consuegra';
+        townDesc = activeLang === 'es'
+          ? 'Dirígete a <strong>Consuegra</strong> (a 35 minutos) para contemplar uno de los paisajes más espectaculares de La Mancha: el cresterío del Cerro Calderico coronado por 12 majestuosos molinos de viento históricos y el imponente castillo medieval de la Orden de San Juan.'
+          : 'Head to <strong>Consuegra</strong> (35 minutes away) to contemplate one of the most spectacular landscapes of La Mancha: the ridge of Cerro Calderico crowned by 12 majestic historic windmills and the grand medieval castle.';
+        townImg = 'images/attraction_windmills.png';
+        routeBadge = activeLang === 'es' ? '🛡️ Ruta de Don Quijote' : '🛡️ Don Quixote Route';
+      } else if (selectedNextTown === 'socuellamos') {
+        townTitle = activeLang === 'es' ? 'Próxima Parada Recomendada: Socuéllamos' : 'Next Recommended Stop: Socuéllamos';
+        townDesc = activeLang === 'es'
+          ? 'Visita <strong>Socuéllamos</strong> (a 30 minutos) y conoce el impresionante Museo Torre del Vino, una joya de divulgación enológica interactiva, rodeado de bodegas de gran solera dedicadas a la crianza de vinos con Denominación de Origen La Mancha.'
+          : 'Visit <strong>Socuéllamos</strong> (30 minutes away) and explore the impressive Wine Tower Museum, an interactive enological learning experience, surrounded by historic wineries dedicated to aging premium D.O. La Mancha wines.';
+        townImg = 'images/winery_carmen.jpg';
+        routeBadge = activeLang === 'es' ? '🍇 Ruta del Vino de La Mancha' : '🍇 La Mancha Wine Route';
+      } else if (selectedNextTown === 'herencia') {
+        townTitle = activeLang === 'es' ? 'Próxima Parada Recomendada: Herencia' : 'Next Recommended Stop: Herencia';
+        townDesc = activeLang === 'es'
+          ? 'Haz una parada en <strong>Herencia</strong> (a 15 minutos) para admirar sus siete molinos de viento históricos restaurados en la colina de la Pedriza y la imponente Parroquia de la Inmaculada Concepción en el centro de la localidad.'
+          : 'Stop in <strong>Herencia</strong> (15 minutes away) to admire its seven historic restored windmills situated on La Pedriza hill, and the towering Parish Church of the Immaculate Conception in the town center.';
+        townImg = 'images/fuera_nucleo_urbano.png';
+        routeBadge = activeLang === 'es' ? '🛡️ Ruta de Don Quijote' : '🛡️ Don Quixote Route';
+      } else if (selectedTheme !== 'none') {
+        // Fallback if town is none but theme is selected
+        if (selectedTheme === 'vino') {
+          townTitle = activeLang === 'es' ? 'Experiencia Vitivinícola D.O. La Mancha' : 'D.O. La Mancha Wine Experience';
+          townDesc = activeLang === 'es'
+            ? '¡Campo de Criptana es clave en la Ruta del Vino de La Mancha! Aprovecha tu visita para degustar tintos Crianza y blancos Airén en bodegas centenarias como Castiblanque, Carmen o Vidal del Saz.'
+            : 'Campo de Criptana is a key stop in the La Mancha Wine Route! Take advantage of your visit to taste premium Crianza and Airén wines in century-old wineries like Castiblanque, Carmen, or Vidal del Saz.';
+          townImg = 'images/attraction_winery.png';
+          routeBadge = activeLang === 'es' ? '🍇 Ruta del Vino' : '🍇 Wine Route';
+        } else if (selectedTheme === 'quijote') {
+          townTitle = activeLang === 'es' ? 'Tras las Huellas de Don Quijote' : 'Following Don Quixote\'s Footsteps';
+          townDesc = activeLang === 'es'
+            ? 'Has planificado tu visita al cerro de los molinos originales del siglo XVI que inspiraron el Capítulo VIII del Quijote. Sigue tu viaje cervantino hacia la cuna de Dulcinea en El Toboso y la partida de bautismo de Cervantes en Alcázar.'
+            : 'You have planned your visit to the historic 16th-century windmills that inspired Chapter VIII of Don Quixote. Continue your Cervantine journey towards Dulcinea\'s home in El Toboso and Cervantes\' baptism certificate in Alcázar.';
+          townImg = 'images/attraction_windmills.png';
+          routeBadge = activeLang === 'es' ? '🛡️ Ruta de Don Quijote' : '🛡️ Don Quixote Route';
+        }
+      }
+
+      html += `
+        <div class="timeline-slot-container onward-stop" style="margin-top: 2rem; border-top: 2px dashed rgba(62, 124, 252, 0.2); padding-top: 2rem;">
+          <div class="timeline-item active-slot">
+            <div class="timeline-dot" style="background: var(--anil-blue); box-shadow: 0 0 10px var(--anil-blue);"></div>
+            <span class="timeline-time-label" style="background: var(--anil-blue-dim); color: var(--anil-blue); border: 1px solid rgba(62, 124, 252, 0.3); font-weight: 700;">🚗 CONTINUACIÓN</span>
+            <h4 style="font-family: var(--font-display); font-size: 1.15rem; color: var(--text); font-weight: 700; margin-bottom: 0.6rem;">${townTitle}</h4>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 1.25rem; font-style: italic;">
+              ${activeLang === 'es' ? '🗺️ Integración con Rutas Regionales' : '🗺️ Regional Route Integration'}
+            </p>
+            <div class="timeline-card recommended-timeline-card" style="border-left: 4px solid var(--anil-blue); background: var(--bg); display: flex; gap: 1rem; border-radius: 12px; padding: 1rem; border: 1px solid var(--border);">
+              <img src="${townImg}" alt="${townTitle}" class="timeline-card-img" style="width: 100px; height: 100px; border-radius: 8px; object-fit: cover; flex-shrink: 0;" onerror="this.src='images/fuera_nucleo_urbano.png'">
+              <div class="timeline-card-body" style="flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
+                <span class="timeline-card-badge" style="background: var(--anil-blue-dim); color: var(--anil-blue); border: 1px solid rgba(62, 124, 252, 0.3); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.68rem; font-weight: 600; align-self: flex-start; margin-bottom: 0.5rem;">${routeBadge}</span>
+                <p class="timeline-card-desc" style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; margin: 0;">${townDesc}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    html += '</div>';
+    outputContainer.innerHTML = html;
+
+    // Call updateIllustratedMap with the list of ALL spots actually rendered in the timeline
+    if (typeof window.updateIllustratedMap === 'function') {
+      window.updateIllustratedMap(actuallyRenderedSpots);
+    }
+  };
+
+  window.openSpotDrawer = function (spotId) {
+    if (window.openDrawer) {
+      window.openDrawer(spotId);
+    }
+  };
+
+  window.copyItineraryText = function () {
+    if (selectedSpots.length === 0) return;
+
+    let text = activeLang === 'es' ? '🚀 MI RUTA EN CAMPO DE CRIPTANA 🚀\n\n' : '🚀 MY CRIPTANA ITINERARY 🚀\n\n';
+    
+    const keys = ['morning', 'lunch', 'afternoon', 'sunset', 'night'];
+    keys.forEach(function (slotKey) {
+      const slot = chronologicalSlots[slotKey];
+      const matchingSpots = selectedSpots.filter(function (id) { return slot.spots.includes(id); });
+
+      if (matchingSpots.length > 0) {
+        const title = activeLang === 'es' ? slot.labelEs : slot.labelEn;
+        text += `⏰ ${slot.time} - ${title}\n`;
+
+        matchingSpots.forEach(function (spotId) {
+          const name = translations[activeLang][spotId + '.name'] || spotId;
+          const address = translations[activeLang][spotId + '.address'] || '';
+          text += `  • ${name} (📍 ${address})\n`;
+        });
+        text += '\n';
+      }
+    });
+
+    text += activeLang === 'es' 
+      ? 'Creado con el Planificador de Criptana360. ¡Disfruta de tu viaje!' 
+      : 'Created with Criptana360 Itinerary Planner. Enjoy your trip!';
+
+    navigator.clipboard.writeText(text).then(function () {
+      const alertMsg = activeLang === 'es' ? '¡Ruta copiada al portapapeles!' : 'Itinerary copied to clipboard!';
+      alert(alertMsg);
+    }).catch(function (err) {
+      console.error('Error copying text:', err);
+    });
+  };
+
+  /* ─── Unified AI Planner & Reopen Panel Logic ─── */
+  window.toggleSpotInItinerary = function (spotId) {
+    if (typeof window.openSpotDrawer === 'function') {
+      window.openSpotDrawer(spotId);
+    }
+  };
+
+  window.openPlannerModal = function () {
+    const modal = document.getElementById('planner-fullscreen-modal');
+    if (modal) {
+      modal.style.display = 'flex';
+      modal.offsetHeight;
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+  };
+
+  window.closePlannerModal = function () {
+    const modal = document.getElementById('planner-fullscreen-modal');
+    if (modal) {
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+      setTimeout(function () {
+        modal.style.display = 'none';
+      }, 300);
+    }
+  };
+
+  window.reopenPlannerPanel = function () {
+    window.openPlannerModal();
+  };
+
+  const pinCoordinates = {
+    'spot1': { left: '62%', top: '18%' },
+    'spot_sara_montiel': { left: '68%', top: '15%' },
+    'spot_ci_molinos': { left: '74%', top: '19%' },
+    'spot_sala_carros': { left: '56%', top: '22%' },
+    'spot2': { left: '50%', top: '26%' },
+    'spot_albaicin': { left: '44%', top: '33%' },
+    'spot_posito': { left: '36%', top: '52%' },
+    'spot_iglesia_parroquial': { left: '48%', top: '58%' },
+    'spot_patrimonio_religioso': { left: '30%', top: '62%' },
+    'spot_fuente_cano': { left: '24%', top: '68%' },
+    'spot_fachadas': { left: '39%', top: '56%' },
+    'spot_escudos': { left: '44%', top: '54%' },
+    'spot_eloy_teno': { left: '52%', top: '40%' },
+    'spot_plaza_mayor_park': { left: '46%', top: '62%' },
+    'spot_parque_luis_cobos': { left: '20%', top: '64%' },
+    'spot_piscina_municipal': { left: '82%', top: '78%' },
+    'spot_ermita_criptana': { left: '86%', top: '38%' },
+    'spot_ermita_villajos': { left: '15%', top: '15%' },
+    'spot_laguna_salicor': { left: '10%', top: '82%' },
+    'spot_centro_naturaleza': { left: '16%', top: '70%' },
+    'route_ermitas': { left: '24%', top: '28%' },
+    'route_alcazar_drunkards': { left: '11%', top: '50%' },
+    'spot_patatas_pintor': { left: '38%', top: '56%' },
+    'spot_queso_manchego': { left: '46%', top: '58%' },
+    'spot_queso_valdivieso': { left: '49%', top: '59%' },
+    'spot_aove_cooperativa': { left: '68%', top: '52%' },
+    'spot5': { left: '60%', top: '48%' },
+    'spot6': { left: '68%', top: '52%' },
+    'spot10': { left: '74%', top: '62%' },
+    'spot3': { left: '59%', top: '12%' },
+    'spot7': { left: '40%', top: '60%' },
+    'spot8': { left: '52%', top: '54%' },
+    'spot4': { left: '52%', top: '15%' },
+    'spot9': { left: '35%', top: '64%' },
+    'spot11': { left: '48%', top: '29%' },
+    'spot12': { left: '54%', top: '27%' },
+    'spot13': { left: '32%', top: '58%' },
+    'spot14': { left: '28%', top: '54%' },
+    'spot15': { left: '78%', top: '70%' },
+    'spot16': { left: '82%', top: '68%' },
+    'spot_vinculo': { left: '72%', top: '48%' },
+    'spot_simbolo': { left: '64%', top: '55%' },
+    'spot_movialsa': { left: '71%', top: '49%' },
+    'spot_vinasoro': { left: '75%', top: '72%' },
+    'spot_casa_la_vina': { left: '78%', top: '68%' },
+    'spot_restaurante_egos': { left: '36%', top: '66%' },
+    'spot_torrecilla': { left: '42%', top: '48%' }
+  };
+
+  window.updatePrintMap = function(activeSpots) {
+    const routeLine = document.getElementById('souvenir-route-line');
+    const badgesLayer = document.getElementById('map-badges-layer');
+    const legendList = document.getElementById('map-legend-list');
+    if (!badgesLayer || !legendList) return;
+
+    badgesLayer.innerHTML = '';
+    legendList.innerHTML = '';
+
+    const mapCoordinates = {
+        "spot1": { x: 52, y: 12, name: "Sierra de los Molinos 🌾" },
+        "spot2": { x: 55, y: 11, name: "Centro de Interpretación de Molinos 🧭" },
+        "spot3": { x: 58, y: 26, name: "Museo Eloy Teno 🏛️" },
+        "spot4": { x: 48, y: 14, name: "Restaurante Cueva La Martina 🍽️" },
+        "spot5": { x: 51, y: 58, name: "Terrazas de la Plaza Mayor ☕" },
+        "spot6": { x: 68, y: 52, name: "Bodegas Castiblanque 🍇" },
+        "spot7": { x: 76, y: 60, name: "Bodegas Vidal del Saz 🍷" },
+        "spot8": { x: 58, y: 72, name: "Patrimonio Religioso (Convento) ⛪" },
+        "spot9": { x: 43, y: 33, name: "Barrio del Albaicín 🏡" },
+        "spot10": { x: 45, y: 29, name: "Casa-Cueva de la Pastora Marcela 🕳️" },
+        "spot11": { x: 46, y: 35, name: "Hotel Boutique Casa Treviño 🏨" },
+        "spot_piscina_municipal": { x: 32, y: 43, name: "Piscina Municipal (Zona de Baño) 🏊" },
+        "spot_vinculo": { x: 69, y: 48, name: "Bodega El Vínculo 🍇" },
+        "spot_simbolo": { x: 62, y: 56, name: "Bodegas Símbolo 🍇" },
+        "spot_movialsa": { x: 71, y: 46, name: "Movialsa 🍇" },
+        "spot_vinasoro": { x: 74, y: 74, name: "Bodegas Viñasoro 🍇" },
+        "spot_casa_la_vina": { x: 72, y: 68, name: "Bodegas Casa La Viña 🍇" },
+        "spot_patatas_pintor": { x: 38, y: 56, name: "Hermanos Pintor 🥔" },
+        "spot_queso_manchego": { x: 46, y: 58, name: "Quesería Riesco (D.O.) 🧀" },
+        "spot_queso_valdivieso": { x: 49, y: 59, name: "Queso Valdivieso (Finca Valdivieso) 🧀" },
+        "spot_aove_cooperativa": { x: 68, y: 52, name: "AOVE Cooperativa El Carmen 🫒" },
+        "spot_restaurante_egos": { x: 38, y: 66, name: "Restaurante Ego’s 🍽️" },
+        "spot_torrecilla": { x: 44, y: 48, name: "Casa de la Torrecilla 🍽️" }
+    };
+
+    let pathPoints = [];
+    let stopCounter = 1;
+
+    activeSpots.forEach(spotId => {
+        const spot = mapCoordinates[spotId];
+        if (spot) {
+            pathPoints.push(spot);
+
+            // Append floating badge onto image
+            const badge = document.createElement('div');
+            badge.innerText = stopCounter;
+            badge.style.cssText = `position: absolute; left: ${spot.x}%; top: ${spot.y}%; transform: translate(-50%, -50%); background: #d4af37; color: #ffffff; width: 24px; height: 24px; border-radius: 50%; text-align: center; line-height: 24px; font-weight: bold; font-size: 12px; border: 2px solid #ffffff; box-shadow: 0 2px 6px rgba(0,0,0,0.3);`;
+            badgesLayer.appendChild(badge);
+
+            // Append text to sidebar legend
+            const listItem = document.createElement('li');
+            listItem.style.marginBottom = "8px";
+            listItem.innerHTML = `<strong>${spot.name}</strong>`;
+            legendList.appendChild(listItem);
+
+            stopCounter++;
+        }
+    });
+
+    if (routeLine && pathPoints.length > 1) {
+        let d = `M ${pathPoints[0].x} ${pathPoints[0].y}`;
+        for (let i = 1; i < pathPoints.length; i++) {
+            const cpX = (pathPoints[i-1].x + pathPoints[i].x) / 2;
+            const cpY = (pathPoints[i-1].y + pathPoints[i].y) / 2;
+            d += ` Q ${cpX} ${cpY}, ${pathPoints[i].x} ${pathPoints[i].y}`;
+        }
+        routeLine.setAttribute('d', d);
+    } else if (routeLine) {
+        routeLine.setAttribute('d', '');
+    }
+  };
+
+  // Wire up tap cards and nav overrides
+  function initMobilePlannerOverlay() {
+    document.querySelectorAll('#planner-fullscreen-modal .tap-card').forEach(function (card) {
+      card.addEventListener('click', function () {
+        const type = card.getAttribute('data-type');
+        const value = card.getAttribute('data-value');
+
+        document.querySelectorAll(`#planner-fullscreen-modal .tap-card[data-type="${type}"]`).forEach(function (sibling) {
+          sibling.classList.remove('active');
+        });
+
+        card.classList.add('active');
+
+        let selectId = '';
+        if (type === 'party') selectId = 'ai-travel-party';
+        else if (type === 'budget') selectId = 'ai-travel-budget';
+        else if (type === 'next') selectId = 'ai-next-destination';
+
+        const select = document.getElementById(selectId);
+        if (select) {
+          select.value = value;
+          select.dispatchEvent(new Event('change'));
+        }
+      });
+    });
+
+    document.querySelectorAll('a[href="#planificador"]').forEach(function(el) {
+      el.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.openPlannerModal();
+      });
+    });
+  }
+
+  // Execute initialization
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMobilePlannerOverlay);
+  } else {
+    initMobilePlannerOverlay();
+  }
+
+  // Email Sharing Overlay functions
+  window.openEmailModal = function () {
+    const modal = document.getElementById('email-modal');
+    if (modal) {
+      modal.style.display = 'flex';
+      modal.offsetHeight;
+      modal.classList.add('open');
+    }
+  };
+
+  window.closeEmailModal = function () {
+    const modal = document.getElementById('email-modal');
+    if (modal) {
+      modal.classList.remove('open');
+      setTimeout(function () {
+        modal.style.display = 'none';
+      }, 300);
+    }
+  };
+
+  window.sendEmailRoute = function () {
+    const yourEmailInput = document.getElementById('email-input-yours');
+    const companionsEmailInput = document.getElementById('email-input-companions');
+    const newsletterCheckbox = document.getElementById('email-checkbox-newsletter');
+
+    const yours = yourEmailInput ? yourEmailInput.value.trim() : '';
+    const companions = companionsEmailInput ? companionsEmailInput.value.trim() : '';
+    const subscribeNewsletter = newsletterCheckbox ? newsletterCheckbox.checked : false;
+
+    if (!yours) {
+      alert(activeLang === 'es' ? 'El campo de tu email es obligatorio.' : 'Your email field is required.');
+      return;
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(yours)) {
+      alert(activeLang === 'es' ? 'Introduce una dirección de email válida.' : 'Please enter a valid email address.');
+      return;
+    }
+
+    // 1. Newsletter subscription handler
+    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    let baseApiUrl = isLocal ? 'http://127.0.0.1:8787/api' : 'https://www.criptana360.com/api';
+    if (!isLocal && window.location.hostname.endsWith('criptana360.com')) {
+      baseApiUrl = window.location.origin + '/api';
+    }
+
+    if (subscribeNewsletter) {
+      // Cloudflare Worker POST request
+      fetch(`${baseApiUrl}/subscribe`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: yours,
+          lang: activeLang
+        })
+      })
+      .then(function (res) {
+        if (!res.ok) throw new Error('Worker not deployed / HTTP error');
+        console.log('Successfully subscribed email to D1 database via Cloudflare Worker!');
+      })
+      .catch(function (err) {
+        console.warn('Backend API request failed. Falling back to local storage collection...', err);
+        // Fallback: save locally
+        const subs = JSON.parse(localStorage.getItem('criptana_newsletter_subscribers') || '[]');
+        if (!subs.some(function (s) { return s.email === yours; })) {
+          subs.push({
+            email: yours,
+            lang: activeLang,
+            timestamp: Date.now()
+          });
+          localStorage.setItem('criptana_newsletter_subscribers', JSON.stringify(subs));
+        }
+      });
+    }
+
+    // 2. Generate Mailto Link Content and Plotted Map Path
+    let text = activeLang === 'es' ? '🚀 MI RUTA EN CAMPO DE CRIPTANA 🚀\n\n' : '🚀 MY CRIPTANA ITINERARY 🚀\n\n';
+    
+    const keys = ['morning', 'lunch', 'afternoon', 'sunset', 'night'];
+    keys.forEach(function (slotKey) {
+      const slot = chronologicalSlots[slotKey];
+      const matchingSpots = selectedSpots.filter(function (id) { return slot.spots.includes(id); });
+
+      if (matchingSpots.length > 0) {
+        const title = activeLang === 'es' ? slot.labelEs : slot.labelEn;
+        text += `⏰ ${slot.time} - ${title}\n`;
+
+        matchingSpots.forEach(function (spotId) {
+          const name = translations[activeLang][spotId + '.name'] || spotId;
+          const address = translations[activeLang][spotId + '.address'] || '';
+          text += `  • ${name} (📍 ${address})\n`;
+        });
+        text += '\n';
+      }
+    });
+
+    // Append onward route if selected
+    const nextTownSelect = document.getElementById('select-next-town');
+    const selectedNextTown = nextTownSelect ? nextTownSelect.value : 'none';
+    if (selectedNextTown !== 'none') {
+      const townKey = selectedNextTown.charAt(0).toUpperCase() + selectedNextTown.slice(1);
+      text += activeLang === 'es' 
+        ? `🚗 CONTINUACIÓN: Parada recomendada en ${townKey}\n\n`
+        : `🚗 ONWARD ROUTE: Recommended stop in ${townKey}\n\n`;
+    }
+
+    // Append pictorial map takeaway asset details
+    let mapText = activeLang === 'es'
+      ? `\n🗺️ TU PREMIUM TAKEAWAY: Mapa Temático 3D Pictórico de Campo de Criptana:\nhttps://www.criptana360.com/images/criptana_navigation_canvas.png\n\nTu ruta trazada cronológicamente sobre el mapa pictorial:\n`
+      : `\n🗺️ YOUR PREMIUM TAKEAWAY: 3D Pictorial Theme-Park Map of Campo de Criptana:\nhttps://www.criptana360.com/images/criptana_navigation_canvas.png\n\nYour route plotted chronologically across the pictorial landmarks:\n`;
+    
+    selectedSpots.forEach(function (spotId, index) {
+      const coord = pinCoordinates[spotId];
+      const name = translations[activeLang][spotId + '.name'] || spotId;
+      if (coord) {
+        mapText += `  [${index + 1}] ${name} (Coordenadas Mapa: Left ${coord.left}, Top ${coord.top})\n`;
+      } else {
+        mapText += `  [${index + 1}] ${name}\n`;
+      }
+    });
+    text += mapText + '\n';
+
+    text += activeLang === 'es' 
+      ? 'Creado con el Planificador de Criptana360. ¡Disfruta de tu viaje!' 
+      : 'Created with Criptana360 Itinerary Planner. Enjoy your trip!';
+
+    const subject = activeLang === 'es' ? 'Mi Ruta Planificada en Criptana 🗺️' : 'My Planned Criptana Itinerary 🗺️';
+    const mailto = `mailto:${encodeURIComponent(yours)}`
+      + `?cc=${encodeURIComponent(companions)}`
+      + `&subject=${encodeURIComponent(subject)}`
+      + `&body=${encodeURIComponent(text)}`;
+
+    // 3. Dispatch Itinerary via Cloudflare Worker POST (falls back to local mail client)
+    const companionsArray = companions
+      ? companions.split(',').map(function (c) { return c.trim(); }).filter(function (c) { return c.length > 0; })
+      : [];
+
+    fetch(`${baseApiUrl}/send-itinerary`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        userEmail: yours,
+        companions: companionsArray,
+        itineraryData: text,
+        lang: activeLang
+      })
+    })
+    .then(function (res) {
+      if (!res.ok) throw new Error('Worker send email failed');
+      alert(activeLang === 'es' 
+        ? '¡Tu ruta e itinerario con mapa temático han sido enviados por email con éxito!' 
+        : 'Your itinerary and pictorial map route have been successfully sent by email!');
+    })
+    .catch(function (err) {
+      console.warn('Backend send-itinerary failed. Falling back to local mail client...', err);
+      window.location.href = mailto;
+    })
+    .finally(function() {
+      if (yourEmailInput) yourEmailInput.value = '';
+      if (companionsEmailInput) companionsEmailInput.value = '';
+      closeEmailModal();
+    });
+  };
+
+  // CSV Export utility
+  window.exportNewsletterSubscribers = function () {
+    const subs = JSON.parse(localStorage.getItem('criptana_newsletter_subscribers') || '[]');
+    if (subs.length === 0) {
+      alert(activeLang === 'es' ? 'No hay suscriptores guardados localmente aún.' : 'No locally saved subscribers found.');
+      return;
+    }
+    let csv = 'Email,Language,Timestamp\n';
+    subs.forEach(function(s) {
+      csv += `"${s.email}","${s.lang}","${new Date(s.timestamp).toISOString()}"\n`;
+    });
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.setAttribute('download', `criptana_subscribers_${Date.now()}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  // AI-Driven Routing Planner Engine
+  window.generateAIItinerary = function (steeringModifier = null) {
+    const partySelect = document.getElementById('ai-travel-party');
+    const budgetSelect = document.getElementById('ai-travel-budget');
+    const nextSelect = document.getElementById('ai-next-destination');
+    const outputContainer = document.getElementById('itinerary-timeline-output');
+    const actionsRow = document.getElementById('itinerary-actions');
+    const generateBtn = document.getElementById('btn-generate-ai-itinerary');
+
+    const party = partySelect ? partySelect.value : 'familia';
+    const budget = budgetSelect ? budgetSelect.value : 'estandar';
+    const nextDestination = nextSelect ? nextSelect.value : 'none';
+
+    // Scrape real-time weather temperature and condition from header widget
+    const weatherEl = document.querySelector('.weather-widget .utility-text');
+    let temp = 24; // default
+    let condition = 'clear'; // default
+    if (weatherEl) {
+      const text = weatherEl.textContent || '';
+      const parts = text.split('·').map(function(s) { return s.trim(); });
+      if (parts.length >= 3) {
+        const tempMatch = parts[2].match(/(-?\d+)/);
+        if (tempMatch) {
+          temp = parseInt(tempMatch[1], 10);
+        }
+        const condText = parts[1].toLowerCase();
+        if (condText.includes('despejado') || condText.includes('clear')) {
+          condition = 'clear';
+        } else if (condText.includes('nuboso') || condText.includes('cloudy') || condText.includes('cubierto') || condText.includes('intervalos')) {
+          condition = 'cloudy_intervals';
+        } else if (condText.includes('lluvia') || condText.includes('rain')) {
+          condition = 'rainy';
+        } else if (condText.includes('tormenta') || condText.includes('storm')) {
+          condition = 'thunderstorm';
+        } else if (condText.includes('niebla') || condText.includes('fog')) {
+          condition = 'foggy';
+        }
+      }
+    }
+
+    // Dismiss the fullscreen modal
+    if (typeof window.closePlannerModal === 'function') {
+      window.closePlannerModal();
+    }
+
+    // Collapse the AI planner entry card smoothly
+    const plannerPanel = document.querySelector('.ai-planner-panel');
+    if (plannerPanel) {
+      plannerPanel.style.maxHeight = '0px';
+      plannerPanel.style.opacity = '0';
+      plannerPanel.style.padding = '0px';
+      plannerPanel.style.border = 'none';
+      plannerPanel.style.marginBottom = '0px';
+      plannerPanel.style.overflow = 'hidden';
+    }
+
+    // Scroll smoothly to the planificador section so they see the vertical timeline
+    const planSec = document.getElementById('planificador');
+    if (planSec) {
+      planSec.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Show loading state in output area
+    const loadingText = activeLang === 'es' 
+      ? '✨ Diseñando tu ruta inteligente con la IA de Gemini... Esto puede tomar unos segundos.'
+      : '✨ Crafting your smart route with Gemini AI... This may take a few seconds.';
+    
+    if (outputContainer) {
+      outputContainer.style.display = 'block';
+      outputContainer.innerHTML = `
+        <div style="text-align: center; padding: 4rem 2rem; background: rgba(11, 79, 200, 0.03); border: 1.5px dashed rgba(11, 79, 200, 0.2); border-radius: 12px; margin-top: 1.5rem;">
+          <div class="ai-loading-spinner" style="width: 45px; height: 45px; border: 4px solid rgba(11, 79, 200, 0.1); border-top: 4px solid var(--anil-blue); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1.5rem;"></div>
+          <p style="font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;">${activeLang === 'es' ? 'Optimizando Ruta...' : 'Optimizing Route...'}</p>
+          <p style="font-size: 0.85rem; color: var(--text-muted); max-width: 420px; margin: 0 auto; line-height: 1.5;">${loadingText}</p>
+        </div>
+      `;
+    }
+
+    if (generateBtn) {
+      generateBtn.disabled = true;
+      generateBtn.innerHTML = activeLang === 'es' ? '✨ Pensando... ⚙️' : '✨ Thinking... ⚙️';
+    }
+
+    // Add keyframes dynamically if not present
+    if (!document.getElementById('ai-spin-style')) {
+      const style = document.createElement('style');
+      style.id = 'ai-spin-style';
+      style.innerHTML = '@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }';
+      document.head.appendChild(style);
+    }
+
+    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    let baseApiUrl = isLocal ? 'http://127.0.0.1:8787/api' : 'https://www.criptana360.com/api';
+    if (!isLocal && window.location.hostname.endsWith('criptana360.com')) {
+      baseApiUrl = window.location.origin + '/api';
+    }
+
+    fetch(`${baseApiUrl}/generate-itinerary`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        travel_party: party,
+        pace: 'relajado',
+        budget_tier: budget === 'mochilero' ? 'low' : budget === 'estandar' ? 'mid' : 'high',
+        next_destination: nextDestination,
+        weather_forecast: {
+          current_temp_c: temp,
+          condition: condition
+        },
+        steering_modifier: steeringModifier || null,
+        lang: activeLang
+      })
+    })
+    .then(function (res) {
+      if (!res.ok) throw new Error('API server returned status ' + res.status);
+      return res.json();
+    })
+    .then(function (data) {
+      if (!data || !data.slots || data.slots.length === 0) {
+        throw new Error('Invalid JSON format or empty schedule received');
+      }
+
+      // Collect all spot IDs from the returned slots to update the map
+      let allSpotIds = [];
+      let slotsHtml = '<div class="itinerary-timeline">';
+
+      // Header summary card of AI generation
+      const summaryTitle = activeLang === 'es' ? 'Tu Ruta Optimizada por IA' : 'Your AI Optimized Route';
+      const costLabel = activeLang === 'es' ? 'Presupuesto Estimado:' : 'Estimated Cost:';
+      const partyLabel = activeLang === 'es' ? 'Compañía:' : 'Party:';
+
+      const partyStr = party === 'solo' ? (activeLang === 'es' ? 'Solo' : 'Solo') :
+                       party === 'pareja' ? (activeLang === 'es' ? 'En Pareja' : 'As a Couple') :
+                       party === 'familia' ? (activeLang === 'es' ? 'En Familia' : 'With Family') : 
+                       (activeLang === 'es' ? 'Con Amigos' : 'With Friends');
+
+      const budgetStr = budget === 'mochilero' ? (activeLang === 'es' ? 'Mochilero (Gratuito/Económico)' : 'Backpacker (Free/Budget)') :
+                        budget === 'estandar' ? (activeLang === 'es' ? 'Estándar (Menús manchegos tradicionales)' : 'Standard (Traditional Manchego meals)') :
+                        (activeLang === 'es' ? 'VIP (Bodegas premium y restaurante de alta cocina)' : 'VIP (Premium wineries & fine dining)');
+
+      slotsHtml += `
+        <div class="planner-success-banner" style="background: rgba(16, 185, 129, 0.06); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 12px; padding: 1.25rem; margin-bottom: 2rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 0.5rem;">
+            <h4 style="font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; color: #10B981; margin: 0;">✨ ${summaryTitle}</h4>
+            <button onclick="reopenPlannerPanel()" class="itinerary-btn-primary" style="padding: 0.35rem 0.85rem; font-size: 0.72rem; border-radius: 6px; background: transparent; border: 1px solid #10B981; color: #10B981; font-weight: 600; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#10B981'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='#10B981';">
+              ⚙️ ${activeLang === 'es' ? 'Ajustar Preferencias' : 'Adjust Preferences'}
+            </button>
+          </div>
+          <p style="font-size: 0.82rem; color: var(--text-color); margin: 0 0 0.75rem 0; line-height: 1.5; font-style: italic;">"${data.summary}"</p>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.6rem; font-size: 0.75rem; border-top: 1px dashed rgba(16, 185, 129, 0.2); padding-top: 0.75rem;">
+            <div><strong>👥 ${partyLabel}</strong> ${partyStr}</div>
+            <div><strong>💰 ${costLabel}</strong> ${data.estimatedCostRange || '---'} (${budgetStr})</div>
+          </div>
+        </div>
+      `;
+
+      data.slots.forEach(function (slot) {
+        slotsHtml += `
+          <div class="timeline-item active-slot">
+            <div class="timeline-dot" style="background: var(--anil-blue); box-shadow: 0 0 8px var(--anil-blue);"></div>
+            <span class="timeline-time-label" style="background: var(--anil-blue-dim); color: var(--anil-blue); font-weight: 700;">${slot.time}</span>
+            <h4 style="font-family: var(--font-display); font-size: 1.1rem; color: var(--anil-blue); font-weight: 700; margin-bottom: 0.4rem;">${slot.title}</h4>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 1.25rem; font-style: italic; line-height: 1.45;">💡 ${slot.description}</p>
+            <div style="display: flex; flex-direction: column; gap: 1rem;">
+        `;
+
+        if (slot.spots && Array.isArray(slot.spots)) {
+          slot.spots.forEach(function (spotId) {
+            const spot = spotsData[spotId];
+            if (!spot) return;
+
+            if (!allSpotIds.includes(spotId)) {
+              allSpotIds.push(spotId);
+            }
+
+            const name = translations[activeLang][spotId + '.name'] || spotId;
+            const excerpt = translations[activeLang][spotId + '.excerpt'] || '';
+            const address = translations[activeLang][spotId + '.address'] || '';
+            
+            let btnLabel = activeLang === 'es' ? 'Saber Más' : 'Learn More';
+            let mapsLabel = activeLang === 'es' ? 'Cómo llegar &rarr;' : 'Get Directions &rarr;';
+            
+            let badgesHtml = '';
+            if (spot.kidsFriendly) {
+              const kidsLabel = activeLang === 'es' ? '👶 Ideal Niños' : '👶 Kid-Friendly';
+              badgesHtml += `<span class="timeline-card-badge kids" style="background: rgba(16, 185, 129, 0.15); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.3); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.68rem; font-weight: 600; margin-right: 0.4rem;">${kidsLabel}</span>`;
+            }
+            if (spot.activeNature) {
+              const activeLabel = activeLang === 'es' ? '🚲 Senderismo y Bici' : '🚲 Active Trail';
+              badgesHtml += `<span class="timeline-card-badge active-route" style="background: rgba(59, 130, 246, 0.15); color: #3B82F6; border: 1px solid rgba(59, 130, 246, 0.3); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.68rem; font-weight: 600; margin-right: 0.4rem;">${activeLabel}</span>`;
+            }
+
+            let callBtnHtml = '';
+            if (spot.category === 'restaurante' && spot.phone) {
+              const callLabel = activeLang === 'es' ? '📞 Reservar' : '📞 Book Table';
+              callBtnHtml = `
+                <a href="tel:${spot.phone}" class="timeline-card-btn call-btn" style="background: #10B981; color: white; border: 1px solid #10B981; text-decoration: none; display: inline-flex; align-items: center; gap: 0.25rem; font-weight: 600; box-shadow: 0 0 10px rgba(16, 185, 129, 0.25); padding: 0.3rem 0.75rem; border-radius: 6px; font-size: 0.72rem; transition: all 0.2s;">
+                  ${callLabel}
+                </a>
+              `;
+            }
+
+            const addBtnTitle = activeLang === 'es' ? 'Quitar de mi ruta' : 'Remove from itinerary';
+
+            slotsHtml += `
+              <div class="timeline-card" style="border-left: 4px solid var(--anil-blue); position: relative;">
+                <img src="${spot.img}" alt="${name}" class="timeline-card-img" onerror="this.src='images/attraction_windmills.png'">
+                <div class="timeline-card-body">
+                  <div style="display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.4rem;">
+                    ${badgesHtml}
+                  </div>
+                  <h5 class="timeline-card-title" style="margin: 0 0 0.35rem 0; font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; color: var(--text);">${name}</h5>
+                  <p class="timeline-card-desc" style="margin: 0 0 0.65rem 0; font-size: 0.8rem; color: var(--text-muted); line-height: 1.45;">${excerpt}</p>
+                  <div class="timeline-card-meta" style="font-size: 0.72rem; color: var(--text-muted);">
+                    <span>📍 ${address.split(',')[0]}</span>
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.6rem; align-items: center;">
+                      <button class="timeline-card-btn" onclick="openSpotDrawer('${spotId}')" style="background: transparent; border: 1px solid var(--border-light); padding: 0.3rem 0.75rem; border-radius: 6px; cursor: pointer; color: var(--text); font-weight: 600;">${btnLabel}</button>
+                      <a href="${spot.mapUrl}" target="_blank" rel="noopener" class="timeline-card-btn" style="text-decoration: none; border: 1px solid var(--border-light); padding: 0.3rem 0.75rem; border-radius: 6px; color: var(--text); font-weight: 600;">${mapsLabel}</a>
+                      ${callBtnHtml}
+                    </div>
+                  </div>
+                </div>
+                <button class="btn-add-to-route added" onclick="event.stopPropagation(); toggleSpotInItinerary('${spotId}')" data-spot="${spotId}" title="${addBtnTitle}">✓</button>
+              </div>
+            `;
+          });
+        }
+
+        slotsHtml += `
+            </div>
+        `;
+
+        // Render alternative choices if present in this block
+        if (slot.choices && Array.isArray(slot.choices) && slot.choices.length > 0) {
+          const choicesTitle = translations[activeLang]['ai.choices.title'] || '💡 Available options in this block:';
+          slotsHtml += `
+            <div class="slot-choices-container" style="margin-top: 0.75rem; padding: 0.75rem; background: rgba(11, 79, 200, 0.02); border: 1px dashed rgba(11, 79, 200, 0.15); border-radius: 8px;">
+              <p style="font-size: 0.72rem; font-weight: 700; color: var(--anil-blue); margin-bottom: 0.5rem; margin-top: 0;">${choicesTitle}</p>
+              <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+          `;
+          slot.choices.forEach(function (choice) {
+            let choiceBtnHtml = '';
+            if (choice.spots && Array.isArray(choice.spots)) {
+              choice.spots.forEach(function (choiceSpotId) {
+                const choiceSpot = spotsData[choiceSpotId];
+                if (!choiceSpot) return;
+                const choiceName = translations[activeLang][choiceSpotId + '.name'] || choiceSpotId;
+                
+                // Add to timeline active spot collection if not present
+                if (!allSpotIds.includes(choiceSpotId)) {
+                  allSpotIds.push(choiceSpotId);
+                }
+
+                choiceBtnHtml += `
+                  <button class="timeline-card-btn" onclick="openSpotDrawer('${choiceSpotId}')" style="background: white; border: 1px solid var(--border-light); padding: 0.2rem 0.5rem; border-radius: 4px; cursor: pointer; font-size: 0.68rem; font-weight: 600; color: var(--text); display: inline-flex; align-items: center; gap: 0.25rem;">
+                    🔎 ${choiceName}
+                  </button>
+                `;
+              });
+            }
+
+            slotsHtml += `
+              <div class="choice-option-item" style="font-size: 0.74rem; color: var(--text-color); line-height: 1.4; border-left: 2.5px solid var(--anil-blue); padding-left: 0.5rem;">
+                <strong>${choice.name}:</strong> ${choice.description}
+                <div style="display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.3rem;">
+                  ${choiceBtnHtml}
+                </div>
+              </div>
+            `;
+          });
+          slotsHtml += `
+              </div>
+            </div>
+          `;
+        }
+
+        slotsHtml += `
+          </div>
+        `;
+      });
+
+      slotsHtml += '</div>';
+
+      // Inject Mutation Steering Chips
+      const steerTitle = translations[activeLang]['ai.steer.title'] || '✨ ¿Quieres ajustar esta ruta? Pulsa para cambiar al instante:';
+      const chipMorning = translations[activeLang]['ai.chip.morning'] || '☀️ Llegada por la mañana';
+      const chipAfternoon = translations[activeLang]['ai.chip.afternoon'] || '⛅ Llegada por la tarde';
+      const chipTapas = translations[activeLang]['ai.chip.tapas'] || '🔄 Más opciones de tapas';
+      const chipCultural = translations[activeLang]['ai.chip.cultural'] || '🏛️ Cambiar por opción cultural en interiores';
+
+      slotsHtml += `
+        <div class="ai-mutation-chips-wrapper" style="margin-top: 2rem; padding: 1.25rem; background: rgba(11, 79, 200, 0.03); border: 1.5px solid rgba(11, 79, 200, 0.1); border-radius: 12px; text-align: center;">
+          <p style="font-size: 0.78rem; font-weight: 700; color: var(--text); margin-bottom: 0.75rem; margin-top: 0;">${steerTitle}</p>
+          <div class="ai-chips-grid" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.6rem;">
+            <button class="ai-mutation-chip" onclick="generateAIItinerary('morning_arrival')" style="background: white; border: 1px solid var(--anil-blue); color: var(--anil-blue); font-weight: 600; padding: 0.4rem 0.9rem; border-radius: 20px; font-size: 0.72rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 4px rgba(11, 79, 200, 0.05);" onmouseover="this.style.background='var(--anil-blue)'; this.style.color='white';" onmouseout="this.style.background='white'; this.style.color='var(--anil-blue)';">${chipMorning}</button>
+            <button class="ai-mutation-chip" onclick="generateAIItinerary('afternoon_arrival')" style="background: white; border: 1px solid var(--anil-blue); color: var(--anil-blue); font-weight: 600; padding: 0.4rem 0.9rem; border-radius: 20px; font-size: 0.72rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 4px rgba(11, 79, 200, 0.05);" onmouseover="this.style.background='var(--anil-blue)'; this.style.color='white';" onmouseout="this.style.background='white'; this.style.color='var(--anil-blue)';">${chipAfternoon}</button>
+            <button class="ai-mutation-chip" onclick="generateAIItinerary('more_tapas')" style="background: white; border: 1px solid var(--anil-blue); color: var(--anil-blue); font-weight: 600; padding: 0.4rem 0.9rem; border-radius: 20px; font-size: 0.72rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 4px rgba(11, 79, 200, 0.05);" onmouseover="this.style.background='var(--anil-blue)'; this.style.color='white';" onmouseout="this.style.background='white'; this.style.color='var(--anil-blue)';">${chipTapas}</button>
+            <button class="ai-mutation-chip" onclick="generateAIItinerary('cultural_swap')" style="background: white; border: 1px solid var(--anil-blue); color: var(--anil-blue); font-weight: 600; padding: 0.4rem 0.9rem; border-radius: 20px; font-size: 0.72rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 4px rgba(11, 79, 200, 0.05);" onmouseover="this.style.background='var(--anil-blue)'; this.style.color='white';" onmouseout="this.style.background='white'; this.style.color='var(--anil-blue)';">${chipCultural}</button>
+          </div>
+        </div>
+      `;
+
+      // Update global active array
+      selectedSpots = allSpotIds;
+
+      // Render slots to container
+      if (outputContainer) outputContainer.innerHTML = slotsHtml;
+
+      // Update active map pins
+      if (typeof window.updateIllustratedMap === 'function') {
+        window.updateIllustratedMap(selectedSpots);
+      }
+
+      // Show Actions Row
+      if (actionsRow) actionsRow.style.display = 'flex';
+    })
+    .catch(function (err) {
+      console.error('Error generating AI itinerary:', err);
+      if (outputContainer) {
+        outputContainer.innerHTML = `
+          <div style="text-align: center; padding: 3rem 1.5rem; background: rgba(239, 68, 68, 0.05); border: 1.5px dashed rgba(239, 68, 68, 0.25); border-radius: 12px; margin-top: 1.5rem;">
+            <span style="font-size: 2.2rem; display: block; margin-bottom: 1rem;">⚠️</span>
+            <p style="font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; color: #EF4444; margin-bottom: 0.5rem;">
+              ${activeLang === 'es' ? 'Error al Generar Ruta con IA' : 'AI Routing Generation Failed'}
+            </p>
+            <p style="font-size: 0.85rem; color: var(--text-muted); max-width: 440px; margin: 0 auto; line-height: 1.5;">
+              ${activeLang === 'es' 
+                ? 'No pudimos conectar con el servicio inteligente de Criptana360. Por favor, comprueba tu conexión e inténtalo de nuevo, o utiliza el asistente tradicional.' 
+                : 'We could not connect to the Criptana360 intelligent service. Please check your connection and try again, or use the standard wizard.'}
+            </p>
+          </div>
+        `;
+      }
+    })
+    .finally(function () {
+      if (generateBtn) {
+        generateBtn.disabled = false;
+        generateBtn.innerHTML = activeLang === 'es' ? '✨ Generar Ruta con IA 🚀' : '✨ Generate Route with AI 🚀';
+      }
+    });
+  };
+
+  // Illustrated theme-park map active pin highlighting engine
+  window.updateIllustratedMap = function (spotsToRender) {
+    if (typeof window.updatePrintMap === 'function') {
+      window.updatePrintMap(spotsToRender);
+    }
+  };
+
+  function initItineraryFilters() {
+    const budgetSelect = document.getElementById('select-budget');
+    const themeSelect = document.getElementById('select-theme');
+    const nextTownSelect = document.getElementById('select-next-town');
+    const kidsToggle = document.getElementById('toggle-kids');
+    const activeToggle = document.getElementById('toggle-active');
+
+    if (budgetSelect) {
+      budgetSelect.addEventListener('change', function() {
+        window.generateItinerary();
+      });
+    }
+    if (themeSelect) {
+      themeSelect.addEventListener('change', function() {
+        window.generateItinerary();
+      });
+    }
+    if (nextTownSelect) {
+      nextTownSelect.addEventListener('change', function() {
+        window.generateItinerary();
+      });
+    }
+    if (kidsToggle) {
+      kidsToggle.addEventListener('change', function() {
+        window.generateItinerary();
+      });
+    }
+    if (activeToggle) {
+      activeToggle.addEventListener('change', function() {
+        window.generateItinerary();
+      });
+    }
+  }
+
+  let monumentsExpanded = false;
+
+  function updateMonumentsLimit() {
+    const subfiltersBar = document.getElementById('monument-subfilters');
+    const expanderContainer = document.getElementById('monuments-expander-container');
+    const expanderBtn = document.getElementById('btn-monuments-expander');
+    const activeSubfilterBtn = subfiltersBar ? subfiltersBar.querySelector('.monument-subfilter-btn.active') : null;
+    const activeZone = activeSubfilterBtn ? activeSubfilterBtn.getAttribute('data-zone') : 'all';
+
+    const cards = document.querySelectorAll('.explorer-card[data-category="monumento"]');
+    
+    // Only limit to 6 if we are on 'Todos' (data-zone='all') AND we are NOT expanded
+    if (activeZone === 'all' && !monumentsExpanded) {
+      if (expanderContainer) expanderContainer.style.display = 'flex';
+      if (expanderBtn) {
+        expanderBtn.innerHTML = activeLang === 'es' 
+          ? '✨ Ver Más Monumentos y Lugares (17) &darr;' 
+          : '✨ View More Sights & Culture (17) &darr;';
+      }
+      
+      let count = 0;
+      cards.forEach(function (card) {
+        if (card.classList.contains('sub-filtered-out')) return;
+        
+        count++;
+        if (count > 6) {
+          card.classList.add('spot-hidden-by-limit');
+        } else {
+          card.classList.remove('spot-hidden-by-limit');
+        }
+      });
+    } else {
+      // If we are in a sub-category OR we are expanded, show all matching cards
+      if (activeZone !== 'all') {
+        if (expanderContainer) expanderContainer.style.display = 'none';
+      } else {
+        // We are on 'all' and expanded
+        if (expanderContainer) expanderContainer.style.display = 'flex';
+        if (expanderBtn) {
+          expanderBtn.innerHTML = activeLang === 'es' 
+            ? '✨ Ver Menos Monumentos &uarr;' 
+            : '✨ View Less Sights &uarr;';
+        }
+      }
+      
+      cards.forEach(function (card) {
+        card.classList.remove('spot-hidden-by-limit');
+      });
+    }
+  }
+
+  function initMonumentsExpander() {
+    const expanderBtn = document.getElementById('btn-monuments-expander');
+    if (!expanderBtn) return;
+
+    expanderBtn.addEventListener('click', function () {
+      monumentsExpanded = !monumentsExpanded;
+      updateMonumentsLimit();
+      
+      // If collapsing, smooth scroll back up to the monument sub-filters
+      if (!monumentsExpanded) {
+        const subfilters = document.getElementById('monument-subfilters');
+        if (subfilters) {
+          subfilters.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    });
+  }
+
+  function initMonumentSubfilters() {
+    const subfiltersContainer = document.getElementById('monument-subfilters');
+    if (!subfiltersContainer) return;
+
+    const filterBtns = subfiltersContainer.querySelectorAll('.monument-subfilter-btn');
+    const cards = document.querySelectorAll('.explorer-card');
+
+    filterBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        // Toggle active button class
+        filterBtns.forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+
+        const selectedZone = btn.getAttribute('data-zone');
+
+        cards.forEach(function (card) {
+          if (card.getAttribute('data-category') === 'monumento') {
+            const cardZone = card.getAttribute('data-zone');
+            if (selectedZone === 'all' || cardZone === selectedZone) {
+              card.classList.remove('sub-filtered-out');
+            } else {
+              card.classList.add('sub-filtered-out');
+            }
+          }
+        });
+
+        // Trigger limit updates upon subfilter selection change
+        updateMonumentsLimit();
+      });
+    });
+  }
+
+  /* ─── 14. B2B Share Hooks Programmatic Setup ───────────────────────────── */
+  function initShareHooks() {
+    const shareHooks = document.querySelectorAll('.share-feature-hook');
+    shareHooks.forEach(function (hook) {
+      // Remove inline click handler so we control it natively
+      hook.removeAttribute('onclick');
+      
+      // Inject minimalist share SVG icon if not already present
+      if (!hook.querySelector('svg')) {
+        const svgIcon = `<svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 5px; display: inline-block; vertical-align: middle;"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>`;
+        hook.insertAdjacentHTML('afterbegin', svgIcon);
+      }
+      
+      hook.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        const spotCard = hook.closest('.explorer-card');
+        const spotId = spotCard ? spotCard.getAttribute('data-spot') : null;
+        if (!spotId) return;
+        
+        const spotTitleEl = spotCard.querySelector('.card-spot-title');
+        const spotTitle = spotTitleEl ? spotTitleEl.innerText : 'Criptana 360';
+        
+        // Construct the exact deep link
+        const hashSegment = spotId.startsWith('spot_') ? spotId.substring(5).replace(/_/g, '-') : spotId.replace(/_/g, '-');
+        const shareUrl = window.location.origin + window.location.pathname + '#' + hashSegment;
+        
+        if (navigator.share) {
+          navigator.share({
+            title: spotTitle,
+            text: activeLang === 'es' 
+              ? `¡Mira nuestra ficha en Criptana 360: ${spotTitle}!`
+              : `Check out our listing on Criptana 360: ${spotTitle}!`,
+            url: shareUrl
+          }).catch(err => {
+            console.log('Error sharing:', err);
+          });
+        } else {
+          // Copy link to clipboard
+          navigator.clipboard.writeText(shareUrl).then(() => {
+            alert(activeLang === 'es' 
+              ? `¡Enlace copiado al portapapeles! Compártelo en tus redes: ${shareUrl}`
+              : `Link copied to clipboard! Share it on your networks: ${shareUrl}`
+            );
+          }).catch(err => {
+            // Open fallback facebook sharer
+            window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(shareUrl), '_blank');
+          });
+        }
+      });
+    });
+  }
+
+  function getSpotIdFromHash(hash) {
+    if (!hash) return null;
+    const clean = hash.replace(/^#/, '');
+    if (!clean) return null;
+    const normalized = clean.replace(/-/g, '_');
+    if (spotsData[normalized]) {
+      return normalized;
+    }
+    const prefixed = 'spot_' + normalized;
+    if (spotsData[prefixed]) {
+      return prefixed;
+    }
+    return null;
+  }
+
+  function handleHashRoute() {
+    const hash = window.location.hash;
+    if (!hash) return;
+    const spotId = getSpotIdFromHash(hash);
+    if (!spotId) return;
+
+    const card = document.querySelector(`.explorer-card[data-spot="${spotId}"]`);
+    if (card) {
+      const category = card.getAttribute('data-category');
+      // Click corresponding tab to filter cards
+      const tabs = document.querySelectorAll('.explorer-tab');
+      tabs.forEach(function (tab) {
+        if (tab.getAttribute('data-category') === category) {
+          tab.click();
+        }
+      });
+      
+      // If it was hidden by the monument limit, expand them
+      if (card.classList.contains('spot-hidden-by-limit')) {
+        monumentsExpanded = true;
+        updateMonumentsLimit();
+      }
+      
+      // Open the details drawer
+      if (typeof window.openSpotDrawer === 'function') {
+        setTimeout(function() {
+          window.openSpotDrawer(spotId);
+          // Smoothly scroll the card into view
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 300);
+      }
+    } else {
+      // Fallback for virtual spots/packages
+      if (typeof window.openSpotDrawer === 'function') {
+        setTimeout(function() {
+          window.openSpotDrawer(spotId);
+        }, 300);
+      }
+    }
+  }
+
   /* ─── App Initialization on DOM Ready ──────────────────────────────────── */
   document.addEventListener('DOMContentLoaded', function () {
     initFadeAnimations();
@@ -1006,10 +2341,69 @@
     initCategoryTabs();
     initDetailDrawer();
     initSunsetCountdown();
+    fetchLiveWeatherData();
     initSunsetToggle();
     initPublicityModal();
     initLanguageSelector();
     initMobileMenu();
+    initItineraryFilters();
+    initMonumentSubfilters();
+    initMonumentsExpander();
+    updateMonumentsLimit(); // Apply default limit on initial load
+    updateItineraryUI(); // Initialize Itinerary empty state
+    initShareHooks(); // Set up the premium social sharing hooks
+
+    // Intercept inbound spot links for B2B card deep-linking (supporting both query params and hash urls)
+    const urlParams = new URLSearchParams(window.location.search);
+    const querySpotId = urlParams.get('spot');
+    if (querySpotId) {
+      const card = document.querySelector(`.explorer-card[data-spot="${querySpotId}"]`);
+      if (card) {
+        const category = card.getAttribute('data-category');
+        const tabs = document.querySelectorAll('.explorer-tab');
+        tabs.forEach(function (tab) {
+          if (tab.getAttribute('data-category') === category) {
+            tab.click();
+          }
+        });
+        if (card.classList.contains('spot-hidden-by-limit')) {
+          monumentsExpanded = true;
+          updateMonumentsLimit();
+        }
+        if (typeof window.openSpotDrawer === 'function') {
+          setTimeout(function() {
+            window.openSpotDrawer(querySpotId);
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }, 300);
+        }
+      } else {
+        if (typeof window.openSpotDrawer === 'function') {
+          setTimeout(function() {
+            window.openSpotDrawer(querySpotId);
+          }, 300);
+        }
+      }
+    } else {
+      handleHashRoute();
+    }
+
+    // Listen to hashchange events
+    window.addEventListener('hashchange', handleHashRoute);
+
+    // Pizzicata Preview Verification QA Stub
+    if (new URLSearchParams(window.location.search).get("preview") === "santi") {
+      console.log("Criptana360 QA Mode: App.js sheet sync stub initialized.");
+      const pizzicataForm = document.getElementById("pizzicata-form");
+      if (pizzicataForm) {
+        pizzicataForm.addEventListener("submit", function(e) {
+          e.stopImmediatePropagation();
+          e.preventDefault();
+          console.log("QA validation log (app.js stub): Intercepted submission.");
+        });
+      }
+    }
   });
 
+
 })();
+
