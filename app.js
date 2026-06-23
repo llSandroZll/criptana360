@@ -229,7 +229,11 @@
       let bookingCtaHtml = '';
       if (spot.bookingUrl) {
         let btnClass, btnLabel, icon;
-        if (spot.bookingUrlType === 'civitatis') {
+        if (spot.bookingUrlType === 'gymkana') {
+          btnClass = 'drawer-btn-gymkana';
+          btnLabel = dict['drawer.btn.tour'] || 'Empezar Gymkana Interactiva';
+          icon = '⚔️';
+        } else if (spot.bookingUrlType === 'civitatis') {
           btnClass = 'drawer-btn-tour';
           btnLabel = dict['drawer.btn.tour'] || 'Reservar Visita Guiada';
           icon = '🚩';
@@ -463,7 +467,7 @@
         }
       }
 
-      // 6. Affiliate Tour Link Click (Civitatis on Sierra de los Molinos card)
+      // 6. Affiliate Tour Link Click (Gymkana on Sierra de los Molinos card)
       const tourBtn = e.target.closest('.affiliate-tour-btn');
       if (tourBtn) {
         const spotCard = tourBtn.closest('.explorer-card');
@@ -475,13 +479,13 @@
           window.gtag('event', 'click_affiliate_tour', {
             'spot_id': spotId,
             'spot_name': spotTitle,
-            'destination': 'civitatis'
+            'destination': 'gymkana'
           });
         }
       }
 
       // 7. Dynamic Drawer Tour CTA Click
-      const drawerTourBtn = e.target.closest('.drawer-btn-tour');
+      const drawerTourBtn = e.target.closest('.drawer-btn-tour') || e.target.closest('.drawer-btn-gymkana');
       if (drawerTourBtn) {
         const spotId = drawerTourBtn.getAttribute('data-spot') || 'Unknown';
         const spotTitleEl = document.querySelector('.drawer-spot-title');
@@ -491,7 +495,7 @@
           window.gtag('event', 'click_affiliate_tour', {
             'spot_id': spotId,
             'spot_name': spotTitle,
-            'destination': 'civitatis'
+            'destination': 'gymkana'
           });
         }
       }

@@ -2009,6 +2009,29 @@ body.sunset-mode .cta-booking:hover {
   box-shadow: 0 4px 12px rgba(255, 90, 95, 0.2);
 }
 
+.drawer-btn-gymkana {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem;
+  background: #E04A3F; /* Gymkana Red/Orange */
+  color: #FFFFFF !important;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-radius: 4px;
+  text-align: center;
+  transition: all var(--transition);
+  box-shadow: 0 4px 10px rgba(224, 74, 63, 0.15);
+}
+
+.drawer-btn-gymkana:hover {
+  background: #c5382e;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(224, 74, 63, 0.25);
+}
+
 .drawer-btn-hotel {
   display: inline-flex;
   align-items: center;
