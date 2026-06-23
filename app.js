@@ -582,6 +582,7 @@
       'hero.cta2': 'Leer Reportajes',
       'hero.scroll': 'Descubrir',
       'hero.gymkana': 'Empezar la Gymkana Interactiva 🗺️',
+      'hero.tiktok': 'Síguenos en TikTok 🎬',
       
       'widget.weather': 'Campo de Criptana · Despejado · 24°C',
       
@@ -762,6 +763,7 @@
       'hero.cta2': 'Read Sights Guides',
       'hero.scroll': 'Discover',
       'hero.gymkana': 'Start the Interactive Gymkana 🗺️',
+      'hero.tiktok': 'Follow us on TikTok 🎬',
       
       'widget.weather': 'Campo de Criptana · Clear · 24°C',
       
