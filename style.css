@@ -372,6 +372,32 @@ a {
   box-shadow: 0 8px 25px rgba(11, 79, 200, 0.18);
 }
 
+.btn-gymkana {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem 2.5rem;
+  background: #E04A3F; /* High-contrast warm red */
+  color: #FFFFFF !important;
+  font-size: 1.15rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: none;
+  border-radius: 50px;
+  box-shadow: 0 8px 24px rgba(224, 74, 63, 0.4);
+  transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+  cursor: pointer;
+  margin: 1.5rem 0;
+  text-decoration: none;
+}
+
+.btn-gymkana:hover {
+  background: #C4382D;
+  transform: scale(1.05);
+  box-shadow: 0 12px 30px rgba(224, 74, 63, 0.55);
+}
+
 .btn-outline {
   padding: 0.85rem 2rem;
   background: transparent;
