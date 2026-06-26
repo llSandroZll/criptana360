@@ -174,8 +174,10 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0" />
   <link rel="stylesheet" href="style.css?v=19.0">
+  <link rel="stylesheet" href="heritage-lux.css">
   <script src="assets/js/data.js?v=19.0" defer></script>
   <script>
     // Defensive placeholders to prevent ReferenceErrors from cached app.js
@@ -195,7 +197,9 @@
       <nav class="site-nav">
         <a href="#guia" data-key="nav.directorio">Guía Local</a>
         <a href="#articulos" data-key="nav.articulos">Reportajes</a>
-        <a href="#planificador" class="nav-cta glowing-btn" data-key="nav.planner">Planifica tu Ruta</a>
+        <a href="ruta-ia.html" data-key="nav.rutaia" style="font-weight:600;">Tu Ruta IA</a>
+        <a href="gymkana.html" data-key="nav.gymkana" style="font-weight:600;">Gymkana</a>
+        <a href="ruta-ia.html" class="nav-cta hl-btn hl-btn-primary" data-key="nav.planner" style="padding: 0.5rem 1.25rem;">Planifica tu Ruta <span class="material-symbols-outlined" style="margin-left: 0.5rem; font-size: 1rem; vertical-align: middle;">auto_awesome</span></a>
       </nav>
       <div class="header-actions">
         <!-- Sunset / After-Dark Mode Toggle Switch -->
@@ -225,13 +229,16 @@
       <div class="starry-sky" id="starry-sky"></div>
       
       <div class="hero-inner">
-        <p class="hero-overline fade-in" data-key="hero.overline">Descubre Campo de Criptana • Tu Guía y Directorio Local</p>
-        <h1 class="hero-title fade-in" data-key="hero.title">«No son gigantes, sino molinos de viento.»<br><span class="hero-attribution">— Don Quijote</span></h1>
-        <p class="hero-subtitle fade-in" data-key="hero.subtitle">Descubre la esencia de Campo de Criptana. Una guía independiente completa y actualizada con los horarios de apertura, localizaciones exactas en Google Maps y contactos directos de las mejores bodegas, restaurantes y monumentos históricos.</p>
-        <div class="hero-cta-row fade-in">
-          <a href="#guia" class="btn-primary" data-key="hero.cta1">Ver Directorio</a>
-          <a href="#articulos" class="btn-outline" data-key="hero.cta2">Leer Reportajes</a>
-          <a href="#planner" class="hero-cta-planner-solid">Planifica tu Ruta</a>
+        <p class="hero-overline hl-label-sm fade-in" style="color: var(--hl-sunset-gold); font-size: 0.85rem;" data-key="hero.overline">Descubre Campo de Criptana • Tu Guía y Directorio Local</p>
+        <h1 class="hero-title hl-display-lg fade-in" data-key="hero.title">«No son gigantes, sino molinos de viento.»<br><span class="hero-attribution">— Don Quijote</span></h1>
+        <p class="hero-subtitle hl-body-lg fade-in" data-key="hero.subtitle" style="color: rgba(255, 255, 255, 0.9);">Descubre la esencia de Campo de Criptana. Una guía independiente completa y actualizada con los horarios de apertura, localizaciones exactas en Google Maps y contactos directos de las mejores bodegas, restaurantes y monumentos históricos.</p>
+        <div class="hero-cta-row fade-in" style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; align-items: center;">
+          <a href="#guia" class="hl-btn hl-btn-secondary" style="color: white; border-color: white; padding: 0.875rem 1.75rem;" data-key="hero.cta1">Ver Directorio</a>
+          <a href="#articulos" class="hl-btn hl-btn-secondary" style="color: white; border-color: white; padding: 0.875rem 1.75rem;" data-key="hero.cta2">Leer Reportajes</a>
+          <a href="ruta-ia.html" class="hl-btn hl-btn-primary" style="padding: 0.875rem 1.75rem; background-color: var(--hl-albaicin-blue);">
+            Planifica tu Ruta IA
+            <span class="material-symbols-outlined" style="margin-left: 0.5rem; font-size: 1.1rem; vertical-align: middle;">auto_awesome</span>
+          </a>
         </div>
       </div>
       <div class="hero-scroll-hint fade-in">
@@ -243,7 +250,7 @@
     <!-- ═══════════════════════════════════════════════════════════════
          LIVE UTILITY BAR (Weather & Sunset Countdown)
          ═══════════════════════════════════════════════════════════════ -->
-    <section class="live-utility-bar fade-in">
+    <section class="live-utility-bar hl-glass fade-in">
       <div class="utility-inner">
         <div class="utility-item weather-widget">
           <span class="utility-icon">☀️</span>

@@ -1,0 +1,360 @@
+<!DOCTYPE html><html class="light" lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Gymkana: Desafía a los Gigantes - Criptana 360</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="assets/css2-d21858f2f08c8d00156ba0e7102964ba" rel="stylesheet">
+<link href="assets/css2-a39f5c6fcbb87b419667ec984d2e579a" rel="stylesheet">
+<link href="assets/css2-a39f5c6fcbb87b419667ec984d2e579a" rel="stylesheet">
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "on-tertiary-container": "#ffaa8a",
+                "albaicin-blue": "#0047AB",
+                "tertiary-fixed-dim": "#ffb59a",
+                "on-primary-fixed": "#001946",
+                "surface-tint": "#2559bd",
+                "tertiary": "#651f00",
+                "on-tertiary-fixed": "#380d00",
+                "on-primary-fixed-variant": "#00419e",
+                "on-error-container": "#93000a",
+                "outline-variant": "#c3c6d5",
+                "mancha-earth": "#4A3728",
+                "error": "#ba1a1a",
+                "on-background": "#191b22",
+                "surface-dim": "#d9d9e2",
+                "tertiary-fixed": "#ffdbcf",
+                "surface-variant": "#e2e2eb",
+                "surface-container-lowest": "#ffffff",
+                "primary-fixed-dim": "#b1c5ff",
+                "primary": "#00327d",
+                "primary-fixed": "#dae2ff",
+                "surface-container": "#ededf6",
+                "on-secondary-fixed": "#1b1c19",
+                "surface-container-high": "#e7e7f0",
+                "on-tertiary-fixed-variant": "#802900",
+                "inverse-on-surface": "#f0f0f9",
+                "on-surface": "#191b22",
+                "secondary-fixed": "#e3e3de",
+                "inverse-primary": "#b1c5ff",
+                "surface": "#faf8ff",
+                "inverse-surface": "#2e3037",
+                "secondary-fixed-dim": "#c7c7c2",
+                "error-container": "#ffdad6",
+                "surface-bright": "#faf8ff",
+                "on-secondary-fixed-variant": "#464744",
+                "on-tertiary": "#ffffff",
+                "on-secondary": "#ffffff",
+                "on-primary-container": "#a5bdff",
+                "secondary": "#5e5f5b",
+                "surface-container-low": "#f3f3fc",
+                "lime-wash": "#F9F8F3",
+                "surface-container-highest": "#e2e2eb",
+                "sunset-gold": "#D4AF37",
+                "primary-container": "#0047ab",
+                "on-error": "#ffffff",
+                "on-surface-variant": "#434653",
+                "tertiary-container": "#8b2e01",
+                "outline": "#737784",
+                "on-secondary-container": "#646561",
+                "on-primary": "#ffffff",
+                "background": "#faf8ff",
+                "secondary-container": "#e3e3de"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "margin-mobile": "16px",
+                "gutter": "24px",
+                "component-padding": "24px",
+                "section-gap": "80px",
+                "container-max": "1280px"
+            },
+            "fontFamily": {
+                "body-lg": ["Manrope"],
+                "headline-md": ["Bodoni Moda"],
+                "display-lg": ["Bodoni Moda"],
+                "body-md": ["Manrope"],
+                "quote-serif": ["Bodoni Moda"],
+                "label-sm": ["Manrope"],
+                "display-lg-mobile": ["Bodoni Moda"]
+            },
+            "fontSize": {
+                "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                "display-lg": ["64px", {"lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "quote-serif": ["24px", {"lineHeight": "36px", "fontWeight": "400"}],
+                "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                "display-lg-mobile": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #F9F8F3; /* lime-wash */
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.4); opacity: 0; }
+            100% { transform: scale(1); opacity: 0; }
+        }
+
+        .custom-scroll-hide::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-on-surface selection:bg-albaicin-blue selection:text-white">
+<!-- TopNavBar (Shared Component) -->
+<nav class="fixed top-0 w-full z-50 backdrop-blur-xl bg-white/70 border-b border-white/20 shadow-sm flex justify-between items-center h-20 px-4 md:px-gutter max-w-container-max mx-auto">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-albaicin-blue">temple_hindu</span>
+<span class="text-body-lg font-headline-md font-bold tracking-tight text-albaicin-blue">Criptana 360</span>
+</div>
+<div class="hidden md:flex gap-8 items-center">
+<a class="text-on-surface-variant hover:text-albaicin-blue transition-colors" href="#">Experiencias</a>
+<a class="text-albaicin-blue font-bold border-b-2 border-albaicin-blue pb-1" href="#">Rutas IA</a>
+<a class="text-on-surface-variant hover:text-albaicin-blue transition-colors" href="#">Historia</a>
+<a class="text-on-surface-variant hover:text-albaicin-blue transition-colors" href="#">Guía</a>
+</div>
+<button class="bg-albaicin-blue text-white px-6 py-2 rounded-full font-label-sm hover:opacity-90 active:scale-[0.99] transition-all">
+            Planificar
+        </button>
+</nav>
+<main class="pt-24 pb-12 px-4 max-w-md mx-auto space-y-6">
+<!-- Progress Header -->
+<header class="glass-panel rounded-xl p-5 shadow-sm">
+<div class="flex justify-between items-end mb-3">
+<div>
+<h2 class="font-headline-md text-headline-md text-albaicin-blue">Desafía a los Gigantes</h2>
+<p class="font-label-sm text-mancha-earth opacity-70">GYMKANA INTERACTIVA</p>
+</div>
+<div class="text-right">
+<span class="font-headline-md text-2xl text-albaicin-blue">3/10</span>
+<p class="font-label-sm text-mancha-earth">ACERTIJOS</p>
+</div>
+</div>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+<div class="bg-albaicin-blue h-full w-[30%] transition-all duration-1000 ease-out"></div>
+</div>
+</header>
+<!-- Map Widget -->
+<section class="relative rounded-2xl overflow-hidden h-[300px] shadow-lg border border-white/50">
+<!-- Simulated Map Background -->
+<div class="absolute inset-0 z-0 bg-surface-container-lowest" data-location="Campo de Criptana, Spain" style="">
+<img class="w-full h-full object-cover grayscale-[0.2] opacity-80" data-alt="A sophisticated, minimalist map illustration of Campo de Criptana's Sierra de los Molinos. The map features elegant cream-colored terrain, stylized white windmill icons, and thin Albaicin Blue route lines. The lighting is bright and clear, reflecting a high-end travel guide aesthetic with a soft focus on the surrounding Manchego landscape." src="assets/AB6AXuBnO1-s_ggCldtSSI59UdPwD3XCjSoSX2ncGgGrK-qiWjUvE2j7b_c4DbG_1S3NxP3aHYdtSHodwx0dqPp3f9_H3iQ76Zi_-c7ae098a8b0e5c8f974c06e44cb9f361">
+</div>
+<!-- Map UI Overlays -->
+<div class="absolute inset-0 pointer-events-none z-10 p-4">
+<div class="glass-panel w-fit px-3 py-1 rounded-full flex items-center gap-2">
+<span class="w-2 h-2 bg-error rounded-full animate-pulse"></span>
+<span class="text-label-sm text-on-surface">Sierra de los Molinos</span>
+</div>
+<!-- Player Pulse -->
+<div class="absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2">
+<div class="relative flex items-center justify-center">
+<div class="absolute w-12 h-12 bg-albaicin-blue/20 rounded-full pulse-animation"></div>
+<div class="w-4 h-4 bg-albaicin-blue border-2 border-white rounded-full shadow-md z-20"></div>
+</div>
+</div>
+<!-- Windmill Marker -->
+<div class="absolute top-[40%] right-[30%] flex flex-col items-center">
+<span class="material-symbols-outlined text-mancha-earth" style="font-variation-settings: 'FILL' 1;">mode_fan</span>
+<div class="w-1 h-3 bg-mancha-earth/30"></div>
+</div>
+</div>
+<!-- Map Controls -->
+<div class="absolute bottom-4 right-4 z-20 flex flex-col gap-2">
+<button class="w-10 h-10 bg-white shadow-md rounded-full flex items-center justify-center text-albaicin-blue active:bg-surface-container">
+<span class="material-symbols-outlined">my_location</span>
+</button>
+<button class="w-10 h-10 bg-white shadow-md rounded-full flex items-center justify-center text-albaicin-blue active:bg-surface-container">
+<span class="material-symbols-outlined">zoom_in</span>
+</button>
+</div>
+</section>
+<!-- Current Riddle Card -->
+<section class="glass-panel rounded-2xl shadow-md p-6 border-t border-white overflow-hidden relative">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-8xl">auto_awesome</span>
+</div>
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-albaicin-blue">history_edu</span>
+<span class="font-label-sm tracking-widest text-albaicin-blue uppercase">Acertijo Actual</span>
+</div>
+<h3 class="font-headline-md text-2xl text-mancha-earth mb-3 italic">"El Gigante que Susurra"</h3>
+<p class="font-body-md text-on-surface-variant leading-relaxed mb-6">
+                «Mis brazos no tienen carne, pero muelen el trigo de la esperanza. Miro al poniente buscando al caballero de la triste figura. Encuéntrame donde el viento ruge primero.»
+            </p>
+<div class="space-y-4">
+<label class="block font-label-sm text-mancha-earth" for="riddle-answer">TU RESPUESTA</label>
+<div class="relative">
+<input class="w-full bg-white/50 border-albaicin-blue/20 rounded-xl px-4 py-4 focus:ring-albaicin-blue focus:border-albaicin-blue transition-all font-body-md" id="riddle-answer" placeholder="Escribe el nombre del molino..." type="text">
+<button class="absolute right-2 top-2 bottom-2 bg-albaicin-blue text-white px-4 rounded-lg font-label-sm flex items-center gap-2 hover:bg-primary transition-colors">
+                        VALIDAR
+                        <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Ficha de Aventurero (Adventurer Profile) -->
+<section class="space-y-4">
+<h4 class="font-headline-md text-xl text-mancha-earth px-1">Ficha de Aventurero</h4>
+<div class="bg-mancha-earth text-white rounded-2xl p-6 shadow-xl relative overflow-hidden">
+<!-- Background Pattern -->
+<div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 20px 20px;"></div>
+<div class="flex items-center gap-4 relative z-10 mb-6">
+<div class="w-16 h-16 rounded-full border-2 border-sunset-gold p-1">
+<div class="w-full h-full rounded-full bg-white/10 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A portrait of a modern traveler in an outdoor heritage outfit, with a soft cinematic blur of a white windmill in the background. The lighting is warm and golden-hour inspired, creating a luxury adventure aesthetic. The traveler's expression is curious and engaged." src="assets/AB6AXuDlvCpFOfRylZw8NhOBZaW4XSl2nQAeJsc0l4Luuvxaa9EZjfwbTNuTiHogagu_Z3ics7I2Po_OjhkVN5di9jX1LkPT_Hl_-1c0ebc9ef985cca5fbf2ad7580d0a157">
+</div>
+</div>
+<div>
+<p class="text-sunset-gold font-label-sm uppercase tracking-tighter">Nivel: Explorador Noble</p>
+<h5 class="font-headline-md text-lg">Sancho G. Pineda</h5>
+</div>
+<div class="ml-auto text-right">
+<p class="text-3xl font-headline-md text-sunset-gold">1,240</p>
+<p class="text-[10px] opacity-60 uppercase tracking-widest">Puntos Totales</p>
+</div>
+</div>
+<div class="space-y-3 relative z-10">
+<p class="font-label-sm opacity-60 uppercase tracking-widest">Insignias Ganadas</p>
+<div class="flex gap-3 overflow-x-auto pb-2 custom-scroll-hide">
+<!-- Badge 1 -->
+<div class="flex-shrink-0 flex flex-col items-center gap-2 group">
+<div class="w-14 h-14 bg-white/10 rounded-xl flex items-center justify-center border border-white/20 group-hover:bg-white/20 transition-all">
+<span class="material-symbols-outlined text-sunset-gold" style="font-variation-settings: 'FILL' 1;">visibility</span>
+</div>
+<span class="text-[10px] text-center w-14 leading-tight opacity-80 font-medium">Ojo de Águila</span>
+</div>
+<!-- Badge 2 -->
+<div class="flex-shrink-0 flex flex-col items-center gap-2 group">
+<div class="w-14 h-14 bg-white/10 rounded-xl flex items-center justify-center border border-white/20 group-hover:bg-white/20 transition-all">
+<span class="material-symbols-outlined text-sunset-gold" style="font-variation-settings: 'FILL' 1;">auto_stories</span>
+</div>
+<span class="text-[10px] text-center w-14 leading-tight opacity-80 font-medium">Hijo de Cervantes</span>
+</div>
+<!-- Badge 3 (Locked) -->
+<div class="flex-shrink-0 flex flex-col items-center gap-2 opacity-30">
+<div class="w-14 h-14 bg-black/20 rounded-xl flex items-center justify-center border border-white/5">
+<span class="material-symbols-outlined text-white">lock</span>
+</div>
+<span class="text-[10px] text-center w-14 leading-tight font-medium">Cronista</span>
+</div>
+<!-- Badge 4 (Locked) -->
+<div class="flex-shrink-0 flex flex-col items-center gap-2 opacity-30">
+<div class="w-14 h-14 bg-black/20 rounded-xl flex items-center justify-center border border-white/5">
+<span class="material-symbols-outlined text-white">shield</span>
+</div>
+<span class="text-[10px] text-center w-14 leading-tight font-medium">Guardián</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer (Shared Component) -->
+<footer class="w-full py-20 px-gutter bg-lime-wash border-t border-outline-variant">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter max-w-container-max mx-auto">
+<div class="col-span-1 md:col-span-2">
+<span class="text-headline-md font-headline-md text-mancha-earth">Criptana 360</span>
+<p class="mt-4 text-body-md text-on-secondary-fixed-variant max-w-xs">
+                    Explora el legado de los Gigantes a través de una experiencia digital inmersiva.
+                </p>
+<p class="mt-8 text-label-sm text-on-secondary-fixed-variant">© 2024 Criptana 360. Legado Manchego.</p>
+</div>
+<div class="flex flex-col gap-4">
+<h6 class="font-bold text-mancha-earth uppercase text-xs tracking-widest">Explorar</h6>
+<a class="text-on-secondary-fixed-variant hover:text-albaicin-blue transition-colors" href="#">Experiencias</a>
+<a class="text-on-secondary-fixed-variant hover:text-albaicin-blue transition-colors" href="#">Rutas IA</a>
+<a class="text-on-secondary-fixed-variant hover:text-albaicin-blue transition-colors" href="#">Mapa Interactivo</a>
+</div>
+<div class="flex flex-col gap-4">
+<h6 class="font-bold text-mancha-earth uppercase text-xs tracking-widest">Soporte</h6>
+<a class="text-on-secondary-fixed-variant hover:text-albaicin-blue transition-colors" href="#">Contacto</a>
+<a class="text-on-secondary-fixed-variant hover:text-albaicin-blue transition-colors" href="#">Privacidad</a>
+<a class="text-on-secondary-fixed-variant hover:text-albaicin-blue transition-colors" href="#">Términos</a>
+</div>
+</div>
+</footer>
+<!-- Persisten Navigation (Mobile Optimized) -->
+<div class="fixed bottom-0 left-0 w-full z-50 bg-white/80 backdrop-blur-xl border-t border-white/20 md:hidden h-20 flex items-center justify-around px-6">
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">explore</span>
+<span class="text-[10px] font-medium">Explorar</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-albaicin-blue">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">map</span>
+<span class="text-[10px] font-medium">Gymkana</span>
+</button>
+<div class="relative -top-6">
+<button class="w-14 h-14 bg-albaicin-blue text-white rounded-full shadow-lg shadow-albaicin-blue/40 flex items-center justify-center active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-3xl">smart_toy</span>
+</button>
+</div>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">history</span>
+<span class="text-[10px] font-medium">Historia</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-medium">Perfil</span>
+</button>
+</div>
+<script>
+        // Micro-interaction for the input field
+        const input = document.getElementById('riddle-answer');
+        input.addEventListener('focus', () => {
+            input.parentElement.classList.add('scale-[1.02]');
+        });
+        input.addEventListener('blur', () => {
+            input.parentElement.classList.remove('scale-[1.02]');
+        });
+
+        // Simple feedback for validation
+        const validateBtn = input.nextElementSibling;
+        validateBtn.addEventListener('click', () => {
+            const val = input.value.toLowerCase();
+            if(val.includes('infante') || val.includes('burleta')) {
+                alert('¡Respuesta correcta, aventurero! Los vientos te favorecen.');
+            } else {
+                validateBtn.classList.add('bg-error');
+                setTimeout(() => validateBtn.classList.remove('bg-error'), 500);
+            }
+        });
+    </script>
+</body></html>

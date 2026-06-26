@@ -1,0 +1,509 @@
+<!DOCTYPE html><html class="scroll-smooth" lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Criptana 360 | Guía de Lujo en La Mancha</title>
+<link href="assets/css2-675a52eba4318eeb4329b4198204fda2" rel="stylesheet">
+<link href="assets/css2-a39f5c6fcbb87b419667ec984d2e579a" rel="stylesheet">
+<link href="assets/css2-a39f5c6fcbb87b419667ec984d2e579a" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-primary": "#b1c5ff",
+                        "secondary-fixed": "#e3e3de",
+                        "on-error": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "albaicin-blue": "#0047AB",
+                        "on-secondary-fixed-variant": "#464744",
+                        "outline": "#737784",
+                        "on-secondary-container": "#646561",
+                        "primary-fixed": "#dae2ff",
+                        "on-secondary": "#ffffff",
+                        "surface-variant": "#e2e2eb",
+                        "secondary-fixed-dim": "#c7c7c2",
+                        "on-background": "#191b22",
+                        "surface-container": "#ededf6",
+                        "surface-container-low": "#f3f3fc",
+                        "surface-container-high": "#e7e7f0",
+                        "background": "#faf8ff",
+                        "surface": "#faf8ff",
+                        "surface-container-highest": "#e2e2eb",
+                        "on-surface-variant": "#434653",
+                        "surface-tint": "#2559bd",
+                        "primary-fixed-dim": "#b1c5ff",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#802900",
+                        "secondary": "#5e5f5b",
+                        "on-primary": "#ffffff",
+                        "on-surface": "#191b22",
+                        "lime-wash": "#F9F8F3",
+                        "error-container": "#ffdad6",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed": "#1b1c19",
+                        "tertiary-container": "#8b2e01",
+                        "on-primary-fixed-variant": "#00419e",
+                        "on-tertiary-fixed": "#380d00",
+                        "outline-variant": "#c3c6d5",
+                        "tertiary": "#651f00",
+                        "surface-bright": "#faf8ff",
+                        "inverse-surface": "#2e3037",
+                        "tertiary-fixed": "#ffdbcf",
+                        "mancha-earth": "#4A3728",
+                        "inverse-on-surface": "#f0f0f9",
+                        "on-primary-container": "#a5bdff",
+                        "on-tertiary-container": "#ffaa8a",
+                        "tertiary-fixed-dim": "#ffb59a",
+                        "error": "#ba1a1a",
+                        "sunset-gold": "#D4AF37",
+                        "on-primary-fixed": "#001946",
+                        "primary": "#00327d",
+                        "surface-dim": "#d9d9e2",
+                        "secondary-container": "#e3e3de",
+                        "primary-container": "#0047ab"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "section-gap": "80px",
+                        "gutter": "24px",
+                        "margin-mobile": "16px",
+                        "component-padding": "24px",
+                        "container-max": "1280px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Bodoni Moda"],
+                        "label-sm": ["Manrope"],
+                        "body-lg": ["Manrope"],
+                        "display-lg-mobile": ["Bodoni Moda"],
+                        "quote-serif": ["Bodoni Moda"],
+                        "display-lg": ["Bodoni Moda"],
+                        "body-md": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "display-lg-mobile": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "quote-serif": ["24px", {"lineHeight": "36px", "fontWeight": "400"}],
+                        "display-lg": ["64px", {"lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-effect {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .hero-gradient {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 50%, rgba(249, 248, 243, 1) 100%);
+        }
+    </style>
+</head>
+<body class="bg-lime-wash text-on-surface font-body-md selection:bg-albaicin-blue selection:text-white">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 backdrop-blur-xl bg-white/70 dark:bg-black/60 border-b border-white/20 transition-all duration-300">
+<div class="flex justify-between items-center h-20 px-gutter max-w-container-max mx-auto">
+<div class="text-body-lg font-headline-md font-bold tracking-tight text-albaicin-blue">
+                Criptana 360
+            </div>
+<div class="hidden md:flex items-center space-x-8">
+<a class="text-albaicin-blue font-bold border-b-2 border-albaicin-blue pb-1 font-label-sm uppercase" href="#">Experiencias</a>
+<a class="text-on-surface-variant hover:text-albaicin-blue transition-colors font-label-sm uppercase" href="#ia-planner">Rutas IA</a>
+<a class="text-on-surface-variant hover:text-albaicin-blue transition-colors font-label-sm uppercase" href="#history">Historia</a>
+<a class="text-on-surface-variant hover:text-albaicin-blue transition-colors font-label-sm uppercase" href="#">Guía</a>
+</div>
+<div class="flex items-center gap-6">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-albaicin-blue transition-colors">search</button>
+<button class="bg-primary text-white px-6 py-2 rounded-full font-label-sm hover:bg-albaicin-blue transition-all active:scale-95 shadow-sm">
+                    Planificar
+                </button>
+</div>
+</div>
+</nav>
+<!-- Hero Section -->
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 z-0">
+<div class="absolute inset-0 hero-gradient z-10"></div>
+<img alt="Sierra de los Molinos en el atardecer" class="w-full h-full object-cover" src="assets/AP1WRLvaxup5G4_RqofHiCuzBOptZv78Cllw_26SASofGKHph3SldxYaGHxqAa-B3xDdqaqV9-5NUtjqzRXkpaKN23wbl8VxHIa--f9164ed75f8b63ff885999d0352643eb">
+</div>
+<div class="relative z-20 text-center px-gutter max-w-4xl mx-auto pt-20">
+<span class="font-label-sm text-white bg-albaicin-blue/20 backdrop-blur-md px-4 py-1 rounded-full mb-6 inline-block border border-white/30 uppercase tracking-widest">Patrimonio de la Humanidad</span>
+<h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-white mb-6 drop-shadow-2xl">
+                «No son gigantes, sino molinos de viento.»
+            </h1>
+<p class="font-body-lg text-white/90 mb-10 max-w-2xl mx-auto leading-relaxed">
+                Descubre la esencia de Campo de Criptana. Una guía independiente completa y actualizada para el viajero que busca lo auténtico.
+            </p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center">
+<button class="bg-albaicin-blue text-white px-8 py-4 rounded-full font-label-sm flex items-center justify-center gap-2 hover:shadow-xl transition-all group relative">
+                    Descubrir Directorio
+                    <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button><span class="absolute -top-3 -right-3 bg-sunset-gold text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm uppercase tracking-tighter">Oficial</span>
+<button class="glass-effect text-mancha-earth px-8 py-4 rounded-full font-label-sm flex items-center justify-center gap-2 hover:bg-white transition-all">
+                    Explorar Reportajes
+                </button>
+</div>
+</div>
+<!-- Floating Weather/Sunset Card -->
+<div class="absolute bottom-12 left-1/2 -translate-x-1/2 md:translate-x-0 md:left-gutter z-20 glass-effect p-4 rounded-2xl flex items-center gap-6 shadow-2xl border-white/50">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-sunset-gold">light_mode</span>
+<div>
+<p class="text-label-sm opacity-60">TIEMPO</p>
+<p class="font-bold text-mancha-earth">24°C Despejado</p>
+</div>
+</div>
+<div class="w-px h-8 bg-mancha-earth/10"></div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-albaicin-blue">wb_twilight</span>
+<div>
+<p class="text-label-sm opacity-60">ATARDECER</p>
+<p class="font-bold text-mancha-earth">20:42h</p>
+</div>
+</div>
+</div>
+</section><section class="py-section-gap bg-white/50 border-y border-mancha-earth/5">
+    <div class="px-gutter max-w-container-max mx-auto">
+        <div class="flex flex-col md:flex-row items-center gap-12">
+            <div class="flex-1">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="material-symbols-outlined text-sunset-gold">map</span>
+                    <span class="text-albaicin-blue font-label-sm uppercase tracking-widest">Una aventura interactiva</span>
+                </div>
+                <h2 class="font-headline-md text-mancha-earth mb-6">La Guía Digital Oficial: Desafía a los Gigantes</h2>
+                <p class="text-body-lg text-on-surface-variant mb-8 leading-relaxed">Conviértete en el protagonista de la historia con el único producto digital oficial de Criptana 360. Nuestra Gymkana interactiva premium te guía por los rincones más secretos de la Sierra, resolviendo acertijos y desbloqueando leyendas exclusivas directamente en tu smartphone.</p>
+                <div class="flex items-center gap-6">
+                    <a href="https://zevallosandro.gumroad.com/l/xdwnjt" target="_blank" class="bg-albaicin-blue text-white px-8 py-4 rounded-full font-label-sm flex items-center justify-center gap-2 hover:shadow-xl transition-all group">
+                        Comenzar Aventura
+                        <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">explore</span>
+                    </a>
+                    <span class="text-label-sm text-on-surface-variant opacity-60 italic">Experiencia Oficial</span>
+                </div>
+            </div>
+            <div class="flex-1 relative">
+                <div class="aspect-square rounded-[2.5rem] overflow-hidden shadow-2xl">
+                    <img src="assets/AB6AXuDtKO1ipjOh1v1iar-qAVSP1n5QAr4hetBWvwZ7Mslbx1096wDONkOfQi4zdF8ou_5moheJyVcen5QQhPBbKGPhUbQEHzCF-588356f065765e55af1790677ad3eee4" alt="Aventura en los molinos" class="w-full h-full object-cover">
+                </div>
+                <div class="absolute -bottom-6 -left-6 glass-effect p-6 rounded-2xl shadow-xl border-white/50 hidden md:block">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-sunset-gold rounded-full flex items-center justify-center text-white">
+                            <span class="material-symbols-outlined">verified</span>
+                        </div>
+                        <div>
+                            <p class="font-bold text-mancha-earth">Recomendado</p>
+                            <p class="text-label-sm opacity-60">Por la Oficina de Turismo</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Curated Experiences Section -->
+<section class="py-section-gap px-gutter max-w-container-max mx-auto">
+<div class="mb-16 flex flex-col md:flex-row justify-between items-end gap-6">
+<div>
+<span class="text-albaicin-blue font-label-sm uppercase tracking-widest mb-2 block">Experiencias Exclusivas</span>
+<h2 class="font-headline-md text-mancha-earth">Inmersión en el Corazón Manchego</h2>
+</div>
+<a class="text-albaicin-blue font-bold border-b border-albaicin-blue pb-1 hover:opacity-70 transition-opacity" href="#">Ver todos los destinos</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+<!-- Experience Card 1 -->
+<div class="group relative overflow-hidden rounded-[2rem] bg-white shadow-sm hover:shadow-2xl transition-all duration-500">
+<div class="h-[450px] overflow-hidden">
+<img alt="Barrio del Albaicín Manchego" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="assets/AP1WRLvORqBh1jY1PFzNFD8MIMYFY7NFe7qE8GRiMOpgnyqJFy3v6k1pxyU-pbuGOMX_ULVA_UCderSENHzCVJmk3g3DSsDScu19-2c4f06affdbdef6052d1f4bca520a0b1">
+</div>
+<div class="p-8">
+<div class="flex justify-between items-start mb-4">
+<span class="text-label-sm bg-lime-wash px-3 py-1 rounded-full text-albaicin-blue">HISTORIA VIVA</span>
+<span class="text-label-sm font-bold text-mancha-earth">Acceso Libre</span>
+</div>
+<h3 class="font-headline-md text-mancha-earth mb-4">Barrio del Albaicín</h3>
+<p class="text-body-md text-on-surface-variant mb-8 line-clamp-2">
+                        El laberinto histórico de calles empinadas pintadas de blanco cal y zócalos de añil cobalto. Un viaje visual al pasado.
+                    </p>
+<div class="flex items-center justify-between">
+<button class="bg-albaicin-blue text-white px-6 py-3 rounded-full font-label-sm hover:bg-primary transition-all flex items-center gap-2" data-tracking="direct-referral">Explorar Barrio <span class="material-symbols-outlined text-[16px]">open_in_new</span></button>
+<div class="flex -space-x-2">
+<span class="material-symbols-outlined text-sunset-gold" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sunset-gold" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sunset-gold" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sunset-gold" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sunset-gold" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Experience Card 2 -->
+<div class="group relative overflow-hidden rounded-[2rem] bg-white shadow-sm hover:shadow-2xl transition-all duration-500">
+<div class="h-[450px] overflow-hidden">
+<img alt="Bodegas y Viñedos de Criptana" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="assets/AP1WRLuhY9us9GODBrPzlTfaFtXOq2x3LeUlWDfk864_NNV5mOrqnm5M-JqxM_Ee6aVfzskhdHHdc9v5KsH5uhFvMUVgO9sr1VA8-480b36228206fc52a9380cb9026ec413">
+</div>
+<div class="p-8">
+<div class="flex justify-between items-start mb-4">
+<span class="text-label-sm bg-lime-wash px-3 py-1 rounded-full text-albaicin-blue">ENOTURISMO PREMIUM</span>
+<span class="text-label-sm font-bold text-mancha-earth">Desde 15€ / cata</span>
+</div>
+<h3 class="font-headline-md text-mancha-earth mb-4">Crianza bajo Tierra</h3>
+<p class="text-body-md text-on-surface-variant mb-8 line-clamp-2">
+                        Visita las bodegas centenarias excavadas en roca viva donde el vino reposa a temperatura constante durante todo el año.
+                    </p>
+<div class="flex items-center justify-between">
+<button class="bg-albaicin-blue text-white px-6 py-3 rounded-full font-label-sm hover:bg-primary transition-all flex items-center gap-2" data-tracking="direct-booking"><span class="text-[10px] font-bold text-sunset-gold uppercase tracking-tighter mr-2">Reserva Directa</span>Reservar Ahora <span class="material-symbols-outlined text-[16px]">calendar_today</span></button>
+<div class="flex items-center gap-2 text-label-sm text-on-surface-variant"><span class="text-[10px] font-bold text-sunset-gold uppercase tracking-tighter mr-2">Reserva Directa</span>
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+                            Varios Puntos
+                        </div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- AI Route Planner Section -->
+<section class="py-section-gap bg-surface-container relative overflow-hidden" id="ia-planner">
+<div class="absolute top-0 right-0 w-96 h-96 bg-albaicin-blue/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+<div class="absolute bottom-0 left-0 w-96 h-96 bg-sunset-gold/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+<div class="px-gutter max-w-container-max mx-auto relative z-10">
+<div class="text-center mb-16">
+<span class="text-albaicin-blue font-label-sm uppercase tracking-widest mb-4 inline-block">Tecnología &amp; Tradición</span>
+<h2 class="font-headline-md text-mancha-earth">Planificador de Ruta Inteligente IA</h2>
+<p class="text-body-lg text-on-surface-variant max-w-2xl mx-auto mt-4">
+                    Diseña tu escapada perfecta en segundos. Nuestro motor de IA optimiza tu tiempo basándose en tus preferencias y compañía.
+                </p>
+</div>
+<div class="glass-effect p-8 md:p-12 rounded-[2.5rem] shadow-xl max-w-4xl mx-auto border-white">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+<!-- Step 1: Who -->
+<div>
+<h4 class="font-headline-md text-mancha-earth text-[24px] mb-6 flex items-center gap-3">
+<span class="bg-albaicin-blue text-white w-8 h-8 rounded-full flex items-center justify-center text-[16px]">1</span>
+                            ¿Con quién viajas?
+                        </h4>
+<div class="grid grid-cols-2 gap-4">
+<button class="flex flex-col items-center gap-2 p-4 rounded-2xl border border-outline-variant hover:border-albaicin-blue hover:bg-white transition-all group active-selection">
+<span class="material-symbols-outlined text-mancha-earth group-hover:text-albaicin-blue transition-colors">person</span>
+<span class="text-label-sm">SOLO</span>
+</button>
+<button class="flex flex-col items-center gap-2 p-4 rounded-2xl border border-outline-variant hover:border-albaicin-blue hover:bg-white transition-all group">
+<span class="material-symbols-outlined text-mancha-earth group-hover:text-albaicin-blue transition-colors">favorite</span>
+<span class="text-label-sm">PAREJA</span>
+</button>
+<button class="flex flex-col items-center gap-2 p-4 rounded-2xl border border-outline-variant hover:border-albaicin-blue hover:bg-white transition-all group">
+<span class="material-symbols-outlined text-mancha-earth group-hover:text-albaicin-blue transition-colors">family_restroom</span>
+<span class="text-label-sm">FAMILIA</span>
+</button>
+<button class="flex flex-col items-center gap-2 p-4 rounded-2xl border border-outline-variant hover:border-albaicin-blue hover:bg-white transition-all group">
+<span class="material-symbols-outlined text-mancha-earth group-hover:text-albaicin-blue transition-colors">group</span>
+<span class="text-label-sm">AMIGOS</span>
+</button>
+</div>
+</div>
+<!-- Step 2: Style -->
+<div>
+<h4 class="font-headline-md text-mancha-earth text-[24px] mb-6 flex items-center gap-3">
+<span class="bg-albaicin-blue text-white w-8 h-8 rounded-full flex items-center justify-center text-[16px]">2</span>
+                            Estilo de Viaje
+                        </h4>
+<div class="space-y-4">
+<button class="w-full flex items-center justify-between p-4 rounded-2xl border border-outline-variant hover:border-albaicin-blue hover:bg-white transition-all group">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-mancha-earth">savings</span>
+<div class="text-left">
+<p class="font-bold text-mancha-earth group-hover:text-albaicin-blue">Económico</p>
+<p class="text-label-sm opacity-60">Explora sin gastar de más</p>
+</div>
+</div>
+<span class="material-symbols-outlined opacity-0 group-hover:opacity-100 transition-opacity">check_circle</span>
+</button>
+<button class="w-full flex items-center justify-between p-4 rounded-2xl border border-albaicin-blue bg-white shadow-md">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-albaicin-blue">restaurant</span>
+<div class="text-left">
+<p class="font-bold text-albaicin-blue">Estándar</p>
+<p class="text-label-sm opacity-60">Experiencias y menús tradicionales</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-albaicin-blue">check_circle</span>
+</button>
+<button class="w-full flex items-center justify-between p-4 rounded-2xl border border-outline-variant hover:border-albaicin-blue hover:bg-white transition-all group">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-mancha-earth">diamond</span>
+<div class="text-left">
+<p class="font-bold text-mancha-earth group-hover:text-albaicin-blue">Premium</p>
+<p class="text-label-sm opacity-60">Lujo y exclusividad total</p>
+</div>
+</div>
+<span class="material-symbols-outlined opacity-0 group-hover:opacity-100 transition-opacity">check_circle</span>
+</button>
+</div>
+</div>
+</div>
+<div class="mt-12 pt-8 border-t border-mancha-earth/10 text-center">
+<button class="bg-albaicin-blue text-white px-12 py-5 rounded-full font-label-sm text-lg hover:shadow-[0_20px_50px_rgba(0,71,171,0.3)] hover:-translate-y-1 transition-all active:scale-95 flex items-center gap-3 mx-auto relative">
+                        Generar Ruta con IA
+                        <span class="material-symbols-outlined">auto_awesome</span>
+</button><span class="absolute -top-3 -right-3 bg-sunset-gold text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm uppercase tracking-tighter">Oficial</span>
+<p class="text-label-sm text-on-surface-variant mt-4 opacity-60 italic">Algoritmo entrenado con guías locales oficiales</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Magazine Section -->
+<section class="py-section-gap px-gutter max-w-container-max mx-auto" id="history">
+<div class="text-center mb-20">
+<h2 class="font-headline-md text-mancha-earth mb-4">Reportajes e Historia</h2>
+<div class="w-24 h-1 bg-sunset-gold mx-auto"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Article 1 -->
+<article class="flex flex-col bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all group">
+<div class="h-64 overflow-hidden relative">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-1000" data-alt="A cinematic low angle shot of the historic windmills of Campo de Criptana under a dramatic stormy sky with golden light piercing through the clouds. The texture of the old white stone and the wooden blades is clearly visible. The mood is epic and historical, reflecting the battle with the giants from Don Quixote." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDtKO1ipjOh1v1iar-qAVSP1n5QAr4hetBWvwZ7Mslbx1096wDONkOfQi4zdF8ou_5moheJyVcen5QQhPBbKGPhUbQEHzCF538ww4dMcgBx5ca8K1LJR_8TIolHNtSlrNM8ODuwy03CbxUimZluDC0T61dqPq_tJ_eFmqmKRc2g27fqLl01TZc58VAPScX0xizz1eAmoTR7MZqIX31uauMrxSugqoAgcOsWQizxSZYEp_gY2OTh0RiC9uwWZlb0-kgUe58emkJQeCU')"></div>
+<div class="absolute top-4 left-4">
+<span class="bg-white/90 backdrop-blur px-3 py-1 rounded-full text-label-sm font-bold text-mancha-earth">5 MIN LECTURA</span>
+</div>
+</div>
+<div class="p-8 flex-1 flex flex-col">
+<span class="text-albaicin-blue font-label-sm uppercase mb-3">HISTORIA</span>
+<h3 class="font-headline-md text-[24px] text-mancha-earth mb-4">La Batalla contra los Gigantes</h3>
+<p class="text-body-md text-on-surface-variant mb-8 flex-1 leading-relaxed">
+                        Conoce la historia del único cerro en el mundo que conserva tres molinos con maquinaria original del siglo XVI.
+                    </p>
+<a class="text-mancha-earth font-bold flex items-center gap-2 group-hover:text-albaicin-blue transition-colors" href="#">
+                        Leer más
+                        <span class="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+</article>
+<!-- Article 2 -->
+<article class="flex flex-col bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all group">
+<div class="h-64 overflow-hidden relative">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-1000" data-alt="A detailed perspective shot looking up a narrow street in the Albaicin district of Campo de Criptana. The walls are brilliant white lime-wash, and the bases of the houses are painted in a deep, vibrant indigo Albaicin blue. Soft afternoon light creates long shadows on the stone path. Minimalist and editorial style." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBdWYdwHwHk0LY1X_U7tUlc8jpmaL0ljN-I6_VL1oCsEBDevOvD4O0bRjRKakANEuCgV9jcOPKmk4aiQBc4OHSXEHhlDUzwa9x58ZUexeFgvPGqV_lRCWt7pF3debHdHnD2fNvwHPY4-EnQR36UqmvD3bQ1z2CgSdOrnuSoo0J99bFxnb0gKD2g75HCUNqIFtvjPgh7rRHI_-TCiUkbDebBjxc6PcJlIsh6Alig2lsSBqXbCzbToZiQs9bhooqVN99nqdzz278eQH8')"></div>
+<div class="absolute top-4 left-4">
+<span class="bg-white/90 backdrop-blur px-3 py-1 rounded-full text-label-sm font-bold text-mancha-earth">4 MIN LECTURA</span>
+</div>
+</div>
+<div class="p-8 flex-1 flex flex-col">
+<span class="text-albaicin-blue font-label-sm uppercase mb-3">TURISMO</span>
+<h3 class="font-headline-md text-[24px] text-mancha-earth mb-4">Paseo Añil: Las Calles Blancas</h3>
+<p class="text-body-md text-on-surface-variant mb-8 flex-1 leading-relaxed">
+                        Una guía paso a paso para perderse por el laberinto de cuestas encaladas y zócalos de pintura añil.
+                    </p>
+<a class="text-mancha-earth font-bold flex items-center gap-2 group-hover:text-albaicin-blue transition-colors" href="#">
+                        Leer más
+                        <span class="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+</article>
+<!-- Article 3 -->
+<article class="flex flex-col bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all group">
+<div class="h-64 overflow-hidden relative">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-1000" data-alt="A high-end interior shot of an ancient wine cave cellar twelve meters underground. The lighting is warm and dim, highlighting the massive clay amphorae jars and wooden barrels lined up against the textured limestone walls. Dust motes dance in single shafts of light. Evoking luxury, mystery, and centuries of tradition." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDVnCYMf7c8J4KRmzC9F8QssdxeeG1j_PTsBL6OY9M9hGaxnmadohn-ur8N8Z2-KmaTSfj11E22qjxPpz-b4W2wnQkMA1mNktLy713Lqc5KzhLLLR3CyC35OU-0l53jKdxpbdFAqPnb4_BwxelTX4Jvcs6cxh28Q1ctAjMtMvaQMmXHvbCWMXu5QaT4eEyen_VY8WZ0hyyDiWF8q-P77hPgnP76nU0Q8Nd-Q4sYMOB1L3RhDK724YUS468X6g8eOTfeqP9GNxHL0qY')"></div>
+<div class="absolute top-4 left-4">
+<span class="bg-white/90 backdrop-blur px-3 py-1 rounded-full text-label-sm font-bold text-mancha-earth">6 MIN LECTURA</span>
+</div>
+</div>
+<div class="p-8 flex-1 flex flex-col">
+<span class="text-albaicin-blue font-label-sm uppercase mb-3">ENOTURISMO</span>
+<h3 class="font-headline-md text-[24px] text-mancha-earth mb-4">Crianza bajo Tierra: El Secreto</h3>
+<p class="text-body-md text-on-surface-variant mb-8 flex-1 leading-relaxed">
+                        ¿Por qué las bodegas de Campo de Criptana maduraban sus mejores cosechas a 12 metros bajo el suelo?
+                    </p>
+<a class="text-mancha-earth font-bold flex items-center gap-2 group-hover:text-albaicin-blue transition-colors" href="#">
+                        Leer más
+                        <span class="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+</article>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-lime-wash dark:bg-inverse-surface border-t border-outline-variant dark:border-outline w-full py-section-gap px-gutter">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter max-w-container-max mx-auto">
+<div class="col-span-1 md:col-span-1">
+<h4 class="text-headline-md font-headline-md text-mancha-earth dark:text-surface-bright mb-6">Criptana 360</h4>
+<p class="text-on-secondary-fixed-variant dark:text-surface-variant text-body-md mb-8 leading-relaxed">
+                    La guía definitiva para descubrir el alma de La Mancha. Patrimonio, gastronomía y tecnología al servicio del viajero.
+                </p>
+<div class="flex gap-4">
+<a class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center hover:bg-albaicin-blue hover:text-white transition-all" href="#">
+<i class="material-symbols-outlined text-[20px]">public</i>
+</a>
+<a class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center hover:bg-albaicin-blue hover:text-white transition-all" href="#">
+<i class="material-symbols-outlined text-[20px]">share</i>
+</a>
+<a class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center hover:bg-albaicin-blue hover:text-white transition-all" href="#">
+<i class="material-symbols-outlined text-[20px]">mail</i>
+</a>
+</div>
+</div>
+<div class="flex flex-col">
+<h5 class="font-label-sm uppercase tracking-widest text-mancha-earth dark:text-surface-bright mb-6">Explorar</h5>
+<ul class="space-y-4">
+<li class=""><a class="text-on-secondary-fixed-variant dark:text-surface-variant hover:text-albaicin-blue dark:hover:text-inverse-primary transition-colors text-body-md" href="#">Experiencias</a></li>
+<li class=""><a class="text-on-secondary-fixed-variant dark:text-surface-variant hover:text-albaicin-blue dark:hover:text-inverse-primary transition-colors text-body-md" href="#">Guía de Bodegas</a></li>
+<li class=""><a class="text-on-secondary-fixed-variant dark:text-surface-variant hover:text-albaicin-blue dark:hover:text-inverse-primary transition-colors text-body-md" href="#">Restaurantes</a></li>
+<li class=""><a class="text-on-secondary-fixed-variant dark:text-surface-variant hover:text-albaicin-blue dark:hover:text-inverse-primary transition-colors text-body-md" href="#">Alojamientos</a></li>
+</ul>
+</div>
+<div class="flex flex-col">
+<h5 class="font-label-sm uppercase tracking-widest text-mancha-earth dark:text-surface-bright mb-6">Compañía</h5>
+<ul class="space-y-4">
+<li class=""><a class="text-on-secondary-fixed-variant dark:text-surface-variant hover:text-albaicin-blue dark:hover:text-inverse-primary transition-colors text-body-md" href="#">Privacidad</a></li>
+<li class=""><a class="text-on-secondary-fixed-variant dark:text-surface-variant hover:text-albaicin-blue dark:hover:text-inverse-primary transition-colors text-body-md" href="#">Términos</a></li>
+<li class=""><a class="text-on-secondary-fixed-variant dark:text-surface-variant hover:text-albaicin-blue dark:hover:text-inverse-primary transition-colors text-body-md" href="#">Contacto</a></li>
+<li class=""><a class="text-on-secondary-fixed-variant dark:text-surface-variant hover:text-albaicin-blue dark:hover:text-inverse-primary transition-colors text-body-md" href="#">Prensa</a></li>
+</ul>
+</div>
+<div class="flex flex-col">
+<h5 class="font-label-sm uppercase tracking-widest text-mancha-earth dark:text-surface-bright mb-6">Newsletter</h5>
+<p class="text-on-secondary-fixed-variant dark:text-surface-variant text-body-md mb-6">Recibe eventos y novedades exclusivas en tu email.</p>
+<div class="relative">
+<input class="w-full bg-white dark:bg-black/20 border border-outline-variant dark:border-outline rounded-full py-3 px-6 text-label-sm focus:ring-1 focus:ring-albaicin-blue outline-none transition-all" placeholder="Tu correo electrónico" type="email">
+<button class="absolute right-2 top-1.2 bottom-1.2 bg-albaicin-blue text-white px-4 py-1.5 rounded-full text-label-sm hover:opacity-90 transition-opacity translate-y-[4px]">
+                        Unirse
+                    </button>
+</div>
+</div>
+</div>
+<div class="mt-section-gap pt-8 border-t border-mancha-earth/5 dark:border-white/5 text-center">
+<p class="text-label-sm text-on-secondary-fixed-variant dark:text-surface-variant">© 2024 Criptana 360. Legado Manchego.</p>
+</div>
+</footer>
+<!-- FAB for IA Planner (Mobile only or persistent context) -->
+<button class="md:hidden fixed bottom-6 right-6 z-50 bg-albaicin-blue text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center active:scale-90 transition-transform">
+<span class="material-symbols-outlined">auto_awesome</span>
+</button>
+<script>
+        // Simple scroll behavior for navbar
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('py-2', 'shadow-md');
+                nav.classList.remove('h-20');
+            } else {
+                nav.classList.remove('py-2', 'shadow-md');
+                nav.classList.add('h-20');
+            }
+        });
+    </script>
+
+
+
+
+</body></html>

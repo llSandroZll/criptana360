@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gymkana Quijotesca — Criptana 360 | Desafía a los Gigantes</title>
+  <meta name="description" content="La Gymkana Quijotesca de Criptana 360: un juego de misterio en los molinos de viento de Campo de Criptana. Resuelve acertijos, escanea QR y desbloquea recompensas exclusivas.">
+  <link rel="canonical" href="https://www.criptana360.com/gymkana.html">
+
+  <!-- Heritage Lux Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0" />
+
+  <!-- Heritage Lux Design System -->
+  <link rel="stylesheet" href="heritage-lux.css">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Variables ── */
+    :root {
+      --nav-h: 72px;
+      --hl-glass-dark: rgba(25, 27, 34, 0.82);
+      --gold: #D4AF37;
+      --earth: #4A3728;
+      --blue: #0047AB;
+    }
+
+    body {
+      font-family: var(--hl-font-sans);
+      background: var(--hl-lime-wash);
+      color: var(--hl-on-background);
+      min-height: 100vh;
+    }
+
+    /* ── Navbar ── */
+    .gymk-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      background: rgba(249, 248, 243, 0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+      box-shadow: 0 1px 20px rgba(0,0,0,0.05);
+      z-index: 200;
+    }
+
+    .gymk-nav__inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .gymk-nav__brand {
+      font-family: var(--hl-font-display);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    .gymk-nav__links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .gymk-nav__links a {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #434653;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .gymk-nav__links a:hover { color: var(--blue); }
+    .gymk-nav__links a.active { color: var(--blue); border-bottom: 2px solid var(--blue); padding-bottom: 2px; }
+
+    @media (max-width: 768px) {
+      .gymk-nav__links { display: none; }
+    }
+
+    /* ── Hero ── */
+    .gymk-hero {
+      margin-top: var(--nav-h);
+      background: linear-gradient(160deg, #191b22 0%, #0d1833 60%, #1a0d00 100%);
+      color: white;
+      position: relative;
+      overflow: hidden;
+      padding: 5rem 24px 4rem;
+      text-align: center;
+    }
+
+    .gymk-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('images/gymkana_map_bg.jpg') center/cover no-repeat;
+      opacity: 0.25;
+      transform: scale(1.05);
+    }
+
+    /* Star particles */
+    .stars {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px; height: 2px;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle var(--dur, 3s) var(--del, 0s) ease-in-out infinite;
+      opacity: 0;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0; transform: scale(0.5); }
+      50% { opacity: 0.8; transform: scale(1.3); }
+    }
+
+    .gymk-hero__content {
+      position: relative;
+      z-index: 2;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .gymk-hero__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1rem;
+      border: 1px solid rgba(212,175,55,0.4);
+      border-radius: 9999px;
+      background: rgba(212,175,55,0.1);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+
+    .gymk-hero__title {
+      font-family: var(--hl-font-display);
+      font-size: clamp(2.8rem, 8vw, 5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      background: linear-gradient(135deg, #D4AF37 0%, #FFF5D1 50%, #D4AF37 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+
+    .gymk-hero__sub {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.65;
+      margin-bottom: 2.5rem;
+    }
+
+    .gymk-hero__cta-row {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .gymk-cta-primary {
+      padding: 1rem 2.5rem;
+      background: linear-gradient(135deg, var(--gold), #b8941e);
+      color: #1a0d00;
+      border: none;
+      border-radius: 9999px;
+      font-family: var(--hl-font-sans);
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 6px 24px rgba(212,175,55,0.4);
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
+
+    .gymk-cta-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(212,175,55,0.5); }
+
+    .gymk-cta-secondary {
+      padding: 1rem 2.5rem;
+      background: rgba(255,255,255,0.1);
+      color: white;
+      border: 1.5px solid rgba(255,255,255,0.25);
+      border-radius: 9999px;
+      font-family: var(--hl-font-sans);
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.25s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
+
+    .gymk-cta-secondary:hover { background: rgba(255,255,255,0.15); }
+
+    /* Stats strip */
+    .gymk-stats {
+      background: rgba(255,255,255,0.08);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      position: relative;
+      z-index: 2;
+      margin-top: 3rem;
+    }
+
+    .gymk-stat {
+      flex: 1;
+      max-width: 200px;
+      padding: 1.5rem;
+      text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .gymk-stat:last-child { border-right: none; }
+
+    .gymk-stat__number {
+      font-family: var(--hl-font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--gold);
+      display: block;
+    }
+
+    .gymk-stat__label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* ── How It Works ── */
+    .how-section {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 5rem 24px;
+      text-align: center;
+    }
+
+    .section-overline {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--blue);
+      display: block;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-family: var(--hl-font-display);
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 700;
+      color: var(--earth);
+      margin-bottom: 1rem;
+    }
+
+    .section-desc {
+      font-size: 1rem;
+      color: #434653;
+      max-width: 560px;
+      margin: 0 auto 3.5rem;
+      line-height: 1.7;
+    }
+
+    /* Steps */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .step-card {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      border: 1px solid #e2e2eb;
+      text-align: left;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .step-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--blue), var(--gold));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    .step-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,0,0,0.1); }
+    .step-card:hover::before { transform: scaleX(1); }
+
+    .step-num {
+      font-family: var(--hl-font-display);
+      font-size: 3rem;
+      font-weight: 700;
+      color: rgba(0,71,171,0.1);
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    .step-icon {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      background: rgba(0,71,171,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--blue);
+      margin-bottom: 1.25rem;
+    }
+
+    .step-icon .material-symbols-outlined { font-size: 1.6rem; }
+
+    .step-title {
+      font-family: var(--hl-font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--earth);
+      margin-bottom: 0.6rem;
+    }
+
+    .step-desc { font-size: 0.88rem; color: #434653; line-height: 1.65; }
+
+    /* ── Challenges Section ── */
+    .challenges-section {
+      background: #191b22;
+      padding: 5rem 24px;
+      color: white;
+    }
+
+    .challenges-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .challenges-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .challenge-card {
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px;
+      padding: 1.75rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .challenge-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(212,175,55,0.08), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .challenge-card:hover::after { opacity: 1; }
+    .challenge-card:hover { border-color: rgba(212,175,55,0.3); transform: translateY(-4px); }
+
+    .challenge-card__status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.75rem;
+      border-radius: 9999px;
+      margin-bottom: 1rem;
+    }
+
+    .status-completed { background: rgba(212,175,55,0.15); color: var(--gold); }
+    .status-active { background: rgba(0,71,171,0.25); color: #7faaff; }
+    .status-locked { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.4); }
+
+    .challenge-card__icon {
+      width: 56px; height: 56px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      font-size: 1.8rem;
+    }
+
+    .challenge-card__name {
+      font-family: var(--hl-font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+      color: white;
+    }
+
+    .challenge-card__desc {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+    }
+
+    .challenge-card__footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .challenge-pts {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .challenge-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #7faaff;
+      background: rgba(0,71,171,0.2);
+      border: 1px solid rgba(0,71,171,0.3);
+      border-radius: 9999px;
+      padding: 0.4rem 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: var(--hl-font-sans);
+    }
+
+    .challenge-action:hover { background: rgba(0,71,171,0.35); }
+
+    /* ── Progress Bar (for user "active" state) ── */
+    .progress-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .progress-track {
+      flex: 1;
+      height: 5px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 9999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 9999px;
+      background: linear-gradient(90deg, var(--blue), var(--gold));
+      transition: width 1s ease;
+    }
+
+    .progress-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+
+    /* ── Rewards Section ── */
+    .rewards-section {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 5rem 24px;
+    }
+
+    .rewards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .reward-card {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      text-align: center;
+      border: 1px solid #e2e2eb;
+      transition: all 0.3s ease;
+    }
+
+    .reward-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,71,171,0.1); }
+
+    .reward-icon {
+      font-size: 2.8rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .reward-name {
+      font-family: var(--hl-font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--earth);
+      margin-bottom: 0.5rem;
+    }
+
+    .reward-desc { font-size: 0.82rem; color: #434653; line-height: 1.6; }
+
+    /* ── Victory Screen (shown on completion) ── */
+    #victory-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #191b22;
+      z-index: 500;
+      overflow-y: auto;
+    }
+
+    #victory-overlay.show { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+
+    /* Particles */
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0;
+      animation: float-up var(--dur, 4s) var(--del, 0s) ease-in infinite;
+    }
+
+    @keyframes float-up {
+      0% { transform: translateY(0) scale(0.5); opacity: 0; }
+      20% { opacity: 0.8; }
+      80% { opacity: 0.5; }
+      100% { transform: translateY(-100vh) scale(1.2); opacity: 0; }
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% { filter: drop-shadow(0 0 20px rgba(212,175,55,0.4)); }
+      50% { filter: drop-shadow(0 0 50px rgba(212,175,55,0.9)); }
+    }
+
+    .trophy-glow { animation: pulse-glow 3s ease-in-out infinite; }
+
+    .gold-text {
+      background: linear-gradient(135deg, #D4AF37 0%, #FFF5D1 50%, #D4AF37 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── FAQ / Info ── */
+    .info-section {
+      background: #F9F8F3;
+      border-top: 1px solid #e2e2eb;
+      padding: 5rem 24px;
+    }
+
+    .info-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    @media (max-width: 768px) {
+      .info-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    }
+
+    .faq-item {
+      border-bottom: 1px solid #e2e2eb;
+      padding: 1.25rem 0;
+    }
+
+    .faq-q {
+      font-weight: 700;
+      color: var(--earth);
+      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    .faq-a { font-size: 0.88rem; color: #434653; line-height: 1.65; }
+
+    /* ── Footer ── */
+    .gymk-footer {
+      background: #191b22;
+      color: rgba(255,255,255,0.6);
+      padding: 3rem 24px;
+      text-align: center;
+      font-size: 0.8rem;
+    }
+
+    .gymk-footer__logo {
+      font-family: var(--hl-font-display);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 0.5rem;
+    }
+
+    .gymk-footer a {
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      margin: 0 0.75rem;
+      transition: color 0.2s;
+    }
+
+    .gymk-footer a:hover { color: var(--gold); }
+
+    /* ── Active Quest Modal ── */
+    .quest-modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(8px);
+      z-index: 300;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .quest-modal-overlay.show { display: flex; }
+
+    .quest-modal {
+      background: #1a1d28;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 24px;
+      padding: 2.5rem;
+      max-width: 480px;
+      width: 100%;
+      color: white;
+      position: relative;
+      animation: modalIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.9) translateY(20px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .quest-modal__close {
+      position: absolute;
+      top: 1.25rem; right: 1.25rem;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      color: white;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+
+    .quest-modal__close:hover { background: rgba(255,255,255,0.2); }
+
+    .riddle-box {
+      background: rgba(212,175,55,0.1);
+      border: 1px solid rgba(212,175,55,0.25);
+      border-radius: 14px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .riddle-box p {
+      font-style: italic;
+      font-family: var(--hl-font-display);
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.9);
+    }
+
+    .riddle-box cite {
+      display: block;
+      margin-top: 0.75rem;
+      font-size: 0.75rem;
+      color: var(--gold);
+      font-style: normal;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .answer-input {
+      width: 100%;
+      padding: 1rem 1.25rem;
+      background: rgba(255,255,255,0.07);
+      border: 1.5px solid rgba(255,255,255,0.15);
+      border-radius: 12px;
+      color: white;
+      font-family: var(--hl-font-sans);
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+      margin-bottom: 1rem;
+    }
+
+    .answer-input:focus { border-color: var(--blue); }
+    .answer-input::placeholder { color: rgba(255,255,255,0.3); }
+
+    .submit-answer-btn {
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(135deg, var(--blue), #1565C0);
+      color: white;
+      border: none;
+      border-radius: 9999px;
+      font-family: var(--hl-font-sans);
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(0,71,171,0.4);
+      transition: all 0.2s;
+    }
+
+    .submit-answer-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,71,171,0.5); }
+
+    .answer-hint {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+      margin-top: 1rem;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .answer-hint:hover { color: var(--gold); }
+
+    .answer-feedback {
+      text-align: center;
+      padding: 1rem;
+      border-radius: 12px;
+      font-weight: 700;
+      margin-top: 0.75rem;
+      display: none;
+    }
+
+    .answer-feedback.correct {
+      background: rgba(212,175,55,0.15);
+      color: var(--gold);
+      border: 1px solid rgba(212,175,55,0.3);
+    }
+
+    .answer-feedback.wrong {
+      background: rgba(186,26,26,0.15);
+      color: #ff8a80;
+      border: 1px solid rgba(186,26,26,0.3);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════ NAVBAR ═══════════════ -->
+  <nav class="gymk-nav" role="navigation" aria-label="Navegación principal">
+    <div class="gymk-nav__inner">
+      <a href="index.html" class="gymk-nav__brand">Criptana 360</a>
+      <ul class="gymk-nav__links">
+        <li><a href="index.html#guia">Experiencias</a></li>
+        <li><a href="ruta-ia.html">Rutas IA</a></li>
+        <li><a href="gymkana.html" class="active">Gymkana</a></li>
+        <li><a href="index.html#articulos">Historia</a></li>
+        <li><a href="index.html#guia">Guía</a></li>
+      </ul>
+      <a href="ruta-ia.html" class="hl-btn hl-btn-primary" style="font-size:0.8rem; padding: 0.5rem 1.25rem;">
+        Planificar Ruta
+      </a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════ HERO ═══════════════ -->
+  <header class="gymk-hero" role="banner">
+    <!-- Animated stars -->
+    <div class="stars" id="stars" aria-hidden="true"></div>
+
+    <div class="gymk-hero__content">
+      <div class="gymk-hero__badge">
+        <span class="material-symbols-outlined" style="font-size:0.9rem;">military_tech</span>
+        Gymkana Quijotesca — Campo de Criptana
+      </div>
+
+      <h1 class="gymk-hero__title">Desafía a los Gigantes</h1>
+
+      <p class="gymk-hero__sub">
+        Una aventura gamificada entre los molinos de viento que inspiraron la locura más célebre de la literatura. 10 misiones. 10 secretos. ¿Serás capaz de conquistarlos todos?
+      </p>
+
+      <div class="gymk-hero__cta-row">
+        <button class="gymk-cta-primary" onclick="startGymkana()">
+          <span class="material-symbols-outlined">explore</span>
+          Comenzar Aventura
+        </button>
+        <a href="#como-funciona" class="gymk-cta-secondary">
+          <span class="material-symbols-outlined">info</span>
+          Cómo funciona
+        </a>
+      </div>
+
+      <!-- Stats -->
+      <div class="gymk-stats">
+        <div class="gymk-stat">
+          <span class="gymk-stat__number" id="counter-players">3.847</span>
+          <span class="gymk-stat__label">Aventureros</span>
+        </div>
+        <div class="gymk-stat">
+          <span class="gymk-stat__number">10</span>
+          <span class="gymk-stat__label">Misiones</span>
+        </div>
+        <div class="gymk-stat">
+          <span class="gymk-stat__number">6.5km</span>
+          <span class="gymk-stat__label">Recorrido</span>
+        </div>
+        <div class="gymk-stat">
+          <span class="gymk-stat__number">~3h</span>
+          <span class="gymk-stat__label">Duración media</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══════════════ HOW IT WORKS ═══════════════ -->
+  <section id="como-funciona" class="how-section">
+    <span class="section-overline">El Proceso</span>
+    <h2 class="section-title">¿Cómo funciona la Gymkana?</h2>
+    <p class="section-desc">
+      Combina exploración física, cultura local y resolución de acertijos en una experiencia que no olvidarás.
+    </p>
+
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <div class="step-icon">
+          <span class="material-symbols-outlined">qr_code_scanner</span>
+        </div>
+        <h3 class="step-title">Escanea el código QR</h3>
+        <p class="step-desc">Cada molino y monumento tiene un código QR único. Localízalo físicamente o usa el mapa interactivo para empezar la misión.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <div class="step-icon">
+          <span class="material-symbols-outlined">psychology</span>
+        </div>
+        <h3 class="step-title">Resuelve el acertijo</h3>
+        <p class="step-desc">Cada parada esconde un enigma inspirado en el Quijote, la historia local o la naturaleza manchega. Razona, observa e investiga.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <div class="step-icon">
+          <span class="material-symbols-outlined">camera_enhance</span>
+        </div>
+        <h3 class="step-title">Captura el momento</h3>
+        <p class="step-desc">Completa el reto visual de cada parada: una foto creativa, una selfie con el molino o encuentra el objeto oculto en el entorno.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">04</div>
+        <div class="step-icon">
+          <span class="material-symbols-outlined">workspace_premium</span>
+        </div>
+        <h3 class="step-title">Desbloquea recompensas</h3>
+        <p class="step-desc">Acumula puntos e insignias en cada parada. Los mejores aventureros reciben premios exclusivos de nuestros socios locales.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ CHALLENGES ═══════════════ -->
+  <section class="challenges-section" id="misiones">
+    <div class="challenges-inner">
+      <span class="section-overline" style="color: rgba(212,175,55,0.8);">Las Misiones</span>
+      <h2 class="section-title" style="color: white;">10 Desafíos Quijotescos</h2>
+      <p class="section-desc" style="color: rgba(255,255,255,0.6);">
+        Cada misión es un capítulo de la historia manchega. Completa todas para alcanzar el rango de Leyenda.
+      </p>
+
+      <!-- Progress bar (sample logged-in user) -->
+      <div class="progress-wrapper" style="margin: 2rem 0 0; max-width: 500px;">
+        <div class="progress-track">
+          <div class="progress-fill" id="main-progress" style="width: 40%"></div>
+        </div>
+        <span class="progress-label" id="progress-label">4 / 10 completadas</span>
+      </div>
+
+      <div class="challenges-grid">
+
+        <!-- Completed missions -->
+        <article class="challenge-card" onclick="openQuest(0)">
+          <span class="challenge-card__status status-completed">
+            <span class="material-symbols-outlined" style="font-size:0.85rem; font-variation-settings:'FILL' 1;">check_circle</span>
+            Completada
+          </span>
+          <div class="challenge-card__icon" style="background:rgba(212,175,55,0.12);">🏰</div>
+          <h3 class="challenge-card__name">Molino Infanto</h3>
+          <p class="challenge-card__desc">El primer gigante. Descubre el secreto que custodian sus aspas desde el siglo XVI.</p>
+          <div class="challenge-card__footer">
+            <span class="challenge-pts">
+              <span class="material-symbols-outlined" style="font-size:1rem; font-variation-settings:'FILL' 1;">star</span>
+              150 pts
+            </span>
+            <span style="font-size:0.75rem; color: var(--gold);">✓ Conquistado</span>
+          </div>
+        </article>
+
+        <article class="challenge-card" onclick="openQuest(1)">
+          <span class="challenge-card__status status-completed">
+            <span class="material-symbols-outlined" style="font-size:0.85rem; font-variation-settings:'FILL' 1;">check_circle</span>
+            Completada
+          </span>
+          <div class="challenge-card__icon" style="background:rgba(212,175,55,0.12);">⚗️</div>
+          <h3 class="challenge-card__name">Secreto de Burleta</h3>
+          <p class="challenge-card__desc">El molino de las leyendas alquimistas. ¿Qué se molía realmente aquí en 1480?</p>
+          <div class="challenge-card__footer">
+            <span class="challenge-pts">
+              <span class="material-symbols-outlined" style="font-size:1rem; font-variation-settings:'FILL' 1;">star</span>
+              200 pts
+            </span>
+            <span style="font-size:0.75rem; color: var(--gold);">✓ Conquistado</span>
+          </div>
+        </article>
+
+        <article class="challenge-card" onclick="openQuest(2)">
+          <span class="challenge-card__status status-completed">
+            <span class="material-symbols-outlined" style="font-size:0.85rem; font-variation-settings:'FILL' 1;">check_circle</span>
+            Completada
+          </span>
+          <div class="challenge-card__icon" style="background:rgba(212,175,55,0.12);">🌿</div>
+          <h3 class="challenge-card__name">Ruta del Albaicín</h3>
+          <p class="challenge-card__desc">El barrio de los zócalos añil. Encuentra la fuente oculta en el laberinto de callejas.</p>
+          <div class="challenge-card__footer">
+            <span class="challenge-pts">
+              <span class="material-symbols-outlined" style="font-size:1rem; font-variation-settings:'FILL' 1;">star</span>
+              175 pts
+            </span>
+            <span style="font-size:0.75rem; color: var(--gold);">✓ Conquistado</span>
+          </div>
+        </article>
+
+        <article class="challenge-card" onclick="openQuest(3)">
+          <span class="challenge-card__status status-completed">
+            <span class="material-symbols-outlined" style="font-size:0.85rem; font-variation-settings:'FILL' 1;">check_circle</span>
+            Completada
+          </span>
+          <div class="challenge-card__icon" style="background:rgba(212,175,55,0.12);">🍷</div>
+          <h3 class="challenge-card__name">La Bodega Prohibida</h3>
+          <p class="challenge-card__desc">Castiblanque esconde más que vino. Descifra la inscripción en la barrica más antigua.</p>
+          <div class="challenge-card__footer">
+            <span class="challenge-pts">
+              <span class="material-symbols-outlined" style="font-size:1rem; font-variation-settings:'FILL' 1;">star</span>
+              225 pts
+            </span>
+            <span style="font-size:0.75rem; color: var(--gold);">✓ Conquistado</span>
+          </div>
+        </article>
+
+        <!-- Active mission -->
+        <article class="challenge-card" onclick="openQuest(4)" style="border-color: rgba(0,71,171,0.35);">
+          <span class="challenge-card__status status-active">
+            <span class="material-symbols-outlined" style="font-size:0.85rem;">radio_button_checked</span>
+            Misión Activa
+          </span>
+          <div class="challenge-card__icon" style="background:rgba(0,71,171,0.15);">⚔️</div>
+          <h3 class="challenge-card__name">El Duelo de Sardinero</h3>
+          <p class="challenge-card__desc">Don Quijote libró aquí su batalla más épica. ¿En qué año fue la gran riña según la placa olvidada?</p>
+          <div class="challenge-card__footer">
+            <span class="challenge-pts">
+              <span class="material-symbols-outlined" style="font-size:1rem; font-variation-settings:'FILL' 1;">star</span>
+              250 pts
+            </span>
+            <button class="challenge-action">
+              <span class="material-symbols-outlined" style="font-size:0.9rem;">play_arrow</span>
+              Resolver
+            </button>
+          </div>
+        </article>
+
+        <!-- Locked missions -->
+        <article class="challenge-card" style="opacity:0.55; cursor:not-allowed;">
+          <span class="challenge-card__status status-locked">
+            <span class="material-symbols-outlined" style="font-size:0.85rem;">lock</span>
+            Bloqueada
+          </span>
+          <div class="challenge-card__icon" style="background:rgba(255,255,255,0.05);">🌙</div>
+          <h3 class="challenge-card__name">La Leyenda Nocturna</h3>
+          <p class="challenge-card__desc">Completa la misión anterior para desbloquear este secreto del atardecer manchego.</p>
+          <div class="challenge-card__footer">
+            <span class="challenge-pts" style="color:rgba(255,255,255,0.3);">
+              <span class="material-symbols-outlined" style="font-size:1rem;">star</span>
+              300 pts
+            </span>
+          </div>
+        </article>
+
+        <article class="challenge-card" style="opacity:0.55; cursor:not-allowed;">
+          <span class="challenge-card__status status-locked">
+            <span class="material-symbols-outlined" style="font-size:0.85rem;">lock</span>
+            Bloqueada
+          </span>
+          <div class="challenge-card__icon" style="background:rgba(255,255,255,0.05);">🗺️</div>
+          <h3 class="challenge-card__name">El Mapa Perdido</h3>
+          <p class="challenge-card__desc">Un mapa del siglo XVII cuyos fragmentos están escondidos en 3 puntos del pueblo.</p>
+          <div class="challenge-card__footer">
+            <span class="challenge-pts" style="color:rgba(255,255,255,0.3);">
+              <span class="material-symbols-outlined" style="font-size:1rem;">star</span>
+              350 pts
+            </span>
+          </div>
+        </article>
+
+        <article class="challenge-card" style="opacity:0.55; cursor:not-allowed;">
+          <span class="challenge-card__status status-locked">
+            <span class="material-symbols-outlined" style="font-size:0.85rem;">lock</span>
+            Bloqueada
+          </span>
+          <div class="challenge-card__icon" style="background:rgba(255,255,255,0.05);">🦅</div>
+          <h3 class="challenge-card__name">El Águila de Criptana</h3>
+          <p class="challenge-card__desc">La figura del águila reaparece en 5 lugares del pueblo. ¿Cuál es el nexo entre ellos?</p>
+          <div class="challenge-card__footer">
+            <span class="challenge-pts" style="color:rgba(255,255,255,0.3);">
+              <span class="material-symbols-outlined" style="font-size:1rem;">star</span>
+              400 pts
+            </span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ REWARDS ═══════════════ -->
+  <section class="rewards-section">
+    <div style="text-align:center;">
+      <span class="section-overline">Lo que Ganas</span>
+      <h2 class="section-title">Recompensas Exclusivas</h2>
+      <p class="section-desc" style="margin: 0 auto 0; max-width:500px;">
+        Los mejores aventureros se llevan premios reales de nuestros socios locales.
+      </p>
+    </div>
+
+    <div class="rewards-grid">
+      <div class="reward-card">
+        <span class="reward-icon">🏆</span>
+        <div class="reward-name">Cata Privada</div>
+        <p class="reward-desc">Degustación de vinos de autor en Bodegas Castiblanque para los que alcancen el rango Leyenda.</p>
+      </div>
+      <div class="reward-card">
+        <span class="reward-icon">🎨</span>
+        <div class="reward-name">Lámina Artesanal</div>
+        <p class="reward-desc">Impresión numerada con la ilustración quijotesca de Campo de Criptana, firmada por el artista.</p>
+      </div>
+      <div class="reward-card">
+        <span class="reward-icon">🍽️</span>
+        <div class="reward-name">Menú Degustación</div>
+        <p class="reward-desc">Almuerzo de bienvenida con productos D.O. La Mancha en el restaurante colaborador.</p>
+      </div>
+      <div class="reward-card">
+        <span class="reward-icon">🎖️</span>
+        <div class="reward-name">Insignia Digital</div>
+        <p class="reward-desc">Colecciona los 10 NFT badges de la Gymkana: arte digital inédito de cada molino conquistado.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ FAQ ═══════════════ -->
+  <section class="info-section">
+    <div class="info-inner">
+      <div>
+        <span class="section-overline">Preguntas Frecuentes</span>
+        <h2 class="section-title" style="font-size:1.8rem;">Todo lo que necesitas saber</h2>
+
+        <div class="faq-item">
+          <p class="faq-q">¿Necesito descargar alguna app?</p>
+          <p class="faq-a">No. La Gymkana funciona completamente desde el navegador de tu móvil. Sin instalaciones, sin cuentas obligatorias.</p>
+        </div>
+        <div class="faq-item">
+          <p class="faq-q">¿Cuánto tiempo dura la experiencia?</p>
+          <p class="faq-a">Entre 2 y 4 horas dependiendo del número de misiones que completes. Puedes hacerlo a tu ritmo y en días diferentes.</p>
+        </div>
+        <div class="faq-item">
+          <p class="faq-q">¿Es apta para niños?</p>
+          <p class="faq-a">Sí. Los acertijos tienen niveles de dificultad. Los menores de 12 años disfrutan especialmente del componente de exploración física.</p>
+        </div>
+        <div class="faq-item">
+          <p class="faq-q">¿Necesito estar físicamente en Criptana?</p>
+          <p class="faq-a">Sí, los retos de escaneo QR requieren presencia física. Sin embargo, los acertijos de texto pueden resolverse desde casa como práctica.</p>
+        </div>
+        <div class="faq-item">
+          <p class="faq-q">¿Hay precio de entrada?</p>
+          <p class="faq-a">La Gymkana básica es gratuita. Las recompensas exclusivas se activan al completar 8 o más misiones (colaboración con socios locales).</p>
+        </div>
+      </div>
+
+      <div style="background: linear-gradient(135deg, #0047AB, #00327d); border-radius:24px; padding:2.5rem; color:white; text-align:center;">
+        <span class="material-symbols-outlined" style="font-size:3rem; opacity:0.5; margin-bottom:1rem; display:block;">explore</span>
+        <h3 style="font-family:var(--hl-font-display); font-size:1.6rem; margin-bottom:1rem;">¿Listo para la aventura?</h3>
+        <p style="opacity:0.85; font-size:0.9rem; line-height:1.7; margin-bottom:2rem;">
+          Únete a los más de 3.800 aventureros que ya han explorado los secretos de Campo de Criptana. Tu historia comienza ahora.
+        </p>
+        <button class="gymk-cta-primary" onclick="startGymkana()" style="width:100%; justify-content:center;">
+          <span class="material-symbols-outlined">play_arrow</span>
+          Empezar Misión
+        </button>
+        <a href="ruta-ia.html" style="display:block; margin-top:1rem; color:rgba(255,255,255,0.6); font-size:0.85rem; text-decoration:none;">
+          O planifica tu ruta primero →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <footer class="gymk-footer" role="contentinfo">
+    <div class="gymk-footer__logo">Criptana 360</div>
+    <p style="margin-bottom:1rem;">Legado y tecnología — Campo de Criptana, La Mancha</p>
+    <div>
+      <a href="index.html">Inicio</a>
+      <a href="ruta-ia.html">Tu Ruta IA</a>
+      <a href="#">Privacidad</a>
+      <a href="#">Contacto</a>
+    </div>
+    <p style="margin-top:1.5rem; font-size:0.75rem;">© 2024 Criptana 360. Todos los derechos reservados.</p>
+  </footer>
+
+  <!-- ═══════════════ QUEST MODAL ═══════════════ -->
+  <div class="quest-modal-overlay" id="quest-modal" role="dialog" aria-modal="true" aria-labelledby="quest-title">
+    <div class="quest-modal">
+      <button class="quest-modal__close" onclick="closeQuest()" aria-label="Cerrar">
+        <span class="material-symbols-outlined" style="font-size:1.2rem;">close</span>
+      </button>
+
+      <span style="font-size:0.65rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color: var(--gold);" id="quest-badge">MISIÓN ACTIVA</span>
+      <h2 style="font-family:var(--hl-font-display); font-size:1.6rem; color:white; margin:0.5rem 0 0.25rem;" id="quest-title">El Duelo de Sardinero</h2>
+      <p style="font-size:0.82rem; color:rgba(255,255,255,0.55);" id="quest-location">
+        <span class="material-symbols-outlined" style="font-size:0.9rem; vertical-align:middle;">location_on</span>
+        Molino Sardinero, Sierra de los Molinos
+      </p>
+
+      <div class="riddle-box">
+        <p id="quest-riddle">"Según la placa de bronce colocada en el año del centenario del Quijote, ¿en qué año se colocó dicha placa conmemorativa?"</p>
+        <cite>🗺️ Pista: Busca la placa en la base norte del molino.</cite>
+      </div>
+
+      <input
+        type="text"
+        class="answer-input"
+        id="answer-input"
+        placeholder="Escribe tu respuesta aquí…"
+        aria-label="Respuesta al acertijo"
+        onkeydown="if(event.key==='Enter') checkAnswer()"
+      >
+
+      <button class="submit-answer-btn" onclick="checkAnswer()">
+        <span class="material-symbols-outlined" style="font-size:1.1rem; vertical-align:middle;">send</span>
+        Enviar Respuesta
+      </button>
+
+      <div class="answer-feedback" id="answer-feedback"></div>
+
+      <p class="answer-hint" onclick="showHint()">
+        <span class="material-symbols-outlined" style="font-size:0.9rem; vertical-align:middle;">lightbulb</span>
+        Ver pista adicional (−10 puntos)
+      </p>
+    </div>
+  </div>
+
+  <!-- ═══════════════ VICTORY OVERLAY ═══════════════ -->
+  <div id="victory-overlay" role="dialog" aria-modal="true" aria-label="¡Victoria!">
+    <div id="particles-v" style="position:fixed;inset:0;pointer-events:none;overflow:hidden;"></div>
+    <div style="text-align:center; padding: 2rem 24px; max-width:600px; margin:0 auto; position:relative; z-index:2;">
+      <header style="display:flex; justify-content:space-between; align-items:center; margin-bottom:3rem; width:100%;">
+        <span style="font-family:var(--hl-font-display); font-size:1.3rem; color:white;">Criptana 360</span>
+        <span style="background:rgba(212,175,55,0.15); border:1px solid rgba(212,175,55,0.3); padding:0.35rem 1rem; border-radius:9999px; font-size:0.7rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold);">Gymkana Completada</span>
+      </header>
+
+      <div class="trophy-glow" style="position:relative; width:200px; height:200px; margin:0 auto 2rem;">
+        <div style="position:absolute; inset:0; background:rgba(212,175,55,0.12); border-radius:50%; filter:blur(30px); animation:pulse 3s infinite;"></div>
+        <div style="position:absolute; inset:20px; background:rgba(0,71,171,0.15); border-radius:50%; filter:blur(20px);"></div>
+        <div style="position:relative; z-index:2; display:flex; align-items:center; justify-content:center; height:100%;">
+          <span style="font-size:7rem; line-height:1; filter:drop-shadow(0 0 20px rgba(212,175,55,0.6));">🏆</span>
+        </div>
+      </div>
+
+      <h1 class="gold-text" style="font-family:var(--hl-font-display); font-size:clamp(3rem,10vw,5rem); font-weight:700; margin-bottom:0.5rem;">¡Victoria!</h1>
+      <p style="font-family:var(--hl-font-display); font-style:italic; color:rgba(255,255,255,0.55); font-size:1.1rem; margin-bottom:2rem;">«El gigante ha sido conquistado.»</p>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:2rem;">
+        <div style="background:rgba(255,255,255,0.07); backdrop-filter:blur(12px); border:1px solid rgba(255,255,255,0.1); border-radius:16px; padding:1.5rem; text-align:center;">
+          <span class="material-symbols-outlined" style="font-size:2.5rem; color:var(--gold); font-variation-settings:'FILL' 1; display:block; margin-bottom:0.5rem;">star</span>
+          <div style="font-family:var(--hl-font-display); font-size:1.5rem; color:white; font-weight:700;">10/10</div>
+          <div style="font-size:0.7rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:rgba(255,255,255,0.4); margin-top:0.25rem;">Acertijos</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.07); backdrop-filter:blur(12px); border:1px solid rgba(255,255,255,0.1); border-radius:16px; padding:1.5rem; text-align:center;">
+          <span class="material-symbols-outlined" style="font-size:2.5rem; color:var(--blue); font-variation-settings:'FILL' 1; display:block; margin-bottom:0.5rem;">local_fire_department</span>
+          <div style="font-family:var(--hl-font-display); font-size:1.5rem; color:var(--gold); font-weight:700;">Leyenda</div>
+          <div style="font-size:0.7rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:rgba(255,255,255,0.4); margin-top:0.25rem;">Rango Final</div>
+        </div>
+      </div>
+
+      <button onclick="closeVictory()" class="gymk-cta-primary" style="width:100%; justify-content:center; margin-bottom:1rem;">
+        Ver mis Recompensas
+      </button>
+      <a href="ruta-ia.html" style="display:block; color:rgba(255,255,255,0.5); font-size:0.85rem; text-decoration:none;">
+        Diseñar mi próxima ruta →
+      </a>
+    </div>
+  </div>
+
+  <script>
+    // ── Stars animation ──────────────────────────────────────────
+    (function() {
+      const container = document.getElementById('stars');
+      for (let i = 0; i < 80; i++) {
+        const s = document.createElement('div');
+        s.className = 'star';
+        s.style.setProperty('--dur', (2 + Math.random() * 4) + 's');
+        s.style.setProperty('--del', (Math.random() * 5) + 's');
+        s.style.left = Math.random() * 100 + '%';
+        s.style.top = Math.random() * 100 + '%';
+        s.style.width = s.style.height = (1 + Math.random() * 2.5) + 'px';
+        container.appendChild(s);
+      }
+    })();
+
+    // ── Counter animation ────────────────────────────────────────
+    (function() {
+      const target = 3847;
+      const el = document.getElementById('counter-players');
+      let count = 3500;
+      const interval = setInterval(() => {
+        count += Math.ceil((target - count) / 10);
+        el.textContent = count.toLocaleString('es-ES');
+        if (count >= target) { el.textContent = target.toLocaleString('es-ES'); clearInterval(interval); }
+      }, 50);
+    })();
+
+    // ── Card mouse-follow glow ───────────────────────────────────
+    document.querySelectorAll('.challenge-card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+        card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+      });
+    });
+
+    // ── Quest data ───────────────────────────────────────────────
+    const quests = [
+      { name: 'Molino Infanto', location: 'Molino Infanto, Sierra de los Molinos', riddle: 'El Molino Infanto tiene un número grabado en su puerta que hace referencia al año de su última restauración integral. ¿Qué número es?', answer: '1962', hint: 'La fecha está en la parte superior de la puerta de madera principal.', completed: true },
+      { name: 'Secreto de Burleta', location: 'Molino Burleta', riddle: '¿Cuántas aspas tiene el molino Burleta en su configuración original? Cuenta bien, algunas pueden estar ocultas.', answer: '4', hint: 'Los molinos manchegos tradicionales tienen un número par de aspas.', completed: true },
+      { name: 'Ruta del Albaicín', location: 'Barrio del Albaicín', riddle: '¿De qué color son los zócalos (parte inferior) de las casas del Albaicín Criptanense?', answer: 'azul', hint: 'Es el color de la bandera de los cielos manchegos.', completed: true },
+      { name: 'La Bodega Prohibida', location: 'Bodegas Castiblanque', riddle: '¿En qué año fue fundada la cooperativa vinícola más antigua de Campo de Criptana según su fachada?', answer: '1954', hint: 'Busca la inscripción en la entrada principal de la cooperativa.', completed: true },
+      { name: 'El Duelo de Sardinero', location: 'Molino Sardinero, Sierra de los Molinos', riddle: '"Según la placa de bronce del centenario, ¿en qué año se colocó dicha placa conmemorativa?"', answer: '2005', hint: 'El primer centenario del Quijote fue en 1905. El cuarto es…', completed: false }
+    ];
+
+    let currentQuest = null;
+
+    function startGymkana() {
+      openQuest(4); // Go to active quest
+    }
+
+    function openQuest(idx) {
+      const q = quests[idx];
+      if (!q) return;
+      currentQuest = q;
+
+      document.getElementById('quest-title').textContent = q.name;
+      document.getElementById('quest-location').innerHTML = `<span class="material-symbols-outlined" style="font-size:0.9rem;vertical-align:middle;">location_on</span> ${q.location}`;
+      document.getElementById('quest-riddle').textContent = q.riddle;
+      document.getElementById('quest-badge').textContent = q.completed ? '✓ COMPLETADA' : 'MISIÓN ACTIVA';
+      document.getElementById('answer-input').value = '';
+      document.getElementById('answer-input').disabled = q.completed;
+      document.getElementById('answer-feedback').style.display = q.completed ? 'block' : 'none';
+      if (q.completed) {
+        document.getElementById('answer-feedback').className = 'answer-feedback correct';
+        document.getElementById('answer-feedback').innerHTML = '✓ Ya has completado esta misión. ¡Bien hecho, aventurero!';
+      }
+
+      document.getElementById('quest-modal').classList.add('show');
+    }
+
+    function closeQuest() {
+      document.getElementById('quest-modal').classList.remove('show');
+      document.getElementById('answer-feedback').style.display = 'none';
+    }
+
+    function checkAnswer() {
+      if (!currentQuest) return;
+      const input = document.getElementById('answer-input').value.trim().toLowerCase();
+      const correct = currentQuest.answer.toLowerCase();
+      const fb = document.getElementById('answer-feedback');
+
+      fb.style.display = 'block';
+
+      if (input === correct || input.includes(correct)) {
+        fb.className = 'answer-feedback correct';
+        fb.innerHTML = '🎉 ¡Correcto! Has ganado ' + (200 + Math.floor(Math.random() * 100)) + ' puntos. ¡La misión está completada!';
+
+        setTimeout(() => {
+          closeQuest();
+          showVictory();
+        }, 2200);
+      } else {
+        fb.className = 'answer-feedback wrong';
+        fb.innerHTML = '✗ No es correcto. Vuelve al lugar e investiga más de cerca.';
+
+        document.getElementById('answer-input').style.borderColor = 'rgba(186,26,26,0.5)';
+        setTimeout(() => {
+          document.getElementById('answer-input').style.borderColor = 'rgba(255,255,255,0.15)';
+        }, 1500);
+      }
+    }
+
+    function showHint() {
+      if (!currentQuest) return;
+      const fb = document.getElementById('answer-feedback');
+      fb.style.display = 'block';
+      fb.className = 'answer-feedback';
+      fb.style.background = 'rgba(212,175,55,0.08)';
+      fb.style.color = 'rgba(212,175,55,0.9)';
+      fb.style.border = '1px solid rgba(212,175,55,0.2)';
+      fb.innerHTML = `💡 ${currentQuest.hint} <br><small style="opacity:0.7">(−10 puntos aplicados)</small>`;
+    }
+
+    // ── Victory screen ───────────────────────────────────────────
+    function showVictory() {
+      const overlay = document.getElementById('victory-overlay');
+      overlay.classList.add('show');
+
+      // Particles
+      const pCont = document.getElementById('particles-v');
+      for (let i = 0; i < 30; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        const colors = ['#D4AF37', '#0047AB', '#ffffff', '#ffb59a'];
+        p.style.setProperty('--dur', (3 + Math.random() * 4) + 's');
+        p.style.setProperty('--del', (Math.random() * 3) + 's');
+        p.style.left = Math.random() * 100 + 'vw';
+        p.style.bottom = '0';
+        p.style.width = p.style.height = (4 + Math.random() * 8) + 'px';
+        p.style.background = colors[Math.floor(Math.random() * colors.length)];
+        pCont.appendChild(p);
+      }
+    }
+
+    function closeVictory() {
+      document.getElementById('victory-overlay').classList.remove('show');
+    }
+
+    // ── Close on backdrop click ──────────────────────────────────
+    document.getElementById('quest-modal').addEventListener('click', e => {
+      if (e.target === document.getElementById('quest-modal')) closeQuest();
+    });
+  </script>
+
+</body>
+</html>

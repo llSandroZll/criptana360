@@ -1,0 +1,344 @@
+<!DOCTYPE html><html class="light" lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Criptana 360 - Tu Ruta Personalizada</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="assets/css2-d21858f2f08c8d00156ba0e7102964ba" rel="stylesheet">
+<link href="assets/css2-a39f5c6fcbb87b419667ec984d2e579a" rel="stylesheet">
+<link href="assets/css2-a39f5c6fcbb87b419667ec984d2e579a" rel="stylesheet">
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "on-tertiary-fixed": "#380d00",
+                "on-surface-variant": "#434653",
+                "inverse-on-surface": "#f0f0f9",
+                "lime-wash": "#F9F8F3",
+                "tertiary-container": "#8b2e01",
+                "surface-variant": "#e2e2eb",
+                "on-secondary": "#ffffff",
+                "surface-container-high": "#e7e7f0",
+                "inverse-primary": "#b1c5ff",
+                "on-primary-container": "#a5bdff",
+                "error": "#ba1a1a",
+                "error-container": "#ffdad6",
+                "outline-variant": "#c3c6d5",
+                "on-primary-fixed": "#001946",
+                "secondary-container": "#e3e3de",
+                "tertiary-fixed-dim": "#ffb59a",
+                "surface": "#faf8ff",
+                "primary-fixed": "#dae2ff",
+                "tertiary-fixed": "#ffdbcf",
+                "secondary": "#5e5f5b",
+                "on-surface": "#191b22",
+                "tertiary": "#651f00",
+                "on-secondary-fixed": "#1b1c19",
+                "on-secondary-container": "#646561",
+                "on-secondary-fixed-variant": "#464744",
+                "albaicin-blue": "#0047AB",
+                "outline": "#737784",
+                "surface-dim": "#d9d9e2",
+                "on-tertiary-container": "#ffaa8a",
+                "on-background": "#191b22",
+                "on-error-container": "#93000a",
+                "surface-container-low": "#f3f3fc",
+                "surface-container": "#ededf6",
+                "primary": "#00327d",
+                "secondary-fixed-dim": "#c7c7c2",
+                "surface-bright": "#faf8ff",
+                "primary-container": "#0047ab",
+                "background": "#faf8ff",
+                "surface-tint": "#2559bd",
+                "surface-container-lowest": "#ffffff",
+                "on-primary-fixed-variant": "#00419e",
+                "on-primary": "#ffffff",
+                "inverse-surface": "#2e3037",
+                "on-tertiary-fixed-variant": "#802900",
+                "surface-container-highest": "#e2e2eb",
+                "mancha-earth": "#4A3728",
+                "secondary-fixed": "#e3e3de",
+                "primary-fixed-dim": "#b1c5ff",
+                "on-tertiary": "#ffffff",
+                "on-error": "#ffffff",
+                "sunset-gold": "#D4AF37"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "component-padding": "24px",
+                "section-gap": "80px",
+                "gutter": "24px",
+                "container-max": "1280px",
+                "margin-mobile": "16px"
+            },
+            "fontFamily": {
+                "body-lg": ["Manrope"],
+                "display-lg": ["Bodoni Moda"],
+                "body-md": ["Manrope"],
+                "quote-serif": ["Bodoni Moda"],
+                "label-sm": ["Manrope"],
+                "headline-md": ["Bodoni Moda"],
+                "display-lg-mobile": ["Bodoni Moda"]
+            },
+            "fontSize": {
+                "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                "display-lg": ["64px", {"lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "quote-serif": ["24px", {"lineHeight": "36px", "fontWeight": "400"}],
+                "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                "display-lg-mobile": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .timeline-line {
+            background: linear-gradient(to bottom, transparent, #0047AB 15%, #0047AB 85%, transparent);
+        }
+
+        .hero-gradient {
+            background: linear-gradient(180deg, rgba(249, 248, 243, 0) 0%, #F9F8F3 100%);
+        }
+
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .scroll-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-lime-wash text-on-surface selection:bg-albaicin-blue selection:text-white">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 backdrop-blur-xl bg-white/70 border-b border-white/20 shadow-sm">
+<nav class="flex justify-between items-center h-20 px-gutter max-w-container-max mx-auto">
+<div class="text-body-lg font-headline-md font-bold tracking-tight text-albaicin-blue">
+                Criptana 360
+            </div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-on-surface-variant hover:text-albaicin-blue transition-colors text-label-sm font-label-sm" href="#">Experiencias</a>
+<a class="text-albaicin-blue font-bold border-b-2 border-albaicin-blue pb-1 text-label-sm font-label-sm" href="#">Rutas IA</a>
+<a class="text-on-surface-variant hover:text-albaicin-blue transition-colors text-label-sm font-label-sm" href="#">Historia</a>
+<a class="text-on-surface-variant hover:text-albaicin-blue transition-colors text-label-sm font-label-sm" href="#">Guía</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="hidden md:block px-6 py-2 bg-albaicin-blue text-white rounded-full font-label-sm text-label-sm hover:opacity-90 active:scale-[0.99] transition-all">
+                    Planificar
+                </button>
+<button class="md:hidden text-albaicin-blue">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</nav>
+</header>
+<main class="pt-20">
+<!-- Hero Section -->
+<section class="relative h-[60vh] overflow-hidden flex items-end">
+<div class="absolute inset-0 z-0">
+<div class="w-full h-full bg-cover bg-center" data-alt="A cinematic, wide-angle shot of the white windmills of Campo de Criptana at sunrise. The golden light illuminates the textured white walls of the mills against a deep blue sky. The landscape is vast and minimalist, mirroring the high-end luxury travel aesthetic of Criptana 360 with clean lines and soft morning shadows." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCRwjIDbZm8Q7uWbSmyOB6yaLxN3rUEg4gcQS7qOKM7-OemrtYdS8m3hVWXa_oZUweOC7B2MYitcIbH1nhRxEZMLM0G8QyAt-GAKfFlZIHnQ5olXlv4g7z7LFbnWi2mB02D6IF3GE9ne4f-ja7c-5kW_ZM7ZyBGBduj5_xYWnco_UJ3bfz0qO72Dc8BC4FZW9aQ28GDAeNbIw8migU-m_-uC8mTR-diIJVI-QVvGX-9ntxoEKKDn-m7yS-lc0Nhu_EXTFHlNbrrOpw')"></div>
+<div class="absolute inset-0 hero-gradient"></div>
+</div>
+<div class="relative z-10 px-gutter max-w-container-max mx-auto w-full pb-12">
+<span class="text-label-sm font-label-sm text-albaicin-blue uppercase tracking-widest mb-4 block">Tu Destino Inteligente</span>
+<h1 class="text-display-lg-mobile md:text-display-lg font-display-lg text-mancha-earth">Tu Ruta Personalizada</h1>
+<p class="text-body-lg font-body-lg text-on-secondary-fixed-variant mt-4 max-w-2xl">
+                    Hemos diseñado un día perfecto fusionando el legado quijotesco con la gastronomía contemporánea y el reposo del vino.
+                </p>
+</div>
+</section>
+<section class="px-gutter max-w-container-max mx-auto py-section-gap grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Timeline Content -->
+<div class="lg:col-span-8 relative">
+<div class="absolute left-4 md:left-8 top-0 bottom-0 w-0.5 timeline-line opacity-20"></div>
+<!-- Stop 1: Morning -->
+<div class="relative pl-12 md:pl-24 mb-24 scroll-reveal active">
+<div class="absolute left-1.5 md:left-5.5 top-0 w-6 h-6 rounded-full bg-albaicin-blue border-4 border-white shadow-md"></div>
+<div class="flex flex-col md:flex-row gap-6">
+<div class="flex-1">
+<span class="text-label-sm font-label-sm text-sunset-gold mb-2 block">09:30 AM — 11:30 AM</span>
+<h3 class="text-headline-md font-headline-md text-mancha-earth mb-4">Sierra de los Molinos</h3>
+<p class="text-body-md font-body-md text-on-surface-variant mb-6 leading-relaxed">
+                                Comienza tu jornada entre los "gigantes" que inspiraron a Cervantes. Una visita privada al Molino Infanto para descubrir el mecanismo original del siglo XVI en funcionamiento.
+                            </p>
+<div class="flex flex-col gap-2"><span class="text-[10px] uppercase tracking-widest text-albaicin-blue/60 font-bold">Socio Colaborador</span><button class="inline-flex items-center gap-2 text-albaicin-blue font-bold text-label-sm group">Consultar Disponibilidad <span class="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span></button></div>
+</div>
+<div class="w-full md:w-80 h-56 rounded-xl overflow-hidden shadow-lg">
+<img class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" data-alt="Close-up detail of a traditional Spanish windmill mechanism with wooden gears and shafts, inside a whitewashed tower. Soft natural light pours through a small window, creating a serene, museum-like atmosphere with high contrast and heritage luxury feel." src="assets/AB6AXuDhsffn-l-X-yleRhB2YQLQNYl3yiMcgO1lNHV7tWD-HUu32cY1spvyvyXAlDpJGfYmJtbZNPl9-eLXewQS6wjB5S4HexU1-b56e284426ed1512c5a9c643fcf8eaf9">
+</div>
+</div>
+</div>
+<!-- Stop 2: Lunch -->
+<div class="relative pl-12 md:pl-24 mb-24 scroll-reveal active">
+<div class="absolute left-1.5 md:left-5.5 top-0 w-6 h-6 rounded-full bg-albaicin-blue border-4 border-white shadow-md"></div>
+<div class="flex flex-col md:flex-row-reverse gap-6">
+<div class="flex-1">
+<span class="text-label-sm font-label-sm text-sunset-gold mb-2 block">14:00 PM — 16:00 PM</span>
+<h3 class="text-headline-md font-headline-md text-mancha-earth mb-4">Almuerzo en Las Musas</h3>
+<p class="text-body-md font-body-md text-on-surface-variant mb-6 leading-relaxed">
+                                Gastronomía manchega de vanguardia con vistas panorámicas a la llanura. Recomendamos el atascaburras reinterpretado y el cordero lechal a baja temperatura.
+                            </p>
+<div class="flex flex-col gap-2"><span class="text-[10px] uppercase tracking-widest text-albaicin-blue/60 font-bold">Restaurante Recomendado</span><button class="inline-flex items-center gap-2 text-albaicin-blue font-bold text-label-sm group">Reservar Mesa <span class="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span></button></div>
+</div>
+<div class="w-full md:w-80 h-56 rounded-xl overflow-hidden shadow-lg">
+<img class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" data-alt="A beautifully plated gourmet dish featuring traditional Manchego flavors with a modern twist, served on artisan stoneware. The setting is a minimalist restaurant interior with large windows overlooking the Castilian landscape, featuring soft lighting and luxury textures." src="assets/AB6AXuCS-f-eCiCizP_PZZH0rwynbwJqFgDiUiFSybnY823dwErJjtaj4CSrzgO2jmygeRFqHxAUduQbXr8miWxJMFYiG2TC0vh_-5a2879f7401b015d748bf337899787df">
+</div>
+</div>
+</div>
+<!-- Stop 3: Afternoon -->
+<div class="relative pl-12 md:pl-24 mb-24 scroll-reveal active">
+<div class="absolute left-1.5 md:left-5.5 top-0 w-6 h-6 rounded-full bg-albaicin-blue border-4 border-white shadow-md"></div>
+<div class="flex flex-col md:flex-row gap-6">
+<div class="flex-1">
+<span class="text-label-sm font-label-sm text-sunset-gold mb-2 block">17:00 PM — 18:30 PM</span>
+<h3 class="text-headline-md font-headline-md text-mancha-earth mb-4">Paseo por el Albaicín</h3>
+<p class="text-body-md font-body-md text-on-surface-variant mb-6 leading-relaxed">
+                                Piérdete en el laberinto de casas blancas y zócalos añil. El barrio del Albaicín Criptanense conserva la esencia pura de la arquitectura popular manchega.
+                            </p>
+<div class="flex flex-col gap-2"><span class="text-[10px] uppercase tracking-widest text-albaicin-blue/60 font-bold">Guía Oficial</span><button class="inline-flex items-center gap-2 text-albaicin-blue font-bold text-label-sm group">Ver Detalles de Contacto <span class="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span></button></div>
+</div>
+<div class="w-full md:w-80 h-56 rounded-xl overflow-hidden shadow-lg">
+<img class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" data-alt="A narrow cobblestone street in the Albaicin neighborhood of Campo de Criptana. The houses are pristine white with vibrant blue bases, adorned with flower pots. The lighting is the soft golden hour glow, emphasizing the texture of the lime-washed walls and the calm, historical atmosphere." src="assets/AB6AXuA6IXSpunIJa1bOiDciudI7fuW205qzon0vo6oza9N1lcy6Q0t978BbSPW0LZAKbnEd9xdYzdjeTOJSCmNsfX9HP3j14JPb-df36feb46bccb32d0445cb636c113f6c">
+</div>
+</div>
+</div>
+<!-- Stop 4: Sunset -->
+<div class="relative pl-12 md:pl-24 scroll-reveal active">
+<div class="absolute left-1.5 md:left-5.5 top-0 w-6 h-6 rounded-full bg-albaicin-blue border-4 border-white shadow-md"></div>
+<div class="flex flex-col md:flex-row-reverse gap-6">
+<div class="flex-1">
+<span class="text-label-sm font-label-sm text-sunset-gold mb-2 block">19:30 PM — 21:00 PM</span>
+<h3 class="text-headline-md font-headline-md text-mancha-earth mb-4">Cata en Bodegas Castiblanque</h3>
+<p class="text-body-md font-body-md text-on-surface-variant mb-6 leading-relaxed">
+                                Un cierre magistral con una degustación privada de vinos de autor. Disfruta del atardecer sobre los viñedos mientras degustas tintos con alma de tierra manchega.
+                            </p>
+<div class="flex flex-col gap-2"><span class="text-[10px] uppercase tracking-widest text-albaicin-blue/60 font-bold">Bodega Partner</span><button class="inline-flex items-center gap-2 text-albaicin-blue font-bold text-label-sm group">Reservar Cata <span class="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span></button></div>
+</div>
+<div class="w-full md:w-80 h-56 rounded-xl overflow-hidden shadow-lg">
+<img class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" data-alt="Two elegant wine glasses filled with red wine sitting on a rustic wooden table in a vineyard at sunset. In the background, the sun dips below the horizon of the vast La Mancha plains. The aesthetic is warm, sophisticated, and deeply rooted in the heritage of Spanish winemaking." src="assets/AB6AXuB4s3lK9GSBKfTrepYEUIC-eTp6W-GBTaHbP58uTFm27QDNfe8TvnlC6qZksGmk87qQ_GHXGJXZb5XlFFBSXYY9lgt-wPWE-ab8d784656fec505cf29fe8d8b686378">
+</div>
+</div>
+</div>
+</div>
+<!-- Sidebar Stats -->
+<aside class="lg:col-span-4">
+<div class="sticky top-28 space-y-gutter">
+<div class="glass-panel p-8 rounded-2xl shadow-sm border border-outline-variant">
+<h4 class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest mb-8">Resumen de Ruta</h4>
+<div class="space-y-6">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-albaicin-blue/10 flex items-center justify-center text-albaicin-blue">
+<span class="material-symbols-outlined">map</span>
+</div>
+<div>
+<p class="text-body-md font-bold text-mancha-earth">4 Lugares</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Puntos de interés</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-albaicin-blue/10 flex items-center justify-center text-albaicin-blue">
+<span class="material-symbols-outlined">route</span>
+</div>
+<div>
+<p class="text-body-md font-bold text-mancha-earth">6.5km de recorrido</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Total acumulado</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-albaicin-blue/10 flex items-center justify-center text-albaicin-blue">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<div>
+<p class="text-body-md font-bold text-mancha-earth">Estándar</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Nivel de Presupuesto</p>
+</div>
+</div>
+</div>
+<hr class="my-8 border-outline-variant">
+<button class="w-full py-4 bg-albaicin-blue text-white rounded-full font-bold hover:opacity-90 transition-opacity mb-4 shadow-lg scale-105">
+                            Guardar en mi Perfil
+                        </button>
+<button class="w-full py-4 border border-albaicin-blue text-albaicin-blue rounded-full font-bold hover:bg-albaicin-blue/5 transition-colors">
+                            Descargar PDF
+                        </button>
+</div>
+<div class="bg-mancha-earth p-8 rounded-2xl text-white"><div class="flex items-center gap-2 mb-4"><span class="material-symbols-outlined text-sunset-gold">military_tech</span><span class="text-label-sm font-label-sm uppercase tracking-widest text-sunset-gold">Producto Destacado</span></div><p class="text-headline-md font-headline-md mb-4">Gymkana Quijotesca</p><p class="text-body-md opacity-90 mb-6">Convierte tu visita en un juego de misterio. Resuelve acertijos en cada parada y desbloquea recompensas exclusivas.</p><button class="w-full py-3 bg-white text-mancha-earth rounded-full font-bold hover:bg-lime-wash transition-colors">Comenzar Aventura</button></div>
+</div>
+</aside>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-section-gap px-gutter bg-lime-wash border-t border-outline-variant">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter max-w-container-max mx-auto">
+<div class="md:col-span-1">
+<div class="text-headline-md font-headline-md text-mancha-earth mb-4">Criptana 360</div>
+<p class="text-body-md font-body-md text-on-secondary-fixed-variant">Legado y tecnología unidos para una experiencia de viaje inigualable.</p>
+</div>
+<div>
+<h5 class="font-bold text-mancha-earth mb-4">Explora</h5>
+<ul class="space-y-2 text-label-sm font-label-sm text-on-secondary-fixed-variant">
+<li class=""><a class="hover:text-albaicin-blue transition-colors" href="#">Molinos</a></li>
+<li class=""><a class="hover:text-albaicin-blue transition-colors" href="#">Museos</a></li>
+<li class=""><a class="hover:text-albaicin-blue transition-colors" href="#">Bodegas</a></li>
+</ul>
+</div>
+<div>
+<h5 class="font-bold text-mancha-earth mb-4">Compañía</h5>
+<ul class="space-y-2 text-label-sm font-label-sm text-on-secondary-fixed-variant">
+<li class=""><a class="hover:text-albaicin-blue transition-colors" href="#">Privacidad</a></li>
+<li class=""><a class="hover:text-albaicin-blue transition-colors" href="#">Términos</a></li>
+<li class=""><a class="hover:text-albaicin-blue transition-colors" href="#">Contacto</a></li>
+</ul>
+</div>
+<div>
+<h5 class="font-bold text-mancha-earth mb-4">Newsletter</h5>
+<div class="flex gap-2">
+<input class="bg-white border-outline-variant rounded-full px-4 py-2 w-full text-sm" placeholder="Email" type="email">
+<button class="bg-albaicin-blue text-white w-10 h-10 rounded-full flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-sm">send</span>
+</button>
+</div>
+</div>
+</div>
+<div class="max-w-container-max mx-auto mt-16 pt-8 border-t border-outline-variant text-center md:text-left text-label-sm font-label-sm text-on-secondary-fixed-variant">
+            © 2024 Criptana 360. Legado Manchego.
+        </div>
+</footer>
+<script>
+        // Simple scroll reveal interaction
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+    </script>
+
+
+</body></html>

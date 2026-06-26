@@ -1,0 +1,307 @@
+<!DOCTYPE html><html class="light" lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Criptana 360 Partner Insights</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="assets/css2-675a52eba4318eeb4329b4198204fda2" rel="stylesheet">
+<link href="assets/css2-a39f5c6fcbb87b419667ec984d2e579a" rel="stylesheet">
+<link href="assets/css2-a39f5c6fcbb87b419667ec984d2e579a" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed": "#ffdbcf",
+                        "on-secondary-fixed": "#1b1c19",
+                        "inverse-on-surface": "#f0f0f9",
+                        "on-secondary-container": "#646561",
+                        "on-primary-fixed-variant": "#00419e",
+                        "secondary-container": "#e3e3de",
+                        "surface-bright": "#faf8ff",
+                        "on-tertiary-fixed-variant": "#802900",
+                        "primary-fixed-dim": "#b1c5ff",
+                        "outline-variant": "#c3c6d5",
+                        "on-secondary-fixed-variant": "#464744",
+                        "surface-dim": "#d9d9e2",
+                        "on-error": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-primary": "#ffffff",
+                        "on-surface-variant": "#434653",
+                        "surface-container-low": "#f3f3fc",
+                        "on-background": "#191b22",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-fixed": "#380d00",
+                        "mancha-earth": "#4A3728",
+                        "error-container": "#ffdad6",
+                        "inverse-primary": "#b1c5ff",
+                        "surface-container-lowest": "#ffffff",
+                        "background": "#faf8ff",
+                        "surface-container": "#ededf6",
+                        "tertiary-container": "#8b2e01",
+                        "sunset-gold": "#D4AF37",
+                        "on-tertiary-container": "#ffaa8a",
+                        "surface": "#faf8ff",
+                        "on-surface": "#191b22",
+                        "surface-variant": "#e2e2eb",
+                        "albaicin-blue": "#0047AB",
+                        "primary-fixed": "#dae2ff",
+                        "secondary": "#5e5f5b",
+                        "secondary-fixed": "#e3e3de",
+                        "primary-container": "#0047ab",
+                        "tertiary-fixed-dim": "#ffb59a",
+                        "on-primary-container": "#a5bdff",
+                        "secondary-fixed-dim": "#c7c7c2",
+                        "inverse-surface": "#2e3037",
+                        "primary": "#00327d",
+                        "on-primary-fixed": "#001946",
+                        "outline": "#737784",
+                        "on-error-container": "#93000a",
+                        "tertiary": "#651f00",
+                        "lime-wash": "#F9F8F3",
+                        "surface-container-high": "#e7e7f0",
+                        "surface-tint": "#2559bd",
+                        "surface-container-highest": "#e2e2eb"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "section-gap": "80px",
+                        "margin-mobile": "16px",
+                        "component-padding": "24px",
+                        "gutter": "24px",
+                        "container-max": "1280px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Bodoni Moda"],
+                        "body-md": ["Manrope"],
+                        "display-lg-mobile": ["Bodoni Moda"],
+                        "display-lg": ["Bodoni Moda"],
+                        "label-sm": ["Manrope"],
+                        "quote-serif": ["Bodoni Moda"],
+                        "body-lg": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "display-lg-mobile": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "display-lg": ["64px", {"lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "quote-serif": ["24px", {"lineHeight": "36px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-lime-wash text-on-surface antialiased min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 backdrop-blur-xl bg-white/70 border-b border-white/20 shadow-sm">
+<div class="flex justify-between items-center h-20 px-gutter max-w-container-max mx-auto">
+<div class="flex items-center gap-4">
+<span class="text-body-lg font-headline-md font-bold tracking-tight text-albaicin-blue">Criptana 360</span>
+</div>
+<!-- Navigation Links -->
+<div class="hidden md:flex items-center gap-8">
+<a class="text-on-surface-variant hover:text-albaicin-blue transition-colors text-label-sm font-label-sm" href="#">Experiencias</a>
+<a class="text-on-surface-variant hover:text-albaicin-blue transition-colors text-label-sm font-label-sm" href="#">Rutas IA</a>
+<a class="text-on-surface-variant hover:text-albaicin-blue transition-colors text-label-sm font-label-sm" href="#">Historia</a>
+<a class="text-albaicin-blue font-bold border-b-2 border-albaicin-blue pb-1 text-label-sm font-label-sm" href="#">Guía</a>
+</div>
+<!-- Primary Action -->
+<button class="bg-albaicin-blue text-on-primary px-6 py-2 rounded-full text-label-sm font-label-sm hover:opacity-90 transition-opacity">
+                Planificar
+            </button>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-grow pt-[120px] pb-section-gap px-margin-mobile md:px-gutter max-w-container-max mx-auto w-full">
+<header class="mb-12">
+<h1 class="text-headline-md font-headline-md text-mancha-earth mb-2">Partner Insights</h1>
+<p class="text-body-md font-body-md text-on-surface-variant">Bodegas Símbolo - Rendimiento del mes actual</p>
+</header>
+<!-- Metrics Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+<!-- Metric 1 -->
+<div class="glass-panel p-component-padding rounded-xl shadow-[0_4px_24px_rgba(74,55,40,0.05)]">
+<div class="flex items-center gap-3 mb-4 text-albaicin-blue">
+<span class="material-symbols-outlined fill-icon" data-icon="groups">groups</span>
+<h3 class="text-label-sm font-label-sm uppercase tracking-wider text-on-surface-variant">Total Referrals</h3>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-headline-md font-headline-md text-on-surface">1,284</span>
+<span class="text-label-sm font-label-sm text-surface-tint">+12%</span>
+</div>
+</div>
+<!-- Metric 2 -->
+<div class="glass-panel p-component-padding rounded-xl shadow-[0_4px_24px_rgba(74,55,40,0.05)]">
+<div class="flex items-center gap-3 mb-4 text-albaicin-blue">
+<span class="material-symbols-outlined fill-icon" data-icon="ads_click">ads_click</span>
+<h3 class="text-label-sm font-label-sm uppercase tracking-wider text-on-surface-variant">High-Intent Clicks</h3>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-headline-md font-headline-md text-on-surface">452</span>
+<span class="text-label-sm font-label-sm text-surface-tint">+8%</span>
+</div>
+</div>
+<!-- Metric 3 -->
+<div class="glass-panel p-component-padding rounded-xl shadow-[0_4px_24px_rgba(74,55,40,0.05)]">
+<div class="flex items-center gap-3 mb-4 text-albaicin-blue">
+<span class="material-symbols-outlined fill-icon" data-icon="conversion_path">conversion_path</span>
+<h3 class="text-label-sm font-label-sm uppercase tracking-wider text-on-surface-variant">Conv. Rate (Gymkana)</h3>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-headline-md font-headline-md text-on-surface">18.5%</span>
+<span class="text-label-sm font-label-sm text-surface-tint">+2.1%</span>
+</div>
+</div>
+<!-- Metric 4 -->
+<div class="glass-panel p-component-padding rounded-xl shadow-[0_4px_24px_rgba(74,55,40,0.05)]">
+<div class="flex items-center gap-3 mb-4 text-albaicin-blue">
+<span class="material-symbols-outlined fill-icon" data-icon="storefront">storefront</span>
+<h3 class="text-label-sm font-label-sm uppercase tracking-wider text-on-surface-variant">Walk-ins Tracked</h3>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-headline-md font-headline-md text-on-surface">89</span>
+<span class="text-label-sm font-label-sm text-surface-tint">+5%</span>
+</div>
+</div>
+</div>
+<!-- Charts Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
+<!-- Traffic Growth Line Chart Placeholder -->
+<div class="glass-panel p-component-padding rounded-xl shadow-[0_4px_24px_rgba(74,55,40,0.05)] lg:col-span-2 flex flex-col">
+<h3 class="text-headline-md font-headline-md text-mancha-earth mb-6">Traffic Growth</h3>
+<div class="flex-grow flex items-center justify-center bg-surface-container-low rounded-lg border border-outline-variant/30 min-h-[300px]">
+<div class="text-center text-on-surface-variant">
+<span class="material-symbols-outlined text-4xl mb-2" data-icon="show_chart">show_chart</span>
+<p class="text-label-sm font-label-sm">Chart Visualization Widget</p>
+</div>
+</div>
+</div>
+<!-- Demographic Heatmap Placeholder -->
+<div class="glass-panel p-component-padding rounded-xl shadow-[0_4px_24px_rgba(74,55,40,0.05)] flex flex-col">
+<h3 class="text-headline-md font-headline-md text-mancha-earth mb-6">Demographic Heatmap</h3>
+<div class="flex-grow relative rounded-lg overflow-hidden border border-outline-variant/30 min-h-[300px]" data-alt="A stylized, high-end data visualization of a demographic heatmap, rendered in soft blues and warm earthy tones over a clean, off-white minimalist background. The design is elegant, modern, and abstract, fitting a luxury B2B dashboard. Lighting is bright and even." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB_LYMtec2_hGO-3iUuRlUxGwIakn91c5mg7cKQ62hf6Y3Wd078nUAINVgfREKEoEjNEXR4Plplxfp91kdjD1aVhkQIzEwenXH9R1Uo-eZaTKZPmiAb5OpVK6VLtg6bt3BlzixfvnSUN2-2urZ3Z6VzOmeJSK0-thClgctKeZuNUXqzJ4vPD0r0mkH5xIEcUbFgrL1I-aZPIPaGcsymNn8uUyjebrAfc8rDvhYxqy67SFO4e-Rj8E6iDFFJfhJLXfncK9K9yAiDGsQ')">
+<!-- Heatmap overlay graphic would go here -->
+<div class="absolute inset-0 flex items-center justify-center bg-white/40 backdrop-blur-sm">
+<span class="material-symbols-outlined text-4xl text-albaicin-blue" data-icon="map">map</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Tables Section -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12">
+<!-- Referral Breakdown Table -->
+<div class="glass-panel p-component-padding rounded-xl shadow-[0_4px_24px_rgba(74,55,40,0.05)]">
+<h3 class="text-headline-md font-headline-md text-mancha-earth mb-6">Referral Breakdown</h3>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant/30">
+<th class="py-3 text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Action Type</th>
+<th class="py-3 text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider text-right">Volume</th>
+<th class="py-3 text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider text-right">Conversion</th>
+</tr>
+</thead>
+<tbody class="text-body-md font-body-md text-on-surface">
+<tr class="border-b border-outline-variant/20 hover:bg-white/40 transition-colors">
+<td class="py-4 flex items-center gap-3">
+<span class="material-symbols-outlined text-albaicin-blue" data-icon="restaurant">restaurant</span>
+                                    Table Reservation Clicks
+                                </td>
+<td class="py-4 text-right">312</td>
+<td class="py-4 text-right text-surface-tint">22%</td>
+</tr>
+<tr class="border-b border-outline-variant/20 hover:bg-white/40 transition-colors">
+<td class="py-4 flex items-center gap-3">
+<span class="material-symbols-outlined text-albaicin-blue" data-icon="directions">directions</span>
+                                    Get Directions
+                                </td>
+<td class="py-4 text-right">845</td>
+<td class="py-4 text-right text-surface-tint">15%</td>
+</tr>
+<tr class="border-b border-outline-variant/20 hover:bg-white/40 transition-colors">
+<td class="py-4 flex items-center gap-3">
+<span class="material-symbols-outlined text-albaicin-blue" data-icon="call">call</span>
+                                    Direct Calls
+                                </td>
+<td class="py-4 text-right">127</td>
+<td class="py-4 text-right text-surface-tint">45%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Top Performing Content -->
+<div class="glass-panel p-component-padding rounded-xl shadow-[0_4px_24px_rgba(74,55,40,0.05)]">
+<h3 class="text-headline-md font-headline-md text-mancha-earth mb-6">Top Performing Content</h3>
+<div class="space-y-4">
+<!-- Content Card 1 -->
+<div class="flex items-center gap-4 p-4 rounded-lg hover:bg-white/40 transition-colors border border-outline-variant/20">
+<div class="w-16 h-16 rounded bg-surface-container-low overflow-hidden relative flex-shrink-0" data-alt="A pristine, high-end photography shot of a traditional Manchego windmill silhouetted against a brilliant golden hour sky. The composition is editorial and clean, featuring minimal distractions and a luxurious, warm color palette typical of a premium travel guide." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDqtU7qW3lYM9I5znuha-bFy6gLmqRSJUOXF_XS_3NUP4nze-JRkVPRQtIIBTCk5O7RiA2g0Cgvo5o4-fIH5R6KABd1vy_chXHVW6-4gJqSbF-ySc2gwvjOafJ7wjMXDN45L0kOD8t9Q8Kn0NlyVXaOddLB-4jasRuScdEYQLG_bS6-C4vM0EyIb1vWafgRddtzOEhq2_ilf6TGVe_L-n_x8Rur20PX8tHYuFURkhJavkA-S9edEBKTuAHhcCd8ThJVnQ5jYwRMzxk')">
+</div>
+<div class="flex-grow">
+<h4 class="text-body-md font-body-md font-bold text-on-surface">Ruta de los Molinos Históricos</h4>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Featured in AI Route Planner</p>
+</div>
+<div class="text-right">
+<span class="text-body-md font-body-md font-bold text-albaicin-blue">620</span>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Views</p>
+</div>
+</div>
+<!-- Content Card 2 -->
+<div class="flex items-center gap-4 p-4 rounded-lg hover:bg-white/40 transition-colors border border-outline-variant/20">
+<div class="w-16 h-16 rounded bg-surface-container-low overflow-hidden relative flex-shrink-0" data-alt="A macro, beautifully lit shot of an artisanal cheese board and a glass of deep red wine on a rustic wooden table. The lighting is soft and cinematic, evoking a high-end culinary experience in a modern, sophisticated bodega setting." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDEZa4F9swj0mNOX8PZyZQQx6R5oAaFXLC4O-mCbEsjjoxvj7VGamR6TIqXQGcTLBY5XnYjUsGVw5aDdKi8BqMm3Skw5mjrixjEx2rDrBWKvxhj0J6ATjZuILq6LRLZuccAvfUO3c1XyB6EnZ3rA8kYETa9ldWomeohJcOzALaZ3qyS5OH_hiCt1lqF0_xIJwXw6j2uGq9Ajfw13SzCazmawGnPtHRny58aaZWZE_YB2FAavLzyMCtXc-v7PLmhENDGrbD44VXmH_M')">
+</div>
+<div class="flex-grow">
+<h4 class="text-body-md font-body-md font-bold text-on-surface">Gastronomía y Vinos del Albaicín</h4>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Curated Article</p>
+</div>
+<div class="text-right">
+<span class="text-body-md font-body-md font-bold text-albaicin-blue">415</span>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Views</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-section-gap px-gutter bg-lime-wash border-t border-outline-variant">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter max-w-container-max mx-auto">
+<div class="col-span-1 md:col-span-2">
+<span class="text-headline-md font-headline-md text-mancha-earth">Criptana 360</span>
+<p class="mt-4 text-body-md font-body-md text-mancha-earth">© 2024 Criptana 360. Legado Manchego.</p>
+</div>
+<div class="flex flex-col gap-2">
+<a class="text-on-secondary-fixed-variant hover:text-albaicin-blue transition-colors text-label-sm font-label-sm" href="#">Privacidad</a>
+<a class="text-on-secondary-fixed-variant hover:text-albaicin-blue transition-colors text-label-sm font-label-sm" href="#">Términos</a>
+</div>
+<div class="flex flex-col gap-2">
+<a class="text-on-secondary-fixed-variant hover:text-albaicin-blue transition-colors text-label-sm font-label-sm" href="#">Contacto</a>
+<a class="text-on-secondary-fixed-variant hover:text-albaicin-blue transition-colors text-label-sm font-label-sm" href="#">Prensa</a>
+</div>
+</div>
+</footer>
+</body></html>

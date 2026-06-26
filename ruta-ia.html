@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tu Ruta IA — Criptana 360 | Itinerario Personalizado con Inteligencia Artificial</title>
+  <meta name="description" content="Diseña tu escapada perfecta a Campo de Criptana con nuestro planificador IA. Rutas personalizadas entre molinos, bodegas, gastronomía manchega y el barrio del Albaicín.">
+  <link rel="canonical" href="https://www.criptana360.com/ruta-ia.html">
+
+  <!-- Heritage Lux Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0" />
+
+  <!-- Heritage Lux Design System -->
+  <link rel="stylesheet" href="heritage-lux.css">
+
+  <style>
+    /* ─── Page Base ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --nav-h: 72px;
+    }
+
+    body {
+      font-family: var(--hl-font-sans);
+      background: var(--hl-lime-wash);
+      color: var(--hl-on-background);
+      min-height: 100vh;
+    }
+
+    /* ─── Navigation ─── */
+    .ruta-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      background: rgba(249, 248, 243, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+      box-shadow: 0 1px 20px rgba(0,0,0,0.06);
+      z-index: 100;
+    }
+
+    .ruta-nav__inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .ruta-nav__brand {
+      font-family: var(--hl-font-display);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--hl-albaicin-blue);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+
+    .ruta-nav__links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .ruta-nav__links a {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--hl-on-surface-variant);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .ruta-nav__links a:hover,
+    .ruta-nav__links a.active {
+      color: var(--hl-albaicin-blue);
+    }
+
+    .ruta-nav__links a.active {
+      border-bottom: 2px solid var(--hl-albaicin-blue);
+      padding-bottom: 2px;
+    }
+
+    @media (max-width: 768px) {
+      .ruta-nav__links { display: none; }
+    }
+
+    /* ─── Hero ─── */
+    .ruta-hero {
+      margin-top: var(--nav-h);
+      position: relative;
+      height: 55vh;
+      min-height: 380px;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .ruta-hero__bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('images/attraction_windmills.png');
+      background-size: cover;
+      background-position: center 40%;
+      transform: scale(1.04);
+      transition: transform 8s ease;
+    }
+
+    .ruta-hero:hover .ruta-hero__bg {
+      transform: scale(1);
+    }
+
+    .ruta-hero__fade {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(249,248,243,0) 0%, rgba(249,248,243,0.5) 60%, #F9F8F3 100%);
+    }
+
+    .ruta-hero__content {
+      position: relative;
+      z-index: 2;
+      padding: 0 24px 3rem;
+      max-width: 1280px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .ruta-hero__overline {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--hl-albaicin-blue);
+      display: block;
+      margin-bottom: 0.75rem;
+    }
+
+    .ruta-hero__title {
+      font-family: var(--hl-font-display);
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 700;
+      color: var(--hl-mancha-earth, #4A3728);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .ruta-hero__subtitle {
+      margin-top: 1rem;
+      font-size: 1.1rem;
+      color: #464744;
+      max-width: 600px;
+      line-height: 1.6;
+    }
+
+    /* ─── Wizard Section ─── */
+    .wizard-section {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px 5rem;
+    }
+
+    /* Wizard Card */
+    .wizard-card {
+      background: rgba(255,255,255,0.82);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255,255,255,0.5);
+      border-radius: 24px;
+      padding: 2.5rem;
+      box-shadow: 0 8px 40px rgba(0,71,171,0.06), 0 2px 10px rgba(0,0,0,0.04);
+      margin-bottom: 2.5rem;
+    }
+
+    .wizard-card__title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--hl-on-surface-variant, #434653);
+      margin-bottom: 1.5rem;
+    }
+
+    /* Pill Group */
+    .pill-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .pill {
+      padding: 0.55rem 1.25rem;
+      border-radius: 9999px;
+      border: 1.5px solid #c3c6d5;
+      background: white;
+      color: #434653;
+      font-family: var(--hl-font-sans);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .pill:hover {
+      border-color: var(--hl-albaicin-blue);
+      color: var(--hl-albaicin-blue);
+      transform: translateY(-2px);
+    }
+
+    .pill.selected {
+      background: var(--hl-albaicin-blue);
+      border-color: var(--hl-albaicin-blue);
+      color: white;
+      box-shadow: 0 4px 12px rgba(0,71,171,0.3);
+    }
+
+    /* Duration Slider */
+    .duration-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 0.75rem;
+    }
+
+    .duration-slider {
+      flex: 1;
+      -webkit-appearance: none;
+      height: 4px;
+      border-radius: 9999px;
+      background: linear-gradient(to right, var(--hl-albaicin-blue) 0%, var(--hl-albaicin-blue) 50%, #e2e2eb 50%);
+      outline: none;
+      cursor: pointer;
+    }
+
+    .duration-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--hl-albaicin-blue);
+      border: 3px solid white;
+      box-shadow: 0 2px 8px rgba(0,71,171,0.4);
+      cursor: pointer;
+    }
+
+    .duration-val {
+      font-family: var(--hl-font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--hl-albaicin-blue);
+      min-width: 90px;
+      text-align: right;
+    }
+
+    /* Generate Button */
+    .generate-btn {
+      width: 100%;
+      padding: 1.1rem;
+      background: linear-gradient(135deg, #0047AB, #1565C0);
+      color: white;
+      border: none;
+      border-radius: 9999px;
+      font-family: var(--hl-font-sans);
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      box-shadow: 0 6px 24px rgba(0,71,171,0.35);
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .generate-btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .generate-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 32px rgba(0,71,171,0.45);
+    }
+
+    .generate-btn:hover::after { opacity: 1; }
+    .generate-btn:active { transform: translateY(0); }
+
+    /* Spinner */
+    .spinner {
+      width: 20px; height: 20px;
+      border: 2.5px solid rgba(255,255,255,0.4);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      display: none;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ─── Two-column layout ─── */
+    .ruta-layout {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    @media (max-width: 1024px) {
+      .ruta-layout {
+        grid-template-columns: 1fr;
+      }
+      .ruta-sidebar { order: -1; }
+    }
+
+    /* ─── Timeline ─── */
+    #itinerary-output {
+      min-height: 300px;
+    }
+
+    .timeline-empty {
+      text-align: center;
+      padding: 4rem 2rem;
+      border: 2px dashed #c3c6d5;
+      border-radius: 20px;
+      color: var(--hl-on-surface-variant);
+    }
+
+    .timeline-empty .material-symbols-outlined {
+      font-size: 3.5rem;
+      opacity: 0.35;
+      display: block;
+      margin-bottom: 1rem;
+    }
+
+    .timeline-empty h3 {
+      font-family: var(--hl-font-display);
+      font-size: 1.4rem;
+      color: #4A3728;
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-empty p {
+      font-size: 0.9rem;
+      max-width: 380px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Timeline stop */
+    .timeline-stops {
+      position: relative;
+    }
+
+    .timeline-stops::before {
+      content: '';
+      position: absolute;
+      left: 20px;
+      top: 12px;
+      bottom: 12px;
+      width: 2px;
+      background: linear-gradient(to bottom, transparent, var(--hl-albaicin-blue) 15%, var(--hl-albaicin-blue) 85%, transparent);
+      opacity: 0.2;
+    }
+
+    .timeline-stop {
+      position: relative;
+      padding-left: 60px;
+      margin-bottom: 2.5rem;
+      animation: slideIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .timeline-stop:nth-child(1) { animation-delay: 0.05s; }
+    .timeline-stop:nth-child(2) { animation-delay: 0.15s; }
+    .timeline-stop:nth-child(3) { animation-delay: 0.25s; }
+    .timeline-stop:nth-child(4) { animation-delay: 0.35s; }
+    .timeline-stop:nth-child(5) { animation-delay: 0.45s; }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .timeline-stop__dot {
+      position: absolute;
+      left: 10px;
+      top: 4px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--hl-albaicin-blue);
+      border: 3px solid white;
+      box-shadow: 0 2px 8px rgba(0,71,171,0.35);
+    }
+
+    .timeline-stop__time {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--hl-sunset-gold, #D4AF37);
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+
+    .timeline-stop__name {
+      font-family: var(--hl-font-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #4A3728;
+      margin-bottom: 0.6rem;
+      line-height: 1.2;
+    }
+
+    .timeline-stop__desc {
+      font-size: 0.9rem;
+      color: #434653;
+      line-height: 1.65;
+      margin-bottom: 0.9rem;
+    }
+
+    .timeline-stop__img {
+      width: 100%;
+      max-width: 480px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 14px;
+      display: block;
+      margin-bottom: 0.9rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+      transition: transform 0.6s ease;
+    }
+
+    .timeline-stop__img:hover { transform: scale(1.02); }
+
+    .timeline-stop__partner {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(0,71,171,0.5);
+      margin-bottom: 0.4rem;
+    }
+
+    .timeline-stop__cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--hl-albaicin-blue);
+      text-decoration: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: gap 0.2s;
+    }
+
+    .timeline-stop__cta:hover { gap: 0.6rem; }
+
+    /* ─── Sidebar ─── */
+    .ruta-sidebar {
+      position: sticky;
+      top: calc(var(--nav-h) + 24px);
+    }
+
+    .sidebar-summary {
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.5);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 6px 30px rgba(0,0,0,0.06);
+      margin-bottom: 1.5rem;
+    }
+
+    .sidebar-summary h4 {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #434653;
+      margin-bottom: 1.5rem;
+    }
+
+    .stat-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .stat-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: rgba(0,71,171,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--hl-albaicin-blue);
+      flex-shrink: 0;
+    }
+
+    .stat-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #434653;
+    }
+
+    .stat-value {
+      font-weight: 700;
+      color: #4A3728;
+      font-size: 1rem;
+    }
+
+    .sidebar-divider {
+      border: none;
+      border-top: 1px solid #e2e2eb;
+      margin: 1.5rem 0;
+    }
+
+    .sidebar-save-btn {
+      width: 100%;
+      padding: 1rem;
+      background: var(--hl-albaicin-blue);
+      color: white;
+      border: none;
+      border-radius: 9999px;
+      font-family: var(--hl-font-sans);
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      margin-bottom: 0.75rem;
+      transition: all 0.2s;
+      box-shadow: 0 4px 16px rgba(0,71,171,0.3);
+    }
+
+    .sidebar-save-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+
+    .sidebar-outline-btn {
+      width: 100%;
+      padding: 1rem;
+      background: transparent;
+      color: var(--hl-albaicin-blue);
+      border: 1.5px solid var(--hl-albaicin-blue);
+      border-radius: 9999px;
+      font-family: var(--hl-font-sans);
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .sidebar-outline-btn:hover { background: rgba(0,71,171,0.05); }
+
+    /* Gymkana promo card */
+    .gymkana-promo {
+      background: #4A3728;
+      border-radius: 20px;
+      padding: 2rem;
+      color: white;
+    }
+
+    .gymkana-promo__badge {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .gymkana-promo__badge .material-symbols-outlined {
+      color: var(--hl-sunset-gold, #D4AF37);
+    }
+
+    .gymkana-promo__badge span:last-child {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--hl-sunset-gold, #D4AF37);
+    }
+
+    .gymkana-promo h3 {
+      font-family: var(--hl-font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .gymkana-promo p {
+      font-size: 0.88rem;
+      opacity: 0.9;
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+    }
+
+    .gymkana-promo-btn {
+      width: 100%;
+      padding: 0.85rem;
+      background: white;
+      color: #4A3728;
+      border: none;
+      border-radius: 9999px;
+      font-family: var(--hl-font-sans);
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      text-decoration: none;
+      display: block;
+      text-align: center;
+    }
+
+    .gymkana-promo-btn:hover { background: #F9F8F3; }
+
+    /* ─── Footer ─── */
+    .ruta-footer {
+      background: var(--hl-lime-wash);
+      border-top: 1px solid #e2e2eb;
+      padding: 4rem 24px;
+      margin-top: 4rem;
+    }
+
+    .ruta-footer__inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .ruta-footer__inner { grid-template-columns: 1fr; }
+    }
+
+    .ruta-footer__brand {
+      font-family: var(--hl-font-display);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #4A3728;
+      margin-bottom: 0.75rem;
+    }
+
+    .ruta-footer__tagline {
+      font-size: 0.88rem;
+      color: #464744;
+      line-height: 1.6;
+    }
+
+    .ruta-footer h5 {
+      font-weight: 700;
+      color: #4A3728;
+      margin-bottom: 1rem;
+    }
+
+    .ruta-footer ul {
+      list-style: none;
+    }
+
+    .ruta-footer ul li { margin-bottom: 0.5rem; }
+
+    .ruta-footer ul a {
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+      color: #464744;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .ruta-footer ul a:hover { color: var(--hl-albaicin-blue); }
+
+    .ruta-footer__copy {
+      max-width: 1280px;
+      margin: 2rem auto 0;
+      padding-top: 2rem;
+      border-top: 1px solid #e2e2eb;
+      font-size: 0.75rem;
+      color: #464744;
+    }
+
+    /* ─── Generating animation ─── */
+    .generating-overlay {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 2rem;
+      gap: 1.5rem;
+    }
+
+    .generating-overlay.active { display: flex; }
+
+    .generating-dots {
+      display: flex;
+      gap: 8px;
+    }
+
+    .generating-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--hl-albaicin-blue);
+      animation: bounce 1.4s ease-in-out infinite;
+    }
+
+    .generating-dot:nth-child(2) { animation-delay: 0.2s; }
+    .generating-dot:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes bounce {
+      0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
+      40% { transform: scale(1.2); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════ NAVBAR ═══════════════ -->
+  <nav class="ruta-nav" role="navigation" aria-label="Navegación principal">
+    <div class="ruta-nav__inner">
+      <a href="index.html" class="ruta-nav__brand">Criptana 360</a>
+      <ul class="ruta-nav__links">
+        <li><a href="index.html#guia">Experiencias</a></li>
+        <li><a href="ruta-ia.html" class="active">Rutas IA</a></li>
+        <li><a href="gymkana.html">Gymkana</a></li>
+        <li><a href="index.html#articulos">Historia</a></li>
+        <li><a href="index.html#guia">Guía</a></li>
+      </ul>
+      <a href="gymkana.html" class="hl-btn hl-btn-primary" style="font-size:0.8rem; padding: 0.5rem 1.25rem;">
+        Comenzar Gymkana
+      </a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════ HERO ═══════════════ -->
+  <header class="ruta-hero" role="banner">
+    <div class="ruta-hero__bg" aria-hidden="true"></div>
+    <div class="ruta-hero__fade" aria-hidden="true"></div>
+    <div class="ruta-hero__content">
+      <span class="ruta-hero__overline">Tu Destino Inteligente</span>
+      <h1 class="ruta-hero__title">Tu Ruta Personalizada</h1>
+      <p class="ruta-hero__subtitle">
+        Diseña un día perfecto fusionando el legado quijotesco con la gastronomía contemporánea y el reposo del vino manchego.
+      </p>
+    </div>
+  </header>
+
+  <!-- ═══════════════ WIZARD ═══════════════ -->
+  <main>
+    <div class="wizard-section">
+
+      <!-- Wizard Card -->
+      <div class="wizard-card" role="form" aria-label="Configurador de ruta">
+        <h2 style="font-family: var(--hl-font-display); font-size: 1.6rem; color: #4A3728; margin-bottom: 0.4rem;">
+          Configura tu escapada
+        </h2>
+        <p style="color: #434653; font-size: 0.9rem; margin-bottom: 2rem; line-height: 1.6;">
+          Selecciona tus preferencias y genera un itinerario optimizado con paradas culturales, gastronómicas y de ocio.
+        </p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+          <!-- Column 1 -->
+          <div>
+            <!-- Who travels -->
+            <div style="margin-bottom: 1.75rem;">
+              <p class="wizard-card__title">¿Con quién viajas?</p>
+              <div class="pill-group" id="party-group">
+                <button class="pill selected" data-group="party" data-val="solo">
+                  <span class="material-symbols-outlined" style="font-size:1rem;">person</span> Solo
+                </button>
+                <button class="pill" data-group="party" data-val="pareja">
+                  <span class="material-symbols-outlined" style="font-size:1rem;">favorite</span> Pareja
+                </button>
+                <button class="pill" data-group="party" data-val="familia">
+                  <span class="material-symbols-outlined" style="font-size:1rem;">family_restroom</span> Familia
+                </button>
+                <button class="pill" data-group="party" data-val="amigos">
+                  <span class="material-symbols-outlined" style="font-size:1rem;">groups</span> Amigos
+                </button>
+              </div>
+            </div>
+
+            <!-- Budget -->
+            <div style="margin-bottom: 1.75rem;">
+              <p class="wizard-card__title">Nivel de presupuesto</p>
+              <div class="pill-group" id="budget-group">
+                <button class="pill" data-group="budget" data-val="mochilero">🎒 Mochilero</button>
+                <button class="pill selected" data-group="budget" data-val="estandar">✨ Estándar</button>
+                <button class="pill" data-group="budget" data-val="VIP">👑 VIP</button>
+              </div>
+            </div>
+
+            <!-- Interests -->
+            <div>
+              <p class="wizard-card__title">¿Qué te interesa más?</p>
+              <div class="pill-group" id="interest-group">
+                <button class="pill selected" data-group="interest" data-val="historia" data-multi="true">🏰 Historia</button>
+                <button class="pill" data-group="interest" data-val="gastronomia" data-multi="true">🍷 Gastronomía</button>
+                <button class="pill" data-group="interest" data-val="naturaleza" data-multi="true">🌿 Naturaleza</button>
+                <button class="pill selected" data-group="interest" data-val="vino" data-multi="true">🍾 Enoturismo</button>
+                <button class="pill" data-group="interest" data-val="arte" data-multi="true">🎨 Arte & Cultura</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Column 2 -->
+          <div>
+            <!-- Duration -->
+            <div style="margin-bottom: 1.75rem;">
+              <p class="wizard-card__title">Duración de la visita</p>
+              <div class="duration-row">
+                <input
+                  type="range"
+                  id="duration-slider"
+                  class="duration-slider"
+                  min="2" max="10" step="0.5" value="7"
+                  aria-label="Duración en horas"
+                >
+                <span class="duration-val" id="duration-val">7 horas</span>
+              </div>
+            </div>
+
+            <!-- Season -->
+            <div style="margin-bottom: 1.75rem;">
+              <p class="wizard-card__title">Temporada de visita</p>
+              <div class="pill-group" id="season-group">
+                <button class="pill" data-group="season" data-val="primavera">🌸 Primavera</button>
+                <button class="pill selected" data-group="season" data-val="verano">☀️ Verano</button>
+                <button class="pill" data-group="season" data-val="otoño">🍂 Otoño</button>
+                <button class="pill" data-group="season" data-val="invierno">❄️ Invierno</button>
+              </div>
+            </div>
+
+            <!-- Continuation -->
+            <div>
+              <p class="wizard-card__title">Siguiente destino tras Criptana</p>
+              <div class="pill-group" id="next-group">
+                <button class="pill selected" data-group="next" data-val="none">🏠 Solo Criptana</button>
+                <button class="pill" data-group="next" data-val="toboso">El Toboso</button>
+                <button class="pill" data-group="next" data-val="consuegra">Consuegra</button>
+                <button class="pill" data-group="next" data-val="tomelloso">Tomelloso</button>
+                <button class="pill" data-group="next" data-val="alcazar">Alcázar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 2rem;">
+          <button class="generate-btn" id="generate-btn" onclick="generateItinerary()">
+            <span class="material-symbols-outlined" style="font-size:1.2rem;">auto_awesome</span>
+            <span id="btn-text">Generar mi Ruta Personalizada</span>
+            <div class="spinner" id="btn-spinner"></div>
+          </button>
+        </div>
+      </div>
+
+      <!-- ─── Main Layout: Timeline + Sidebar ─── -->
+      <div class="ruta-layout">
+
+        <!-- Timeline Column -->
+        <div>
+          <!-- Generating animation -->
+          <div class="generating-overlay" id="generating-overlay">
+            <div class="generating-dots">
+              <div class="generating-dot"></div>
+              <div class="generating-dot"></div>
+              <div class="generating-dot"></div>
+            </div>
+            <p style="color:#434653; font-size:0.9rem;">Diseñando tu ruta perfecta…</p>
+          </div>
+
+          <!-- Timeline output -->
+          <div id="itinerary-output">
+            <div class="timeline-empty">
+              <span class="material-symbols-outlined">map</span>
+              <h3>Tu ruta está esperando</h3>
+              <p>Configura tus preferencias arriba y haz clic en <strong>Generar</strong> para que nuestra IA diseñe una jornada perfecta para ti.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="ruta-sidebar" aria-label="Resumen de ruta">
+          <div class="sidebar-summary" id="route-summary" style="display:none;">
+            <h4>Resumen de Ruta</h4>
+
+            <div class="stat-row">
+              <div class="stat-icon">
+                <span class="material-symbols-outlined">map</span>
+              </div>
+              <div>
+                <div class="stat-value" id="stat-stops">—</div>
+                <div class="stat-label">Paradas</div>
+              </div>
+            </div>
+
+            <div class="stat-row">
+              <div class="stat-icon">
+                <span class="material-symbols-outlined">schedule</span>
+              </div>
+              <div>
+                <div class="stat-value" id="stat-duration">—</div>
+                <div class="stat-label">Duración estimada</div>
+              </div>
+            </div>
+
+            <div class="stat-row">
+              <div class="stat-icon">
+                <span class="material-symbols-outlined">route</span>
+              </div>
+              <div>
+                <div class="stat-value" id="stat-km">—</div>
+                <div class="stat-label">Kilómetros de recorrido</div>
+              </div>
+            </div>
+
+            <div class="stat-row">
+              <div class="stat-icon">
+                <span class="material-symbols-outlined">payments</span>
+              </div>
+              <div>
+                <div class="stat-value" id="stat-budget-level">—</div>
+                <div class="stat-label">Nivel de presupuesto</div>
+              </div>
+            </div>
+
+            <hr class="sidebar-divider">
+
+            <button class="sidebar-save-btn" onclick="alert('¡Ruta guardada! (Próximamente conectaremos con tu perfil)')">
+              Guardar en mi Perfil
+            </button>
+            <button class="sidebar-outline-btn" onclick="window.print()">
+              Descargar PDF
+            </button>
+          </div>
+
+          <!-- Placeholder when no itinerary -->
+          <div class="sidebar-summary" id="summary-placeholder">
+            <h4>Tu resumen</h4>
+            <div style="text-align:center; padding: 2rem 0; color: #737784;">
+              <span class="material-symbols-outlined" style="font-size:2.5rem; opacity:0.3; display:block; margin-bottom:0.75rem;">route</span>
+              <p style="font-size:0.85rem; line-height:1.6;">El resumen de tu ruta aparecerá aquí una vez generada.</p>
+            </div>
+          </div>
+
+          <!-- Gymkana Promo -->
+          <div class="gymkana-promo">
+            <div class="gymkana-promo__badge">
+              <span class="material-symbols-outlined">military_tech</span>
+              <span>Producto Destacado</span>
+            </div>
+            <h3>Gymkana Quijotesca</h3>
+            <p>Convierte tu visita en un juego de misterio. Resuelve acertijos en cada parada y desbloquea recompensas exclusivas.</p>
+            <a href="gymkana.html" class="gymkana-promo-btn">Comenzar Aventura</a>
+          </div>
+        </aside>
+
+      </div><!-- end ruta-layout -->
+    </div><!-- end wizard-section -->
+  </main>
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <footer class="ruta-footer" role="contentinfo">
+    <div class="ruta-footer__inner">
+      <div>
+        <div class="ruta-footer__brand">Criptana 360</div>
+        <p class="ruta-footer__tagline">Legado y tecnología unidos para una experiencia de viaje inigualable en el corazón de La Mancha.</p>
+      </div>
+      <div>
+        <h5>Explora</h5>
+        <ul>
+          <li><a href="index.html#guia">Molinos</a></li>
+          <li><a href="index.html#guia">Museos</a></li>
+          <li><a href="guía-enoturismo-bodegas-campo-de-criptana.html">Bodegas</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Compañía</h5>
+        <ul>
+          <li><a href="#">Privacidad</a></li>
+          <li><a href="#">Términos</a></li>
+          <li><a href="#">Contacto</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Newsletter</h5>
+        <div style="display:flex; gap: 0.5rem; margin-top: 0.25rem;">
+          <input
+            type="email"
+            placeholder="Tu email"
+            style="flex:1; padding:0.6rem 1rem; border:1.5px solid #c3c6d5; border-radius:9999px; font-family:var(--hl-font-sans); font-size:0.85rem; background:white;"
+            aria-label="Email para newsletter"
+          >
+          <button style="width:42px; height:42px; border-radius:50%; background:var(--hl-albaicin-blue); border:none; color:white; cursor:pointer; display:flex; align-items:center; justify-content:center;" aria-label="Suscribirse">
+            <span class="material-symbols-outlined" style="font-size:1.1rem;">send</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="ruta-footer__copy">
+      © 2024 Criptana 360. Legado Manchego. Campo de Criptana, Castilla-La Mancha.
+    </div>
+  </footer>
+
+  <script>
+    // ─── State ───────────────────────────────────────────────────
+    const state = {
+      party: 'solo',
+      budget: 'estandar',
+      interests: ['historia', 'vino'],
+      season: 'verano',
+      next: 'none',
+      duration: 7
+    };
+
+    // ─── Pill interaction ─────────────────────────────────────────
+    document.querySelectorAll('.pill').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const group = btn.dataset.group;
+        const val = btn.dataset.val;
+        const isMulti = btn.dataset.multi === 'true';
+
+        if (isMulti) {
+          if (btn.classList.contains('selected')) {
+            const selectedInGroup = document.querySelectorAll(`.pill[data-group="${group}"].selected`);
+            if (selectedInGroup.length > 1) {
+              btn.classList.remove('selected');
+              state.interests = [...document.querySelectorAll(`.pill[data-group="${group}"].selected`)].map(b => b.dataset.val);
+            }
+          } else {
+            btn.classList.add('selected');
+            state.interests = [...document.querySelectorAll(`.pill[data-group="${group}"].selected`)].map(b => b.dataset.val);
+          }
+        } else {
+          document.querySelectorAll(`.pill[data-group="${group}"]`).forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+          state[group] = val;
+        }
+      });
+    });
+
+    // ─── Duration slider ──────────────────────────────────────────
+    const slider = document.getElementById('duration-slider');
+    const durationVal = document.getElementById('duration-val');
+
+    slider.addEventListener('input', () => {
+      state.duration = parseFloat(slider.value);
+      durationVal.textContent = state.duration % 1 === 0
+        ? `${state.duration} horas`
+        : `${state.duration} horas`;
+      const pct = ((state.duration - slider.min) / (slider.max - slider.min)) * 100;
+      slider.style.background = `linear-gradient(to right, #0047AB ${pct}%, #e2e2eb ${pct}%)`;
+    });
+
+    // ─── Itinerary data ───────────────────────────────────────────
+    const STOPS = {
+      historia: [
+        {
+          time: '09:30 — 11:30',
+          name: 'Sierra de los Molinos',
+          desc: 'Comienza tu jornada entre los "gigantes" que inspiraron a Cervantes. Una visita al Molino Infanto para descubrir el mecanismo original del siglo XVI en funcionamiento.',
+          partner: 'Molino Infanto',
+          cta: 'Consultar Disponibilidad',
+          img: 'stitch_screens/criptana_360_tu_ruta_ia/assets/AB6AXuDhsffn-l-X-yleRhB2YQLQNYl3yiMcgO1lNHV7tWD-HUu32cY1spvyvyXAlDpJGfYmJtbZNPl9-eLXewQS6wjB5S4HexU1-b56e284426ed1512c5a9c643fcf8eaf9'
+        },
+        {
+          time: '12:00 — 13:30',
+          name: 'Museo La Señora del Toboso',
+          desc: 'Descubre la historia de Dulcinea del Toboso y la literatura cervantina en este museo municipal dedicado al mito quijotesco de La Mancha.',
+          partner: 'Museo Municipal',
+          cta: 'Ver Horarios',
+          img: null
+        }
+      ],
+      gastronomia: [
+        {
+          time: '14:00 — 16:00',
+          name: 'Almuerzo en Las Musas',
+          desc: 'Gastronomía manchega de vanguardia con vistas panorámicas a la llanura. Atascaburras reinterpretado y cordero lechal a baja temperatura.',
+          partner: 'Restaurante Recomendado',
+          cta: 'Reservar Mesa',
+          img: 'stitch_screens/criptana_360_tu_ruta_ia/assets/AB6AXuCS-f-eCiCizP_PZZH0rwynbwJqFgDiUiFSybnY823dwErJjtaj4CSrzgO2jmygeRFqHxAUduQbXr8miWxJMFYiG2TC0vh_-5a2879f7401b015d748bf337899787df'
+        }
+      ],
+      naturaleza: [
+        {
+          time: '10:00 — 12:30',
+          name: 'Ruta por la Serranía',
+          desc: 'Senderismo de grado bajo por los cerros que rodean los molinos, con vistas inigualables a la llanura manchega y avistamiento de aves locales.',
+          partner: 'Guía Oficial',
+          cta: 'Ver Ruta en Mapa',
+          img: null
+        }
+      ],
+      vino: [
+        {
+          time: '17:30 — 19:00',
+          name: 'Cata en Bodegas Castiblanque',
+          desc: 'Un cierre magistral con una degustación privada de vinos de autor. Atardecer sobre los viñedos mientras degustas tintos con alma de tierra manchega.',
+          partner: 'Bodega Partner',
+          cta: 'Reservar Cata',
+          img: 'stitch_screens/criptana_360_tu_ruta_ia/assets/AB6AXuB4s3lK9GSBKfTrepYEUIC-eTp6W-GBTaHbP58uTFm27QDNfe8TvnlC6qZksGmk87qQ_GHXGJXZb5XlFFBSXYY9lgt-wPWE-ab8d784656fec505cf29fe8d8b686378'
+        }
+      ],
+      arte: [
+        {
+          time: '16:00 — 17:30',
+          name: 'Centro Andaluz de Cerámica',
+          desc: 'Exploramos la cerámica tradicional manchega y su influencia árabe. Taller opcional de modelado con maestros artesanos locales.',
+          partner: 'Taller Cultural',
+          cta: 'Reservar Plaza',
+          img: null
+        }
+      ]
+    };
+
+    const ALBAICIN_STOP = {
+      time: '17:00 — 18:30',
+      name: 'Paseo por el Albaicín',
+      desc: 'Piérdete en el laberinto de casas blancas y zócalos añil. El barrio del Albaicín Criptanense conserva la esencia pura de la arquitectura popular manchega.',
+      partner: 'Guía Oficial',
+      cta: 'Ver Detalles de Contacto',
+      img: 'stitch_screens/criptana_360_tu_ruta_ia/assets/AB6AXuA6IXSpunIJa1bOiDciudI7fuW205qzon0vo6oza9N1lcy6Q0t978BbSPW0LZAKbnEd9xdYzdjeTOJSCmNsfX9HP3j14JPb-df36feb46bccb32d0445cb636c113f6c'
+    };
+
+    // ─── Generate Itinerary ───────────────────────────────────────
+    function generateItinerary() {
+      const btn = document.getElementById('generate-btn');
+      const spinner = document.getElementById('btn-spinner');
+      const btnText = document.getElementById('btn-text');
+      const overlay = document.getElementById('generating-overlay');
+      const output = document.getElementById('itinerary-output');
+
+      // Show loading
+      btn.disabled = true;
+      spinner.style.display = 'block';
+      btnText.textContent = 'Generando tu ruta…';
+      overlay.classList.add('active');
+      output.innerHTML = '';
+
+      setTimeout(() => {
+        overlay.classList.remove('active');
+
+        // Collect stops based on interests
+        let stops = [];
+        state.interests.forEach(interest => {
+          const interestStops = STOPS[interest] || [];
+          stops = stops.concat(interestStops);
+        });
+
+        // Always add Albaicín if not already in
+        if (!stops.find(s => s.name === 'Paseo por el Albaicín')) {
+          stops.push(ALBAICIN_STOP);
+        }
+
+        // Trim based on duration
+        const maxStops = Math.ceil(state.duration / 1.5);
+        stops = stops.slice(0, maxStops);
+
+        // Render
+        renderTimeline(stops);
+
+        // Show sidebar summary
+        document.getElementById('summary-placeholder').style.display = 'none';
+        document.getElementById('route-summary').style.display = 'block';
+        document.getElementById('stat-stops').textContent = stops.length + ' paradas';
+        document.getElementById('stat-duration').textContent = state.duration + ' horas';
+
+        const km = (stops.length * 1.8 + Math.random() * 2).toFixed(1);
+        document.getElementById('stat-km').textContent = km + ' km';
+
+        const budgetLabels = { mochilero: 'Mochilero', estandar: 'Estándar', VIP: 'Premium VIP' };
+        document.getElementById('stat-budget-level').textContent = budgetLabels[state.budget] || state.budget;
+
+        // Reset button
+        btn.disabled = false;
+        spinner.style.display = 'none';
+        btnText.textContent = '✓ Ruta Generada — Regenerar';
+
+        // Smooth scroll to timeline
+        output.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      }, 1800);
+    }
+
+    function renderTimeline(stops) {
+      const output = document.getElementById('itinerary-output');
+
+      if (stops.length === 0) {
+        output.innerHTML = `
+          <div class="timeline-empty">
+            <span class="material-symbols-outlined">search_off</span>
+            <h3>Sin resultados</h3>
+            <p>Selecciona al menos un interés para generar tu itinerario.</p>
+          </div>`;
+        return;
+      }
+
+      const html = `<div class="timeline-stops">` +
+        stops.map((stop, i) => `
+          <article class="timeline-stop" aria-label="Parada ${i+1}: ${stop.name}">
+            <div class="timeline-stop__dot" aria-hidden="true"></div>
+            <span class="timeline-stop__time">${stop.time}</span>
+            <h2 class="timeline-stop__name">${stop.name}</h2>
+            <p class="timeline-stop__desc">${stop.desc}</p>
+            ${stop.img ? `<img class="timeline-stop__img" src="${stop.img}" alt="${stop.name} - Criptana 360" loading="lazy">` : ''}
+            <span class="timeline-stop__partner">
+              <span class="material-symbols-outlined" style="font-size:0.85rem;">handshake</span>
+              ${stop.partner}
+            </span><br>
+            <button class="timeline-stop__cta">
+              ${stop.cta}
+              <span class="material-symbols-outlined" style="font-size:1rem;">arrow_forward</span>
+            </button>
+          </article>
+        `).join('') + `</div>`;
+
+      output.innerHTML = html;
+    }
+  </script>
+
+</body>
+</html>

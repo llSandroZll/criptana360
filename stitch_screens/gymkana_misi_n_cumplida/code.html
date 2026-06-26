@@ -1,0 +1,281 @@
+<!DOCTYPE html><html class="dark" lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Gymkana - ¡Victoria!</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="assets/css2-a39f5c6fcbb87b419667ec984d2e579a" rel="stylesheet">
+<link href="assets/css2-675a52eba4318eeb4329b4198204fda2" rel="stylesheet">
+<link href="assets/css2-a39f5c6fcbb87b419667ec984d2e579a" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#d9d9e2",
+                        "secondary-container": "#e3e3de",
+                        "primary-container": "#0047ab",
+                        "inverse-on-surface": "#f0f0f9",
+                        "on-tertiary-container": "#ffaa8a",
+                        "on-primary-container": "#a5bdff",
+                        "tertiary-fixed-dim": "#ffb59a",
+                        "error": "#ba1a1a",
+                        "sunset-gold": "#D4AF37",
+                        "on-primary-fixed": "#001946",
+                        "primary": "#00327d",
+                        "on-tertiary-fixed": "#380d00",
+                        "tertiary": "#651f00",
+                        "outline-variant": "#c3c6d5",
+                        "surface-bright": "#faf8ff",
+                        "inverse-surface": "#2e3037",
+                        "tertiary-fixed": "#ffdbcf",
+                        "mancha-earth": "#4A3728",
+                        "on-primary": "#ffffff",
+                        "on-surface": "#191b22",
+                        "lime-wash": "#F9F8F3",
+                        "error-container": "#ffdad6",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed": "#1b1c19",
+                        "tertiary-container": "#8b2e01",
+                        "on-primary-fixed-variant": "#00419e",
+                        "surface-container-highest": "#e2e2eb",
+                        "surface-tint": "#2559bd",
+                        "on-surface-variant": "#434653",
+                        "primary-fixed-dim": "#b1c5ff",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#802900",
+                        "secondary": "#5e5f5b",
+                        "surface-container-high": "#e7e7f0",
+                        "background": "#faf8ff",
+                        "surface": "#faf8ff",
+                        "on-secondary": "#ffffff",
+                        "surface-variant": "#e2e2eb",
+                        "secondary-fixed-dim": "#c7c7c2",
+                        "on-background": "#191b22",
+                        "surface-container": "#ededf6",
+                        "surface-container-low": "#f3f3fc",
+                        "inverse-primary": "#b1c5ff",
+                        "secondary-fixed": "#e3e3de",
+                        "on-error": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "albaicin-blue": "#0047AB",
+                        "outline": "#737784",
+                        "on-secondary-fixed-variant": "#464744",
+                        "on-secondary-container": "#646561",
+                        "primary-fixed": "#dae2ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "section-gap": "80px",
+                        "gutter": "24px",
+                        "margin-mobile": "16px",
+                        "container-max": "1280px",
+                        "component-padding": "24px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Bodoni Moda"],
+                        "body-md": ["Manrope"],
+                        "display-lg-mobile": ["Bodoni Moda"],
+                        "quote-serif": ["Bodoni Moda"],
+                        "label-sm": ["Manrope"],
+                        "headline-md": ["Bodoni Moda"],
+                        "body-lg": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["64px", {"lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "display-lg-mobile": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "quote-serif": ["24px", {"lineHeight": "36px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(25, 27, 34, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #D4AF37 0%, #FFF5D1 50%, #D4AF37 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Particle Animation Base */
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+            animation: float-up 4s ease-in infinite;
+        }
+
+        @keyframes float-up {
+            0% { transform: translateY(0) scale(0.5); opacity: 0; }
+            20% { opacity: 0.8; }
+            80% { opacity: 0.5; }
+            100% { transform: translateY(-100vh) scale(1.2); opacity: 0; }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.4)); }
+            50% { filter: drop-shadow(0 0 40px rgba(212, 175, 55, 0.8)); }
+        }
+
+        .trophy-glow {
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-inverse-surface text-surface-bright min-h-screen relative overflow-x-hidden antialiased font-body-md">
+<!-- Particle Container -->
+<div class="fixed inset-0 z-0 pointer-events-none overflow-hidden" id="particles"></div>
+<!-- Main Content Container -->
+<main class="relative z-10 flex flex-col items-center justify-center min-h-screen p-margin-mobile md:p-gutter max-w-container-max mx-auto">
+<!-- Top Branding / Context -->
+<header class="w-full flex justify-between items-center pt-8 pb-12 opacity-80">
+<span class="font-headline-md text-headline-md text-surface-bright tracking-tight">Criptana 360</span>
+<span class="glass-panel px-4 py-2 rounded-full font-label-sm text-label-sm uppercase tracking-widest text-sunset-gold border border-sunset-gold/30">
+                Gymkana Completada
+            </span>
+</header>
+<!-- Central Victory Graphic -->
+<section class="flex flex-col items-center text-center space-y-8 flex-grow justify-center w-full max-w-2xl">
+<!-- 3D Trophy / Medal Placeholder -->
+<div class="relative w-64 h-64 md:w-80 md:h-80 mb-6 trophy-glow">
+<!-- Decorative background circles -->
+<div class="absolute inset-0 bg-sunset-gold/10 rounded-full blur-3xl animate-pulse"></div>
+<div class="absolute inset-4 bg-albaicin-blue/20 rounded-full blur-2xl"></div>
+<img class="w-full h-full object-contain relative z-10 drop-shadow-2xl" data-alt="A highly detailed, ultra-realistic 3D rendering of an ornate golden trophy or medal, glowing against a dark, premium studio background. The trophy features intricate, classical heritage engravings reminiscent of 16th-century Spanish craftsmanship. Soft, cinematic lighting highlights the polished gold textures, with subtle hints of deep Albaicín Blue reflecting on its edges. The composition is centered, dramatic, and exudes high-end luxury and achievement." src="assets/AB6AXuBw6AKqLxyotaeyP02WRp5OJLDnqxV5jgSSf5obiAjnegMluZugeN4CLIaYlAAc-C1FygQYAoeC8OI9bznixCgi4SY2Cmzr-9068f96a2f60f4e81cfa840e96cd0538">
+</div>
+<!-- Text Content -->
+<div class="space-y-4">
+<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg gold-gradient-text">
+                    ¡Victoria!
+                </h1>
+<p class="font-quote-serif text-quote-serif text-surface-variant italic">
+                    "El gigante ha sido conquistado."
+                </p>
+</div>
+<!-- Stats Grid -->
+<div class="grid grid-cols-2 gap-4 w-full mt-8">
+<!-- Score -->
+<div class="glass-panel p-6 rounded-xl flex flex-col items-center justify-center space-y-2 transform hover:scale-105 transition-transform duration-300">
+<span class="material-symbols-outlined text-sunset-gold text-4xl" style="font-variation-settings: 'FILL' 1;">
+                        star
+                    </span>
+<span class="font-headline-md text-headline-md text-surface-bright">10/10</span>
+<span class="font-label-sm text-label-sm text-outline-variant uppercase">Acertijos</span>
+</div>
+<!-- Rank -->
+<div class="glass-panel p-6 rounded-xl flex flex-col items-center justify-center space-y-2 transform hover:scale-105 transition-transform duration-300 border-sunset-gold/30">
+<span class="material-symbols-outlined text-albaicin-blue text-4xl" style="font-variation-settings: 'FILL' 1;">
+                        local_fire_department
+                    </span>
+<span class="font-headline-md text-headline-md text-sunset-gold text-center leading-none mt-2">Leyenda</span>
+<span class="font-label-sm text-label-sm text-outline-variant uppercase mt-1">Rango Final</span>
+</div>
+</div>
+<!-- Badges Recap -->
+<div class="w-full glass-panel rounded-xl p-6 mt-4">
+<h3 class="font-label-sm text-label-sm text-outline-variant uppercase mb-4 text-left">Insignias Obtenidas</h3>
+<div class="flex flex-row justify-around items-center">
+<div class="flex flex-col items-center space-y-2 opacity-100 transition-opacity">
+<div class="w-12 h-12 rounded-full bg-albaicin-blue/20 flex items-center justify-center border border-albaicin-blue/50 text-albaicin-blue shadow-[0_0_15px_rgba(0,71,171,0.4)]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">explore</span>
+</div>
+</div>
+<div class="flex flex-col items-center space-y-2 opacity-100 transition-opacity" style="transition-delay: 100ms;">
+<div class="w-12 h-12 rounded-full bg-sunset-gold/20 flex items-center justify-center border border-sunset-gold/50 text-sunset-gold shadow-[0_0_15px_rgba(212,175,55,0.4)]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
+</div>
+</div>
+<div class="flex flex-col items-center space-y-2 opacity-100 transition-opacity" style="transition-delay: 200ms;">
+<div class="w-12 h-12 rounded-full bg-on-tertiary-container/20 flex items-center justify-center border border-on-tertiary-container/50 text-on-tertiary-container shadow-[0_0_15px_rgba(255,170,138,0.4)]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">bolt</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Bottom Actions -->
+<footer class="w-full max-w-2xl mt-12 mb-8 space-y-4 flex flex-col items-center">
+<!-- Primary Share Action -->
+<button class="w-full md:w-auto px-8 py-4 bg-sunset-gold text-on-secondary-fixed rounded-full font-body-lg text-body-lg font-bold flex items-center justify-center space-x-3 hover:bg-opacity-90 hover:scale-[1.02] transition-all duration-300 shadow-[0_4px_20px_rgba(212,175,55,0.3)]">
+<span class="material-symbols-outlined">share</span>
+<span>Compartir Logro</span>
+</button>
+<!-- Secondary Return Action -->
+<button class="w-full md:w-auto px-8 py-4 bg-transparent border-2 border-outline-variant text-surface-bright rounded-full font-body-lg text-body-lg flex items-center justify-center space-x-3 hover:border-surface-bright hover:bg-white/5 transition-all duration-300">
+<span>Volver a la Guía</span>
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</footer>
+</main>
+<!-- Particle Generator Script -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('particles');
+            const colors = ['#D4AF37', '#0047AB', '#ffffff']; // Gold, Blue, White
+            const particleCount = window.innerWidth > 768 ? 50 : 30;
+
+            for (let i = 0; i < particleCount; i++) {
+                createParticle(container, colors);
+            }
+        });
+
+        function createParticle(container, colors) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            
+            // Randomize properties
+            const size = Math.random() * 6 + 2; // 2px to 8px
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            const left = Math.random() * 100; // 0% to 100%
+            const duration = Math.random() * 3 + 2; // 2s to 5s
+            const delay = Math.random() * 5; // 0s to 5s
+
+            // Apply styles
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.backgroundColor = color;
+            particle.style.left = `${left}vw`;
+            particle.style.bottom = `-10px`;
+            particle.style.animationDuration = `${duration}s`;
+            particle.style.animationDelay = `${delay}s`;
+            
+            // Add subtle glow based on color
+            if(color === '#D4AF37') {
+                particle.style.boxShadow = `0 0 8px ${color}`;
+            } else if (color === '#0047AB') {
+                particle.style.boxShadow = `0 0 6px ${color}`;
+            }
+
+            container.appendChild(particle);
+            
+            // Recreate particle when animation ends to keep it looping infinitely
+            particle.addEventListener('animationend', () => {
+                particle.remove();
+                createParticle(container, colors);
+            });
+        }
+    </script>
+</body></html>

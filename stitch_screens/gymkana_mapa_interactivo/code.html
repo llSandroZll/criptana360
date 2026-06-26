@@ -1,0 +1,301 @@
+<!DOCTYPE html><html class="light" lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Gymkana Criptana 360 - Mapa Interactivo</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="assets/css2-4352a012783f67e3fdb965878cbbad2a" rel="stylesheet">
+<link href="assets/css2-a39f5c6fcbb87b419667ec984d2e579a" rel="stylesheet">
+<link href="assets/css2-a39f5c6fcbb87b419667ec984d2e579a" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        /* Custom map markers pulse */
+        @keyframes pulse-blue {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 71, 171, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(0, 71, 171, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 71, 171, 0); }
+        }
+        .user-pulse {
+            animation: pulse-blue 2s infinite;
+        }
+        /* Hide scrollbars for the drawer */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .glass-dark {
+            background: rgba(25, 27, 34, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .map-gradient-overlay {
+            background: linear-gradient(to top, rgba(25, 27, 34, 0.4) 0%, transparent 40%);
+            pointer-events: none;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed": "#380d00",
+                        "on-surface-variant": "#434653",
+                        "inverse-on-surface": "#f0f0f9",
+                        "lime-wash": "#F9F8F3",
+                        "tertiary-container": "#8b2e01",
+                        "surface-variant": "#e2e2eb",
+                        "on-secondary": "#ffffff",
+                        "surface-container-high": "#e7e7f0",
+                        "inverse-primary": "#b1c5ff",
+                        "on-primary-container": "#a5bdff",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "outline-variant": "#c3c6d5",
+                        "on-primary-fixed": "#001946",
+                        "secondary-container": "#e3e3de",
+                        "tertiary-fixed-dim": "#ffb59a",
+                        "surface": "#faf8ff",
+                        "primary-fixed": "#dae2ff",
+                        "tertiary-fixed": "#ffdbcf",
+                        "secondary": "#5e5f5b",
+                        "on-surface": "#191b22",
+                        "tertiary": "#651f00",
+                        "on-secondary-fixed": "#1b1c19",
+                        "on-secondary-container": "#646561",
+                        "on-secondary-fixed-variant": "#464744",
+                        "albaicin-blue": "#0047AB",
+                        "outline": "#737784",
+                        "surface-dim": "#d9d9e2",
+                        "on-tertiary-container": "#ffaa8a",
+                        "on-background": "#191b22",
+                        "on-error-container": "#93000a",
+                        "surface-container-low": "#f3f3fc",
+                        "surface-container": "#ededf6",
+                        "primary": "#00327d",
+                        "secondary-fixed-dim": "#c7c7c2",
+                        "surface-bright": "#faf8ff",
+                        "primary-container": "#0047ab",
+                        "background": "#faf8ff",
+                        "surface-tint": "#2559bd",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed-variant": "#00419e",
+                        "on-primary": "#ffffff",
+                        "inverse-surface": "#2e3037",
+                        "on-tertiary-fixed-variant": "#802900",
+                        "surface-container-highest": "#e2e2eb",
+                        "mancha-earth": "#4A3728",
+                        "secondary-fixed": "#e3e3de",
+                        "primary-fixed-dim": "#b1c5ff",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "sunset-gold": "#D4AF37"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "component-padding": "24px",
+                        "section-gap": "80px",
+                        "gutter": "24px",
+                        "container-max": "1280px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Manrope"],
+                        "display-lg": ["Bodoni Moda"],
+                        "body-md": ["Manrope"],
+                        "quote-serif": ["Bodoni Moda"],
+                        "label-sm": ["Manrope"],
+                        "headline-md": ["Bodoni Moda"],
+                        "display-lg-mobile": ["Bodoni Moda"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "display-lg": ["64px", {"lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "quote-serif": ["24px", {"lineHeight": "36px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                        "display-lg-mobile": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-lime-wash text-on-background overflow-hidden h-screen font-body-md">
+<!-- Interactive Topographic Map -->
+<main class="relative w-full h-full bg-mancha-earth">
+<!-- Mock Map Background -->
+<div class="absolute inset-0 z-0 bg-cover bg-center" data-alt="A highly detailed topographic map of Campo de Criptana and the Sierra de los Molinos. The map uses a premium aesthetic with earth-toned contours in mancha-earth, soft albaicin-blue highlights for water paths, and a paper-like texture. Subtle grid lines and elevation markers are visible, creating a sophisticated, high-tech adventurer tool aesthetic for a luxury tourism app." data-location="Campo de Criptana" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCFKyG7g2krCStDKc6BhjZF9-E8TCBh628QfDxueUq-OeBtMRTb7AaGfPUoierNjI2_z17nVi4R3uybf-X5pRn5fWjCazdf50bMd2fvY7I1p3WDizZYmyOsL6dkCpRFqQnJp4IvDP8B17CSiRlhwDl5dW8iUCR9cw1-w50FPfGs6SyVG3oZhrM7_xpjRlalAm8K02oo7z6o46bE72d-yHKUL1NJyYgiNoHCT5_O_74pydUMMjxUV3toL6lqOPtk74jpVolgn5SuyMk')"></div>
+<div class="absolute inset-0 map-gradient-overlay z-10"></div>
+<!-- UI Elements: Top Bar -->
+<div class="fixed top-0 left-0 w-full p-margin-mobile z-40 flex justify-between items-start pointer-events-none">
+<div class="glass-dark rounded-xl px-4 py-3 pointer-events-auto flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-albaicin-blue flex items-center justify-center text-white">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">explore</span>
+</div>
+<div>
+<h1 class="text-white font-headline-md text-body-md leading-tight">Gymkana Gigantes</h1>
+<p class="text-surface-variant text-label-sm">4 / 10 Descubiertos</p>
+</div>
+</div>
+<button class="glass-dark w-12 h-12 rounded-full flex items-center justify-center text-white pointer-events-auto transition-transform active:scale-95">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+<!-- Map Markers (Simulated) -->
+<div class="absolute inset-0 z-20 overflow-hidden pointer-events-none">
+<!-- User Location -->
+<div class="absolute top-[60%] left-[45%] flex flex-col items-center pointer-events-auto cursor-pointer">
+<div class="w-6 h-6 bg-albaicin-blue rounded-full border-4 border-white user-pulse"></div>
+</div>
+<!-- Windmill 1: Infanto -->
+<div class="absolute top-[40%] left-[30%] flex flex-col items-center pointer-events-auto cursor-pointer group">
+<div class="relative flex flex-col items-center">
+<div class="bg-sunset-gold text-on-tertiary-fixed w-10 h-10 rounded-full flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined fill-icon">castle</span>
+</div>
+<div class="bg-white px-2 py-1 rounded-md mt-1 shadow-sm">
+<span class="text-label-sm font-bold text-mancha-earth">Infanto</span>
+</div>
+<!-- Marker Line -->
+<div class="w-0.5 h-4 bg-sunset-gold/50"></div>
+</div>
+</div>
+<!-- Windmill 2: Burleta -->
+<div class="absolute top-[25%] left-[55%] flex flex-col items-center pointer-events-auto cursor-pointer group opacity-80">
+<div class="relative flex flex-col items-center">
+<div class="bg-surface-variant text-on-surface-variant w-8 h-8 rounded-full flex items-center justify-center shadow-md transform group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">castle</span>
+</div>
+<div class="bg-white/90 px-2 py-0.5 rounded-md mt-1">
+<span class="text-label-sm text-on-surface-variant">Burleta</span>
+</div>
+</div>
+</div>
+<!-- Windmill 3: Sardinero -->
+<div class="absolute top-[55%] left-[65%] flex flex-col items-center pointer-events-auto cursor-pointer group opacity-80">
+<div class="relative flex flex-col items-center">
+<div class="bg-surface-variant text-on-surface-variant w-8 h-8 rounded-full flex items-center justify-center shadow-md transform group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">castle</span>
+</div>
+<div class="bg-white/90 px-2 py-0.5 rounded-md mt-1">
+<span class="text-label-sm text-on-surface-variant">Sardinero</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Quest Slide-up Drawer -->
+<div class="fixed bottom-[88px] left-1/2 -translate-x-1/2 w-[calc(100%-32px)] max-w-md z-40 transition-all duration-500 transform translate-y-0" id="questDrawer">
+<div class="glass-dark rounded-t-3xl p-6 shadow-2xl border-t border-white/20">
+<!-- Handle -->
+<div class="w-12 h-1 bg-white/20 rounded-full mx-auto mb-6"></div>
+<div class="flex justify-between items-start mb-4">
+<div class="space-y-1">
+<span class="text-sunset-gold font-bold text-label-sm tracking-widest">MISIÓN ACTUAL</span>
+<h2 class="text-white font-display-lg text-[24px] leading-tight">Encuentra el Gigante Infanto</h2>
+</div>
+<div class="bg-white/10 p-2 rounded-lg">
+<span class="material-symbols-outlined text-sunset-gold fill-icon">verified_user</span>
+</div>
+</div>
+<p class="text-surface-variant text-body-md mb-6 leading-relaxed">
+                    Dice la leyenda que este gigante custodia las llaves del Albaicín. Acércate a menos de 20 metros para desbloquear el siguiente capítulo.
+                </p>
+<div class="grid grid-cols-2 gap-3">
+<button class="bg-albaicin-blue hover:bg-primary transition-colors text-white py-4 px-4 rounded-xl flex items-center justify-center gap-2 group">
+<span class="material-symbols-outlined fill-icon group-hover:scale-110 transition-transform">volume_up</span>
+<span class="font-bold text-label-sm">Pista de Audio</span>
+</button>
+<button class="bg-white/10 hover:bg-white/20 transition-colors text-white py-4 px-4 rounded-xl flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">camera</span>
+<span class="font-bold text-label-sm">Escanear</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Floating Action Button for GPS -->
+<button class="fixed right-margin-mobile bottom-[300px] z-40 bg-white dark:bg-inverse-surface w-12 h-12 rounded-full shadow-lg flex items-center justify-center text-albaicin-blue active:scale-90 transition-transform">
+<span class="material-symbols-outlined">my_location</span>
+</button>
+</main>
+<!-- Bottom Navigation (Persistent Shell) -->
+<nav class="fixed bottom-0 left-0 w-full bg-white/95 dark:bg-on-surface/95 backdrop-blur-md z-50 h-[88px] flex justify-around items-center px-4 md:hidden">
+<a class="flex flex-col items-center gap-1 text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-label-sm">Inicio</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-albaicin-blue" href="#">
+<span class="material-symbols-outlined fill-icon">map</span>
+<span class="text-label-sm font-bold">Mapa</span>
+</a>
+<!-- Central Scanner (Special prominence) -->
+<div class="relative -top-4">
+<button class="w-16 h-16 bg-albaicin-blue rounded-full flex items-center justify-center shadow-xl border-4 border-white">
+<span class="material-symbols-outlined text-white text-3xl">qr_code_scanner</span>
+</button>
+</div>
+<a class="flex flex-col items-center gap-1 text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="text-label-sm">Inventario</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-label-sm">Perfil</span>
+</a>
+</nav>
+<!-- Desktop Fallback / Navigation Anchor -->
+<div class="hidden md:flex fixed top-0 left-0 w-full h-20 bg-white/70 backdrop-blur-xl border-b border-white/20 z-50 px-gutter items-center justify-between">
+<div class="font-headline-md font-bold tracking-tight text-albaicin-blue text-body-lg">Criptana 360</div>
+<div class="flex gap-8">
+<a class="text-on-surface-variant hover:text-albaicin-blue font-body-md transition-colors" href="#">Experiencias</a>
+<a class="text-albaicin-blue font-bold border-b-2 border-albaicin-blue pb-1 font-body-md" href="#">Rutas IA</a>
+<a class="text-on-surface-variant hover:text-albaicin-blue font-body-md transition-colors" href="#">Historia</a>
+<a class="text-on-surface-variant hover:text-albaicin-blue font-body-md transition-colors" href="#">Guía</a>
+</div>
+<button class="bg-albaicin-blue text-white px-6 py-2 rounded-full font-bold text-label-sm hover:opacity-90 transition-opacity">
+            Planificar
+        </button>
+</div>
+<script>
+        // Simple Interaction logic for the drawer
+        const drawer = document.getElementById('questDrawer');
+        let isOpen = true;
+
+        drawer.addEventListener('click', (e) => {
+            // Minimal toggle for demonstration
+            if (e.target.closest('.w-12.h-1')) {
+                if (isOpen) {
+                    drawer.style.transform = 'translateY(75%)';
+                    isOpen = false;
+                } else {
+                    drawer.style.transform = 'translateY(0)';
+                    isOpen = true;
+                }
+            }
+        });
+
+        // Simulate marker clicking
+        document.querySelectorAll('.pointer-events-auto.cursor-pointer').forEach(marker => {
+            marker.addEventListener('click', () => {
+                // Flash effect or sound trigger could go here
+                console.log('Marker selected');
+            });
+        });
+    </script>
+</body></html>
