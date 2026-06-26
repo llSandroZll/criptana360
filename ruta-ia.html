@@ -904,6 +904,57 @@
     .generating-overlay {
       color: var(--cream);
     }
+
+    /* ─── Dynamic Theme Overrides (Sunset Mode) ─── */
+    body.sunset-mode {
+      background: #090F1C;
+      color: #F6F9FD;
+    }
+    body.sunset-mode .ruta-nav {
+      background: rgba(9, 15, 28, 0.85);
+      border-bottom-color: rgba(62, 124, 252, 0.2);
+    }
+    body.sunset-mode .ruta-nav__links a {
+      color: #A1B2CD;
+    }
+    body.sunset-mode .ruta-nav__links a.active,
+    body.sunset-mode .ruta-nav__links a:hover {
+      color: #3E7CFC;
+    }
+    body.sunset-mode .wizard-card {
+      background: rgba(12, 20, 36, 0.82);
+      border-color: rgba(62, 124, 252, 0.15);
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
+    }
+    body.sunset-mode .wizard-card__title {
+      color: #A1B2CD;
+    }
+    body.sunset-mode .pill {
+      background: #16243D;
+      border-color: rgba(62, 124, 252, 0.3);
+      color: #F6F9FD;
+    }
+    body.sunset-mode .pill.selected {
+      background: #3E7CFC;
+      border-color: #3E7CFC;
+      color: #FFFFFF;
+    }
+    body.sunset-mode .duration-val {
+      color: #3E7CFC;
+    }
+    body.sunset-mode .timeline-empty {
+      border-color: rgba(62, 124, 252, 0.3);
+      color: #A1B2CD;
+    }
+    body.sunset-mode .timeline-empty h3 {
+      color: #F1B83A;
+    }
+    body.sunset-mode .ruta-hero__fade {
+      background: linear-gradient(180deg, rgba(9,15,28,0) 0%, rgba(9,15,28,0.5) 60%, #090F1C 100%);
+    }
+    body.sunset-mode .step-card-num {
+      color: rgba(62, 124, 252, 0.15);
+    }
   </style>
 </head>
 <body>

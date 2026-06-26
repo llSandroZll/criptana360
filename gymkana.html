@@ -16,6 +16,24 @@
   <!-- Heritage Lux Design System -->
   <link rel="stylesheet" href="heritage-lux.css">
 
+  <script>
+    // Instantly check and apply localStorage/parent window active theme token on page load
+    (function() {
+      try {
+        const isSunset = localStorage.getItem('criptana-sunset-mode') === 'active' || 
+                         (window.parent !== window && window.parent.document.body && window.parent.document.body.classList.contains('sunset-mode'));
+        if (isSunset) {
+          document.documentElement.classList.add('sunset-mode');
+          document.addEventListener('DOMContentLoaded', function() {
+            document.body.classList.add('sunset-mode');
+          });
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+  </script>
+
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -545,6 +563,63 @@
     }
 
     .gymk-footer a:hover { color: var(--gold); }
+
+    /* ─── Dynamic Theme Overrides (Sunset Mode) ─── */
+    body.sunset-mode {
+      background: var(--bg-deep);
+      color: var(--cream);
+    }
+    body.sunset-mode .gymk-nav {
+      background: var(--bg-cave);
+      opacity: 0.96;
+      border-bottom-color: var(--border, rgba(0,0,0,0.1));
+    }
+    body.sunset-mode .gymk-nav__brand {
+      color: var(--anil-blue);
+    }
+    body.sunset-mode .gymk-nav__links a {
+      color: var(--cream-dim);
+    }
+    body.sunset-mode .gymk-nav__links a:hover,
+    body.sunset-mode .gymk-nav__links a.active {
+      color: var(--anil-blue);
+    }
+    body.sunset-mode .gymk-nav__links a.active {
+      border-bottom-color: var(--anil-blue);
+    }
+    body.sunset-mode .step-card {
+      background: var(--bg-cave);
+      border-color: var(--border, rgba(0,0,0,0.1));
+      color: var(--cream);
+    }
+    body.sunset-mode .step-title {
+      color: var(--cream);
+    }
+    body.sunset-mode .step-desc {
+      color: var(--cream-dim);
+    }
+    body.sunset-mode .info-section {
+      background: var(--bg-deep);
+      border-top-color: var(--border, #e2e2eb);
+    }
+    body.sunset-mode .faq-q {
+      color: var(--cream);
+    }
+    body.sunset-mode .faq-a {
+      color: var(--cream-dim);
+    }
+    body.sunset-mode .faq-item {
+      border-bottom-color: var(--border, #e2e2eb);
+    }
+    body.sunset-mode .section-title {
+      color: var(--cream);
+    }
+    body.sunset-mode .section-desc {
+      color: var(--cream-dim);
+    }
+    body.sunset-mode .section-overline {
+      color: var(--anil-blue);
+    }
   </style>
 </head>
 <body>

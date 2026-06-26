@@ -433,3 +433,31 @@ body.dark-mode,
   color: var(--cream-dim) !important;
 }
 
+/* ─── UX/UI Audit Fixes: Contrast & Accessibility ─── */
+
+/* 1. Increase contrast of rating/price gold labels on light backgrounds (WCAG AA compliance) */
+:root:not(.sunset-mode) .meta-gold,
+body:not(.sunset-mode) .meta-gold,
+:root:not(.sunset-mode) .explorer-card .meta-gold,
+body:not(.sunset-mode) .explorer-card .meta-gold,
+:root:not(.sunset-mode) [data-theme="light"] .meta-gold,
+body:not(.sunset-mode) [data-theme="light"] .meta-gold {
+  color: #8C6203 !important; /* Darker golden-brown, 4.6:1 contrast ratio on white */
+}
+
+/* 2. Accent Button text color contrast fix */
+.hl-btn-accent {
+  background-color: var(--hl-sunset-gold) !important;
+  color: #191b22 !important; /* Dark charcoal text for maximum contrast on gold (WCAG compliant) */
+}
+.hl-btn-accent:hover {
+  color: #191b22 !important;
+}
+
+/* 3. Live Utility Bar dark glassmorphism for sunset mode (fixing white-on-white text bleeding) */
+body.sunset-mode .live-utility-bar.hl-glass,
+body.sunset-mode .live-utility-bar {
+  background: rgba(9, 15, 28, 0.75) !important;
+  border-bottom-color: rgba(62, 124, 252, 0.2) !important;
+}
+
