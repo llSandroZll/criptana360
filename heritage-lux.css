@@ -373,7 +373,7 @@ body.light-mode,
   --bg-cave: var(--hl-surface-container-lowest); /* #ffffff */
   --surface: var(--hl-surface-container-lowest); /* #ffffff */
   --surface-2: var(--hl-surface-container-low); /* #f3f3fc */
-  --cream: var(--hl-mancha-earth); /* Map --cream to dark --hl-mancha-earth token (#4A3728) */
+  --cream: var(--hl-on-surface); /* Map --cream to deep charcoal (#191b22) for high legibility */
   --cream-dim: var(--hl-on-surface-variant); /* #434653 */
   --gold: var(--hl-sunset-gold); /* #D4AF37 */
   --anil-blue: var(--hl-albaicin-blue); /* #0047AB */
