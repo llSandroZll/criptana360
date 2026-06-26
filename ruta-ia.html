@@ -16,6 +16,30 @@
   <!-- Heritage Lux Design System -->
   <link rel="stylesheet" href="heritage-lux.css">
 
+  <script>
+    // Instantly check and apply localStorage/parent window active theme token on page load
+    (function() {
+      try {
+        const isSunset = localStorage.getItem('criptana-sunset-mode') === 'active' || 
+                         (window.parent !== window && window.parent.document.body && window.parent.document.body.classList.contains('sunset-mode'));
+        if (isSunset) {
+          document.documentElement.classList.add('sunset-mode');
+          document.addEventListener('DOMContentLoaded', function() {
+            document.body.classList.add('sunset-mode');
+            // Update slider background initially
+            const slider = document.getElementById('duration-slider');
+            if (slider) {
+              const pct = ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
+              slider.style.background = `linear-gradient(to right, var(--anil-blue) ${pct}%, var(--surface-2) ${pct}%)`;
+            }
+          });
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+  </script>
+
   <style>
     /* ─── Page Base ─── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -731,6 +755,155 @@
       0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
       40% { transform: scale(1.2); opacity: 1; }
     }
+
+    /* ─── Dynamic Theme Overrides (Light/Dark Mode Integration) ─── */
+    body {
+      background: var(--bg-deep);
+      color: var(--cream);
+    }
+    .ruta-nav {
+      background: var(--bg-cave);
+      opacity: 0.96;
+      border-bottom: 1px solid var(--border, rgba(0,0,0,0.1));
+    }
+    .ruta-nav__brand {
+      color: var(--anil-blue);
+    }
+    .ruta-nav__links a {
+      color: var(--cream-dim);
+    }
+    .ruta-nav__links a:hover,
+    .ruta-nav__links a.active {
+      color: var(--anil-blue);
+    }
+    .ruta-nav__links a.active {
+      border-bottom-color: var(--anil-blue);
+    }
+    .ruta-hero__fade {
+      background: linear-gradient(180deg, rgba(255,255,255,0) 0%, var(--bg-deep) 100%);
+    }
+    .ruta-hero__title {
+      color: var(--cream);
+    }
+    .ruta-hero__subtitle {
+      color: var(--cream-dim);
+    }
+    .wizard-card {
+      background: var(--bg-cave);
+      border-color: var(--border, rgba(0,0,0,0.1));
+      color: var(--cream);
+      box-shadow: 0 8px 40px rgba(0,71,171,0.03), 0 2px 10px rgba(0,0,0,0.02);
+    }
+    .wizard-card__title {
+      color: var(--cream-dim);
+    }
+    .pill {
+      background: var(--surface-2);
+      border-color: var(--border, #c3c6d5);
+      color: var(--cream-dim);
+    }
+    .pill:hover {
+      border-color: var(--anil-blue);
+      color: var(--anil-blue);
+    }
+    .pill.selected {
+      background: var(--anil-blue);
+      border-color: var(--anil-blue);
+      color: #ffffff;
+    }
+    .duration-slider {
+      background: linear-gradient(to right, var(--anil-blue) 0%, var(--anil-blue) var(--slider-fill-percent, 50%), var(--surface-2) var(--slider-fill-percent, 50%));
+    }
+    .duration-slider::-webkit-slider-thumb {
+      background: var(--anil-blue);
+      border-color: var(--bg-cave);
+    }
+    .duration-val {
+      color: var(--anil-blue);
+    }
+    .timeline-empty {
+      border-color: var(--border, #c3c6d5);
+      color: var(--cream-dim);
+    }
+    .timeline-empty h3 {
+      color: var(--cream);
+    }
+    .timeline-stop__dot {
+      background: var(--anil-blue);
+      border-color: var(--bg-cave);
+    }
+    .timeline-stop__time {
+      color: var(--gold);
+    }
+    .timeline-stop__name {
+      color: var(--cream);
+    }
+    .timeline-stop__desc {
+      color: var(--cream-dim);
+    }
+    .timeline-stop__partner {
+      color: var(--cream-dim);
+    }
+    .timeline-stop__cta {
+      color: var(--anil-blue);
+    }
+    .sidebar-summary {
+      background: var(--bg-cave);
+      border-color: var(--border, rgba(0,0,0,0.1));
+      color: var(--cream);
+    }
+    .sidebar-summary h4 {
+      color: var(--cream-dim);
+    }
+    .stat-icon {
+      background: var(--surface-2);
+      color: var(--anil-blue);
+    }
+    .stat-label {
+      color: var(--cream-dim);
+    }
+    .stat-value {
+      color: var(--cream);
+    }
+    .sidebar-divider {
+      border-top-color: var(--border, #e2e2eb);
+    }
+    .sidebar-save-btn {
+      background: var(--anil-blue);
+    }
+    .sidebar-outline-btn {
+      color: var(--anil-blue);
+      border-color: var(--anil-blue);
+    }
+    .sidebar-outline-btn:hover {
+      background: var(--surface-2);
+    }
+    .ruta-footer {
+      background: var(--bg-cave);
+      border-top-color: var(--border, #e2e2eb);
+    }
+    .ruta-footer__brand {
+      color: var(--cream);
+    }
+    .ruta-footer__tagline {
+      color: var(--cream-dim);
+    }
+    .ruta-footer h5 {
+      color: var(--cream);
+    }
+    .ruta-footer ul a {
+      color: var(--cream-dim);
+    }
+    .ruta-footer ul a:hover {
+      color: var(--anil-blue);
+    }
+    .ruta-footer__copy {
+      border-top-color: var(--border, #e2e2eb);
+      color: var(--cream-dim);
+    }
+    .generating-overlay {
+      color: var(--cream);
+    }
   </style>
 </head>
 <body>
@@ -1069,7 +1242,7 @@
         ? `${state.duration} horas`
         : `${state.duration} horas`;
       const pct = ((state.duration - slider.min) / (slider.max - slider.min)) * 100;
-      slider.style.background = `linear-gradient(to right, #0047AB ${pct}%, #e2e2eb ${pct}%)`;
+      slider.style.background = `linear-gradient(to right, var(--anil-blue) ${pct}%, var(--surface-2) ${pct}%)`;
     });
 
     // ─── Itinerary data ───────────────────────────────────────────

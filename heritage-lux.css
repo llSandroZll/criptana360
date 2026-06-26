@@ -189,14 +189,14 @@
 
 .hl-btn-secondary {
   background-color: transparent;
-  color: var(--hl-primary);
-  border-color: var(--hl-primary);
+  color: var(--btn-secondary-text, var(--hl-primary));
+  border-color: var(--btn-secondary-border, var(--hl-primary));
 }
 
 .hl-btn-secondary:hover {
-  background-color: rgba(0, 50, 125, 0.05);
-  border-color: var(--hl-albaicin-blue);
-  color: var(--hl-albaicin-blue);
+  background-color: var(--btn-secondary-hover-bg, rgba(0, 50, 125, 0.05));
+  border-color: var(--btn-secondary-hover-border, var(--hl-albaicin-blue));
+  color: var(--btn-secondary-hover-text, var(--hl-albaicin-blue));
 }
 
 .hl-btn-accent {
@@ -362,16 +362,74 @@
 }
 
 /* ── Legacy Mappings Adapter ───────────────────────────────────────── */
-:root {
-  --bg-deep: var(--hl-lime-wash);
-  --bg-cave: var(--hl-surface-container-lowest);
-  --surface: var(--hl-surface-container-lowest);
-  --surface-2: var(--hl-surface-container-low);
-  --cream: var(--hl-on-background);
-  --cream-dim: var(--hl-on-surface-variant);
-  --gold: var(--hl-sunset-gold);
-  --anil-blue: var(--hl-albaicin-blue);
+/* Default / Light Mode State */
+:root,
+body:not(.sunset-mode),
+body.light-mode,
+.light-mode,
+.claro,
+[data-theme="light"] {
+  --bg-deep: var(--hl-lime-wash); /* #F9F8F3 */
+  --bg-cave: var(--hl-surface-container-lowest); /* #ffffff */
+  --surface: var(--hl-surface-container-lowest); /* #ffffff */
+  --surface-2: var(--hl-surface-container-low); /* #f3f3fc */
+  --cream: var(--hl-mancha-earth); /* Map --cream to dark --hl-mancha-earth token (#4A3728) */
+  --cream-dim: var(--hl-on-surface-variant); /* #434653 */
+  --gold: var(--hl-sunset-gold); /* #D4AF37 */
+  --anil-blue: var(--hl-albaicin-blue); /* #0047AB */
+  
+  --btn-secondary-text: var(--hl-albaicin-blue);
+  --btn-secondary-border: var(--hl-albaicin-blue);
+  --btn-secondary-hover-bg: rgba(0, 71, 171, 0.06);
+  --btn-secondary-hover-border: var(--hl-primary);
+  --btn-secondary-hover-text: var(--hl-primary);
+  
+  --link-color: var(--hl-albaicin-blue);
+  --link-hover-color: var(--hl-primary);
+  
   --font-display: var(--hl-font-display);
   --font-body: var(--hl-font-sans);
+}
+
+/* Dark Mode State / Sunset Mode */
+body.sunset-mode,
+body.dark-mode,
+.dark-mode,
+.oscuro,
+[data-theme="dark"] {
+  --bg-deep: #090F1C;
+  --bg-cave: #0C1424;
+  --surface: #0C1424;
+  --surface-2: #16243D;
+  --cream: #F6F9FD; /* High-contrast white/silver text on dark surfaces */
+  --cream-dim: #A1B2CD;
+  --gold: #F1B83A;
+  --anil-blue: #3E7CFC;
+  
+  --btn-secondary-text: #F6F9FD; /* High-contrast white/silver text on dark background */
+  --btn-secondary-border: #F6F9FD;
+  --btn-secondary-hover-bg: rgba(255, 255, 255, 0.1);
+  --btn-secondary-hover-border: #FFFFFF;
+  --btn-secondary-hover-text: #FFFFFF;
+  
+  --link-color: #3E7CFC;
+  --link-hover-color: #6ea0ff;
+  
+  --font-display: var(--hl-font-display);
+  --font-body: var(--hl-font-sans);
+}
+
+/* Apply scoped link colors to anchor tags that use anil-blue class or general links where appropriate */
+.dynamic-link, a.dynamic-link {
+  color: var(--link-color);
+  transition: color var(--hl-transition);
+}
+.dynamic-link:hover, a.dynamic-link:hover {
+  color: var(--link-hover-color);
+}
+
+/* Fix hero-subtitle color specificity to respect light/dark themes */
+.hero-subtitle {
+  color: var(--cream-dim) !important;
 }
 
