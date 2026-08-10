@@ -130,6 +130,7 @@
 
   let activeLang = 'es';
   let cachedSunsetTime = null;
+  let cachedSunriseTime = null;
 
   function initDetailDrawer() {
     const drawer = document.getElementById('detail-drawer');
@@ -229,11 +230,7 @@
       let bookingCtaHtml = '';
       if (spot.bookingUrl) {
         let btnClass, btnLabel, icon;
-        if (spot.bookingUrlType === 'gymkana') {
-          btnClass = 'drawer-btn-gymkana';
-          btnLabel = dict['drawer.btn.tour'] || 'Empezar Gymkana Interactiva';
-          icon = '⚔️';
-        } else if (spot.bookingUrlType === 'civitatis') {
+        if (spot.bookingUrlType === 'civitatis') {
           btnClass = 'drawer-btn-tour';
           btnLabel = dict['drawer.btn.tour'] || 'Reservar Visita Guiada';
           icon = '🚩';
@@ -485,7 +482,7 @@
       }
 
       // 7. Dynamic Drawer Tour CTA Click
-      const drawerTourBtn = e.target.closest('.drawer-btn-tour') || e.target.closest('.drawer-btn-gymkana');
+      const drawerTourBtn = e.target.closest('.drawer-btn-tour');
       if (drawerTourBtn) {
         const spotId = drawerTourBtn.getAttribute('data-spot') || 'Unknown';
         const spotTitleEl = document.querySelector('.drawer-spot-title');
@@ -495,7 +492,7 @@
           window.gtag('event', 'click_affiliate_tour', {
             'spot_id': spotId,
             'spot_name': spotTitle,
-            'destination': 'gymkana'
+            'destination': 'civitatis'
           });
         }
       }
@@ -519,17 +516,14 @@
       // 9. Bento Action Item Click
       const bentoItem = e.target.closest('.bento-action-item');
       if (bentoItem) {
-        const isGymkana = bentoItem.classList.contains('cta-gymkana');
-        const eventName = isGymkana ? 'click_gymkana' : 'click_affiliate_booking';
-        const dest = isGymkana ? 'gumroad' : 'booking_com';
         const bentoTitleEl = bentoItem.querySelector('.bento-btn-title');
-        const bentoTitle = bentoTitleEl ? bentoTitleEl.innerText : (isGymkana ? 'Gymkana Interactiva' : 'Hoteles y Casas Cueva');
+        const bentoTitle = bentoTitleEl ? bentoTitleEl.innerText : 'Escapada';
         
         if (window.gtag) {
-          window.gtag('event', eventName, {
+          window.gtag('event', 'click_affiliate_booking', {
             'spot_id': 'bento_escapada',
             'spot_name': bentoTitle,
-            'destination': dest
+            'destination': 'booking_com'
           });
         }
       }
@@ -571,70 +565,621 @@
     window.openSpotDrawer = openDrawer;
   }
 
-  /* ─── 5. Dynamic Sunset Countdown Logic ────────────────────────────────── */
+  /* ─── 5. Dynamic Sunrise & Sunset Countdown Logic ─────────────────────────── */
   function initSunsetCountdown() {
     const timerText = document.getElementById('sunset-timer');
     if (!timerText) return;
 
     function updateSunsetTimer() {
       const now = new Date();
+      const month = now.getMonth(); // 0 = Jan, 11 = Dec
       
       let sunset = cachedSunsetTime;
       if (!sunset) {
         sunset = new Date();
-        const month = sunset.getMonth(); // 0 = Jan, 11 = Dec
         const sunsetHours = [18, 18, 20, 20, 21, 21, 21, 21, 20, 19, 18, 17];
         const sunsetMins  = [15, 45, 30, 50, 20, 45, 40, 0, 15, 30, 0, 50];
-        
         sunset.setHours(sunsetHours[month]);
         sunset.setMinutes(sunsetMins[month]);
         sunset.setSeconds(0);
       }
 
-      const isSpanish = (activeLang === 'es');
-      const timeDiff = sunset.getTime() - now.getTime();
-
-      // Format time as HH:MM 24h
-      const timeString = sunset.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
-
-      if (timeDiff > 0) {
-        // Sunset is still ahead
-        const totalMinutes = Math.floor(timeDiff / (1000 * 60));
-        const hours = Math.floor(totalMinutes / 60);
-        const mins = totalMinutes % 60;
-
-        let display = '';
-        if (isSpanish) {
-          display = `Atardecer hoy a las ${timeString} · Quedan ${hours}h y ${mins} min. ¡Sube a los Molinos!`;
-        } else {
-          // English 12h format
-          let hour12 = sunset.getHours() % 12 || 12;
-          let ampm = sunset.getHours() >= 12 ? 'PM' : 'AM';
-          let minString = String(sunset.getMinutes()).padStart(2, '0');
-          let timeString12 = `${hour12}:${minString} ${ampm}`;
-          display = `Sunset tonight at ${timeString12} · ${hours}h ${mins}m left. Perfect view from Windmill ridge!`;
-        }
-        timerText.innerText = display;
-      } else {
-        // Sunset has passed
-        let display = '';
-        if (isSpanish) {
-          display = `Atardecer hoy fue a las ${timeString} · ¡El mejor crepúsculo de La Mancha!`;
-        } else {
-          let hour12 = sunset.getHours() % 12 || 12;
-          let ampm = sunset.getHours() >= 12 ? 'PM' : 'AM';
-          let minString = String(sunset.getMinutes()).padStart(2, '0');
-          let timeString12 = `${hour12}:${minString} ${ampm}`;
-          display = `Sunset occurred at ${timeString12} · Golden hour at the giants!`;
-        }
-        timerText.innerText = display;
+      let sunrise = cachedSunriseTime;
+      if (!sunrise) {
+        sunrise = new Date();
+        const sunriseHours = [8, 8, 7, 7, 6, 6, 6, 7, 7, 8, 7, 8];
+        const sunriseMins  = [30, 5, 25, 35, 55, 45, 55, 20, 45, 15, 50, 20];
+        sunrise.setHours(sunriseHours[month]);
+        sunrise.setMinutes(sunriseMins[month]);
+        sunrise.setSeconds(0);
       }
+
+      const isSpanish = (activeLang === 'es');
+      const timeToSunrise = sunrise.getTime() - now.getTime();
+      const timeToSunset = sunset.getTime() - now.getTime();
+
+      const sr24 = sunrise.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+      const ss24 = sunset.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+
+      function format12(d) {
+        let h = d.getHours() % 12 || 12;
+        let ampm = d.getHours() >= 12 ? 'PM' : 'AM';
+        let m = String(d.getMinutes()).padStart(2, '0');
+        return `${h}:${m} ${ampm}`;
+      }
+
+      const sr12 = format12(sunrise);
+      const ss12 = format12(sunset);
+
+      let display = '';
+      if (timeToSunrise > 0) {
+        const totalMins = Math.floor(timeToSunrise / 60000);
+        const h = Math.floor(totalMins / 60);
+        const m = totalMins % 60;
+        if (isSpanish) {
+          display = `🌄 Amanecer hoy a las ${sr24} (en ${h}h ${m}m) · 🌅 Atardecer ${ss24}`;
+        } else {
+          display = `🌄 Sunrise today at ${sr12} (in ${h}h ${m}m) · 🌅 Sunset ${ss12}`;
+        }
+      } else if (timeToSunset > 0) {
+        const totalMins = Math.floor(timeToSunset / 60000);
+        const h = Math.floor(totalMins / 60);
+        const m = totalMins % 60;
+        if (isSpanish) {
+          display = `🌄 Amanecer ${sr24} · 🌅 Atardecer hoy a las ${ss24} (quedan ${h}h ${m}m)`;
+        } else {
+          display = `🌄 Sunrise ${sr12} · 🌅 Sunset tonight at ${ss12} (${h}h ${m}m left)`;
+        }
+      } else {
+        if (isSpanish) {
+          display = `🌄 Amanecer ${sr24} · 🌅 Atardecer hoy fue a las ${ss24} · ¡Crepúsculo en los Molinos!`;
+        } else {
+          display = `🌄 Sunrise ${sr12} · 🌅 Sunset was at ${ss12} · Golden hour at the giants!`;
+        }
+      }
+
+      timerText.innerText = display;
     }
 
     window.updateSunsetTimer = updateSunsetTimer;
-
     updateSunsetTimer();
-    setInterval(updateSunsetTimer, 30000); // Update every 30 seconds
+    setInterval(updateSunsetTimer, 30000);
+  }
+
+  /* ─── 5b. Total Solar Eclipse 2026 Live Countdown & Modal Logic ─────────── */
+  function initEclipseCountdown() {
+    const timerText = document.getElementById('eclipse-timer');
+    const bannerTimerText = document.getElementById('astro-banner-timer');
+    const eclipseTarget = new Date('2026-08-12T20:28:00+02:00').getTime();
+
+    function updateEclipseTimer() {
+      const now = new Date().getTime();
+      const diff = eclipseTarget - now;
+      const isSpanish = (activeLang === 'es');
+
+      if (diff <= 0 && diff > -7200000) {
+        const liveText = isSpanish 
+          ? '✨ ¡ECLIPSE SOLAR TOTAL EN DIRECTO SOBRE LOS MOLINOS! ☀️🌑' 
+          : '✨ TOTAL SOLAR ECLIPSE LIVE OVER THE WINDMILLS! ☀️🌑';
+        if (timerText) timerText.innerText = liveText;
+        if (bannerTimerText) bannerTimerText.innerText = liveText;
+        return;
+      }
+
+      if (diff <= -7200000) {
+        const postText = isSpanish
+          ? '🌌 Noche Estelar de las Perseidas (Lágrimas de San Lorenzo)'
+          : '🌌 Stargazing Season: Perseids Meteor Shower';
+        if (timerText) timerText.innerText = postText;
+        if (bannerTimerText) bannerTimerText.innerText = postText;
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      let shortStr = '';
+      let bannerStr = '';
+      if (isSpanish) {
+        shortStr = `Eclipse & Perseidas · Quedan ${days}d ${hours}h ${minutes}m`;
+        bannerStr = `${days} días, ${hours}h ${minutes}m ${seconds}s`;
+      } else {
+        shortStr = `Eclipse & Perseids · ${days}d ${hours}h ${minutes}m left`;
+        bannerStr = `${days} days, ${hours}h ${minutes}m ${seconds}s`;
+      }
+
+      if (timerText) timerText.innerText = shortStr;
+      if (bannerTimerText) bannerTimerText.innerText = bannerStr;
+    }
+
+    window.updateEclipseTimer = updateEclipseTimer;
+    updateEclipseTimer();
+    setInterval(updateEclipseTimer, 1000);
+  }
+
+  function initEclipseModal() {
+    const modal = document.getElementById('modal-eclipse');
+    if (!modal) return;
+
+    const overlay = document.getElementById('modal-eclipse-overlay');
+    const closeBtn1 = document.getElementById('btn-close-eclipse-modal');
+    const closeBtn2 = document.getElementById('btn-close-eclipse-modal-bottom');
+    const triggerBtns = document.querySelectorAll('.trigger-eclipse-modal');
+
+    function openModal(e) {
+      if (e) e.preventDefault();
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+
+      const tabTarget = e && e.currentTarget ? e.currentTarget.getAttribute('data-tab-target') : null;
+      if (tabTarget) {
+        const btnToClick = modal.querySelector(`.astro-tab-btn[data-tab="${tabTarget}"]`);
+        if (btnToClick) btnToClick.click();
+      }
+    }
+
+    function closeModal(e) {
+      if (e) e.preventDefault();
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    triggerBtns.forEach(function (btn) {
+      btn.addEventListener('click', openModal);
+    });
+
+    if (overlay) overlay.addEventListener('click', closeModal);
+    if (closeBtn1) closeBtn1.addEventListener('click', closeModal);
+    if (closeBtn2) closeBtn2.addEventListener('click', closeModal);
+
+    const tabBtns = modal.querySelectorAll('.astro-tab-btn');
+    const tabContents = modal.querySelectorAll('.astro-tab-content');
+
+    tabBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        const targetId = btn.getAttribute('data-tab');
+        tabBtns.forEach(function (b) { b.classList.remove('active'); });
+        tabContents.forEach(function (c) { c.classList.remove('active'); });
+        btn.classList.add('active');
+        const targetEl = document.getElementById(targetId);
+        if (targetEl) targetEl.classList.add('active');
+      });
+    });
+  }
+
+  /* ─── Standalone Feria y Fiestas Modal Controller ───────────────────────── */
+  function initFeriaModal() {
+    const modal = document.getElementById('modal-feria');
+    if (!modal) return;
+
+    const overlay = document.getElementById('modal-feria-overlay');
+    const closeBtn1 = document.getElementById('btn-close-feria-modal');
+    const closeBtn2 = document.getElementById('btn-close-feria-modal-bottom');
+    const triggerBtns = document.querySelectorAll('.trigger-feria-modal');
+    const periodCards = modal.querySelectorAll('.feria-period-card');
+
+    function expandCard(selectedPeriod) {
+      periodCards.forEach(function (card) {
+        const cardPeriod = card.getAttribute('data-period');
+        if (selectedPeriod && cardPeriod === selectedPeriod) {
+          card.classList.add('expanded');
+          const badge = card.querySelector('.feria-card-badge');
+          if (badge && badge.textContent.includes('Desplegar')) {
+            badge.textContent = 'Plegar ➖';
+          } else if (badge && badge.textContent.includes('Expand')) {
+            badge.textContent = 'Collapse ➖';
+          }
+          setTimeout(function () {
+            card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }, 150);
+        } else {
+          card.classList.remove('expanded');
+          const badge = card.querySelector('.feria-card-badge');
+          if (badge && badge.textContent.includes('Plegar')) {
+            badge.textContent = 'Desplegar ➕';
+          } else if (badge && badge.textContent.includes('Collapse')) {
+            badge.textContent = 'Expand ➕';
+          }
+        }
+      });
+    }
+
+    periodCards.forEach(function (card) {
+      card.addEventListener('click', function () {
+        const isExpanded = card.classList.contains('expanded');
+
+        periodCards.forEach(function (c) {
+          if (c !== card) {
+            c.classList.remove('expanded');
+            const badge = c.querySelector('.feria-card-badge');
+            if (badge && badge.textContent.includes('Plegar')) {
+              badge.textContent = 'Desplegar ➕';
+            } else if (badge && badge.textContent.includes('Collapse')) {
+              badge.textContent = 'Expand ➕';
+            }
+          }
+        });
+
+        if (isExpanded) {
+          card.classList.remove('expanded');
+          const badge = card.querySelector('.feria-card-badge');
+          if (badge && badge.textContent.includes('Plegar')) {
+            badge.textContent = 'Desplegar ➕';
+          } else if (badge && badge.textContent.includes('Collapse')) {
+            badge.textContent = 'Expand ➕';
+          }
+        } else {
+          card.classList.add('expanded');
+          const badge = card.querySelector('.feria-card-badge');
+          if (badge && badge.textContent.includes('Desplegar')) {
+            badge.textContent = 'Plegar ➖';
+          } else if (badge && badge.textContent.includes('Expand')) {
+            badge.textContent = 'Collapse ➖';
+          }
+        }
+      });
+    });
+
+    function openModal(e) {
+      if (e) e.preventDefault();
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+
+      modal.scrollTop = 0;
+      const modalCard = modal.querySelector('.modal-card');
+      if (modalCard) modalCard.scrollTop = 0;
+
+      const clickedPeriod = e && e.currentTarget ? e.currentTarget.getAttribute('data-period') : null;
+      if (clickedPeriod) {
+        expandCard(clickedPeriod);
+      }
+    }
+
+    function closeModal(e) {
+      if (e) e.preventDefault();
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    triggerBtns.forEach(function (btn) {
+      btn.addEventListener('click', openModal);
+    });
+
+    if (overlay) overlay.addEventListener('click', closeModal);
+    if (closeBtn1) closeBtn1.addEventListener('click', closeModal);
+    if (closeBtn2) closeBtn2.addEventListener('click', closeModal);
+  }
+
+  /* ─── Interactive Starfield & Solar Eclipse Corona Effect ─────────── */
+  function initAstroBannerCanvas() {
+    const card = document.querySelector('.astro-banner-card');
+    if (!card) return;
+
+    let canvas = document.getElementById('astro-banner-canvas');
+    if (!canvas) {
+      canvas = document.createElement('canvas');
+      canvas.id = 'astro-banner-canvas';
+      canvas.style.position = 'absolute';
+      canvas.style.top = '0';
+      canvas.style.left = '0';
+      canvas.style.width = '100%';
+      canvas.style.height = '100%';
+      canvas.style.pointerEvents = 'none';
+      canvas.style.zIndex = '1';
+      card.insertBefore(canvas, card.firstChild);
+    }
+
+    const ctx = canvas.getContext('2d');
+    let width = (canvas.width = card.offsetWidth);
+    let height = (canvas.height = card.offsetHeight);
+
+    window.addEventListener('resize', function () {
+      if (card) {
+        width = canvas.width = card.offsetWidth;
+        height = canvas.height = card.offsetHeight;
+      }
+    });
+
+    const stars = [];
+    const numStars = 70;
+    for (let i = 0; i < numStars; i++) {
+      stars.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        radius: Math.random() * 1.6 + 0.4,
+        alpha: Math.random(),
+        speed: Math.random() * 0.02 + 0.005
+      });
+    }
+
+    let mouseX = width * 0.85;
+    let mouseY = height * 0.35;
+    let targetX = mouseX;
+    let targetY = mouseY;
+
+    card.addEventListener('mousemove', function (e) {
+      const rect = card.getBoundingClientRect();
+      targetX = e.clientX - rect.left;
+      targetY = e.clientY - rect.top;
+    });
+
+    function render() {
+      ctx.clearRect(0, 0, width, height);
+
+      mouseX += (targetX - mouseX) * 0.06;
+      mouseY += (targetY - mouseY) * 0.06;
+
+      // Draw interactive solar eclipse corona halo
+      const coronaRadius = 55;
+      const grad = ctx.createRadialGradient(mouseX, mouseY, 5, mouseX, mouseY, coronaRadius * 2.2);
+      grad.addColorStop(0, 'rgba(255, 235, 170, 0.85)');
+      grad.addColorStop(0.25, 'rgba(255, 180, 50, 0.4)');
+      grad.addColorStop(0.65, 'rgba(255, 110, 0, 0.15)');
+      grad.addColorStop(1, 'rgba(15, 23, 42, 0)');
+
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(mouseX, mouseY, coronaRadius * 2.2, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Dark Moon disk blocking center
+      ctx.fillStyle = '#0f172a';
+      ctx.beginPath();
+      ctx.arc(mouseX, mouseY, 24, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Solar Corona Rim Ring
+      ctx.strokeStyle = 'rgba(255, 215, 0, 0.85)';
+      ctx.lineWidth = 1.8;
+      ctx.stroke();
+
+      // Draw twinkling stars
+      for (let i = 0; i < stars.length; i++) {
+        const star = stars[i];
+        star.alpha += star.speed;
+        if (star.alpha > 1 || star.alpha < 0.1) {
+          star.speed = -star.speed;
+        }
+
+        ctx.fillStyle = `rgba(255, 255, 255, ${Math.abs(star.alpha)})`;
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      requestAnimationFrame(render);
+    }
+
+    render();
+  }
+
+  /* ─── Interactive Spain & La Mancha Eclipse Location Radar & Leaflet Map ─── */
+  function initEclipseLocationCalculator() {
+    const select = document.getElementById('select-town-eclipse');
+    const gpsBtn = document.getElementById('btn-detect-gps');
+    const resBadge = document.getElementById('res-status-badge');
+    const resTownName = document.getElementById('res-town-name');
+    const resTownDesc = document.getElementById('res-town-desc');
+    const resTime = document.getElementById('res-time');
+    const resDuration = document.getElementById('res-duration');
+    const resPos = document.getElementById('res-pos');
+
+    const townsData = {
+      criptana: { coords: [39.40, -3.12], name: 'Campo de Criptana (La Mancha)', total: true, time: '20:28:14 CEST', duration: '1m 45s', pos: 'Alt 5.2° · WNW 287°', desc: '¡Ubicación de lujo! El Sol se eclipsará por completo al atardecer justo sobre los molinos gigantes de Don Quijote.' },
+      alcazar: { coords: [39.39, -3.21], name: 'Alcázar de San Juan (La Mancha)', total: true, time: '20:28:12 CEST', duration: '1m 42s', pos: 'Alt 5.2° · WNW 287°', desc: '¡Totalidad 100%! Puesta de Sol eclipsada en el corazón cervantino de La Mancha.' },
+      consuegra: { coords: [39.46, -3.60], name: 'Consuegra (Toledo)', total: true, time: '20:28:30 CEST', duration: '1m 38s', pos: 'Alt 5.1° · WNW 287°', desc: '¡Totalidad 100%! Puesta de Sol sobre la cresta del Castillo de la Muela y los molinos.' },
+      toboso: { coords: [39.51, -2.99], name: 'El Toboso (Toledo)', total: true, time: '20:28:05 CEST', duration: '1m 46s', pos: 'Alt 5.3° · WNW 287°', desc: '¡Totalidad 100%! Atardecer eclipsado en la patria de Dulcinea.' },
+      tomelloso: { coords: [39.15, -3.02], name: 'Tomelloso (Ciudad Real)', total: true, time: '20:27:50 CEST', duration: '1m 30s', pos: 'Alt 5.4° · WNW 287°', desc: '¡Totalidad 100%! Oscuridad total sobre las bodegas y bombos manchegos.' },
+      madrid: { coords: [40.41, -3.70], name: 'Madrid (Comunidad de Madrid)', total: true, time: '20:29:10 CEST', duration: '1m 48s', pos: 'Alt 4.8° · WNW 287°', desc: '¡Totalidad 100%! Visibilidad ideal mirando hacia el horizonte oeste de la capital.' },
+      toledo: { coords: [39.86, -4.02], name: 'Toledo (Castilla-La Mancha)', total: true, time: '20:28:55 CEST', duration: '1m 40s', pos: 'Alt 5.0° · WNW 287°', desc: '¡Totalidad 100%! El Sol se eclipsará sobre el perfil del Alcázar y el río Tajo.' },
+      cuenca: { coords: [40.07, -2.13], name: 'Cuenca (Serranía)', total: true, time: '20:27:10 CEST', duration: '1m 52s', pos: 'Alt 5.5° · WNW 287°', desc: '¡Totalidad 100%! Espectáculo único sobre las Casas Colgadas y las hoces.' },
+      valencia: { coords: [39.47, -0.37], name: 'Valencia (Comunidad Valenciana)', total: false, time: '20:26:00 CEST', duration: 'Parcial (99.8%)', pos: 'Alt 5.8° · WNW 287°', desc: 'Eclipse Parcial muy profundo (99.8%). Para presenciar el anillo de corona 100% Total, viaja unas decenas de km hacia el oeste (La Mancha/Requena).' },
+      barcelona: { coords: [41.38, 2.16], name: 'Barcelona (Catalunya)', total: true, time: '20:24:30 CEST', duration: '1m 20s', pos: 'Alt 6.1° · WNW 287°', desc: '¡Totalidad 100%! El eclipse total ocurrirá al atardecer rozando los picos de Montserrat.' },
+      sevilla: { coords: [37.38, -5.98], name: 'Sevilla (Andalucía)', total: false, time: '20:29:00 CEST', duration: 'Parcial (89.5%)', pos: 'Alt 5.0° · WNW 287°', desc: 'Eclipse Parcial (89.5%). Para ver el Sol 100% Eclipsado con su corona dorada, viaja al norte hacia Campo de Criptana o Toledo.' },
+      malaga: { coords: [36.72, -4.42], name: 'Málaga (Andalucía)', total: false, time: '20:29:00 CEST', duration: 'Parcial (87.2%)', pos: 'Alt 5.1° · WNW 287°', desc: 'Eclipse Parcial (87.2%). Para presenciar la Totalidad absoluta al 100%, viaja hacia La Mancha (Campo de Criptana).' },
+      bilbao: { coords: [43.26, -2.93], name: 'Bilbao (País Vasco)', total: true, time: '20:28:00 CEST', duration: '1m 35s', pos: 'Alt 4.9° · WNW 287°', desc: '¡Totalidad 100%! Puesta de Sol eclipsada en la cornisa cantábrica.' },
+      zaragoza: { coords: [41.65, -0.88], name: 'Zaragoza (Aragón)', total: true, time: '20:26:30 CEST', duration: '1m 44s', pos: 'Alt 5.6° · WNW 287°', desc: '¡Totalidad 100%! Espectacularidad absoluta sobre el perfil del Ebro.' },
+      palma: { coords: [39.56, 2.65], name: 'Palma de Mallorca (Baleares)', total: true, time: '20:23:00 CEST', duration: '1m 28s', pos: 'Alt 6.2° · WNW 287°', desc: '¡Totalidad 100%! El Sol se eclipsará al atardecer sobre las islas Baleares.' }
+    };
+
+    let leafletMap = null;
+    let userMarker = null;
+
+    function updateCard(data) {
+      if (!resTownName) return;
+      resTownName.innerText = data.name;
+      resTownDesc.innerText = data.desc;
+      resTime.innerText = data.time;
+      resDuration.innerText = data.duration;
+      resPos.innerText = data.pos;
+
+      if (data.total) {
+        resBadge.style.background = 'rgba(34, 197, 94, 0.2)';
+        resBadge.style.color = '#4ade80';
+        resBadge.innerText = '☀️ 100% ECLIPSE TOTAL';
+      } else {
+        resBadge.style.background = 'rgba(234, 179, 8, 0.2)';
+        resBadge.style.color = '#facc15';
+        resBadge.innerText = '🌗 ECLIPSE PARCIAL';
+      }
+
+      if (leafletMap && data.coords) {
+        leafletMap.setView(data.coords, 8);
+        if (userMarker) {
+          userMarker.setLatLng(data.coords).bindPopup(`<b>${data.name}</b><br>${data.time}`).openPopup();
+        }
+      }
+    }
+
+    // Universal Spain Coordinates Totality Solver
+    function calculateLocationData(lat, lon, locationTitle) {
+      const R = 6371;
+      const dLat = (39.40 - lat) * Math.PI / 180;
+      const dLon = (-3.12 - lon) * Math.PI / 180;
+      const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(lat * Math.PI / 180) * Math.cos(39.40 * Math.PI / 180) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      const distKm = Math.round(R * c);
+
+      const lineLat = lon < -3.0 ? (39.4 - 0.35 * (lon + 3.12)) : (39.4 + 0.25 * (lon + 3.12));
+      const distFromCenterLine = Math.abs(lat - lineLat) * 111;
+
+      const isTotal = (distFromCenterLine <= 140 && lat >= 38.0 && lat <= 44.0 && lon >= -9.8 && lon <= 4.5);
+
+      let desc = '';
+      if (distKm <= 15) {
+        desc = `¡Estás en Campo de Criptana / La Mancha! El Sol se eclipsará por completo al atardecer justo sobre los 10 molinos históricos.`;
+      } else if (isTotal) {
+        desc = `¡Felicidades! ${locationTitle} está dentro de la Franja de Totalidad del Eclipse Total 2026. Te encuentras a ${distKm} km de los Molinos de Campo de Criptana.`;
+      } else {
+        desc = `En ${locationTitle} el eclipse será Parcial. Para presenciar la Totalidad absoluta al 100% y la corona dorada, viaja a Campo de Criptana (${distKm} km).`;
+      }
+
+      return {
+        coords: [lat, lon],
+        name: locationTitle,
+        total: isTotal,
+        time: '20:28 CEST',
+        duration: isTotal ? '1m 42s' : 'Parcial',
+        pos: 'Alt 5.2° · WNW 287°',
+        desc: desc
+      };
+    }
+
+    // Spain Geocoding Search Handler (Nominatim API)
+    const searchInput = document.getElementById('input-search-spain');
+    const searchBtn = document.getElementById('btn-search-spain');
+
+    function performSpainSearch() {
+      const query = searchInput ? searchInput.value.trim() : '';
+      if (!query) return;
+
+      if (searchBtn) searchBtn.innerText = '⏳ Buscando...';
+      const apiUrl = `https://nominatim.openstreetmap.org/search?countrycodes=es&format=json&q=${encodeURIComponent(query)}`;
+
+      fetch(apiUrl)
+        .then(res => res.json())
+        .then(data => {
+          if (searchBtn) searchBtn.innerText = '🔍 Buscar';
+          if (data && data.length > 0) {
+            const result = data[0];
+            const lat = parseFloat(result.lat);
+            const lon = parseFloat(result.lon);
+            const placeName = result.display_name.split(',')[0] + ' (España)';
+            const locData = calculateLocationData(lat, lon, placeName);
+            updateCard(locData);
+          } else {
+            alert('No encontramos esa ubicación en España. Intenta escribir el nombre del municipio (ej. Albacete, Ourense, Gijón...).');
+          }
+        })
+        .catch(() => {
+          if (searchBtn) searchBtn.innerText = '🔍 Buscar';
+          alert('Error de conexión al buscar la ubicación.');
+        });
+    }
+
+    if (searchBtn) searchBtn.addEventListener('click', performSpainSearch);
+    if (searchInput) {
+      searchInput.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') performSpainSearch();
+      });
+    }
+
+    if (select) {
+      select.addEventListener('change', function () {
+        const val = select.value;
+        if (townsData[val]) {
+          updateCard(townsData[val]);
+        }
+      });
+    }
+
+    if (gpsBtn) {
+      gpsBtn.addEventListener('click', function () {
+        if (!navigator.geolocation) {
+          alert('Tu navegador no soporta geolocalización.');
+          return;
+        }
+        gpsBtn.innerText = '⏳ Buscando satélites GPS...';
+        navigator.geolocation.getCurrentPosition(
+          function (pos) {
+            gpsBtn.innerText = '📍 Detectar Mi Ubicación GPS';
+            const lat = pos.coords.latitude;
+            const lon = pos.coords.longitude;
+
+            const R = 6371;
+            const dLat = (39.40 - lat) * Math.PI / 180;
+            const dLon = (-3.12 - lon) * Math.PI / 180;
+            const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(lat * Math.PI / 180) * Math.cos(39.40 * Math.PI / 180) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            const distKm = Math.round(R * c);
+
+            const isTotal = (lat >= 38.5 && lat <= 43.5 && lon >= -9.0 && lon <= 3.0);
+            const customData = {
+              coords: [lat, lon],
+              name: `Tu Ubicación (${lat.toFixed(2)}°, ${lon.toFixed(2)}°)`,
+              total: isTotal,
+              time: '20:28 CEST',
+              duration: isTotal ? '1m 40s' : 'Parcial',
+              pos: 'Alt 5.2° · WNW 287°',
+              desc: isTotal
+                ? `¡Felicidades! Tu ubicación está dentro de la Franja de Totalidad del Eclipse Total 2026. Te encuentras a ${distKm} km de los Molinos de Campo de Criptana.`
+                : `Tu ubicación se encuentra fuera de la franja de totalidad. Te recomendamos viajar a Campo de Criptana (${distKm} km) para presenciar el eclipse al 100%.`
+            };
+            updateCard(customData);
+          },
+          function () {
+            gpsBtn.innerText = '📍 Detectar Mi Ubicación GPS';
+            alert('No pudimos acceder a tu GPS. Selecciona un municipio de la lista desplegable.');
+          }
+        );
+      });
+    }
+
+    const tabBtns = document.querySelectorAll('.astro-tab-btn');
+    tabBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        if (btn.getAttribute('data-tab') === 'tab-mizona') {
+          setTimeout(function () {
+            if (!leafletMap) {
+              initMap();
+            } else {
+              leafletMap.invalidateSize();
+            }
+          }, 200);
+        }
+      });
+    });
+
+    function initMap() {
+      const mapContainer = document.getElementById('eclipse-map-container');
+      if (!mapContainer || leafletMap || typeof L === 'undefined') return;
+
+      leafletMap = L.map('eclipse-map-container').setView([39.40, -3.12], 7);
+
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; OpenStreetMap &copy; CARTO',
+        maxZoom: 18
+      }).addTo(leafletMap);
+
+      const totalityBand = L.polygon([
+        [43.8, -9.5],
+        [43.0, -9.5],
+        [38.2, 3.5],
+        [39.8, 3.5]
+      ], {
+        color: '#ffd700',
+        weight: 2,
+        fillColor: '#ffd700',
+        fillOpacity: 0.18
+      }).addTo(leafletMap);
+      totalityBand.bindTooltip('☀️ Franja de Totalidad 100% (12 de Agosto de 2026)', { permanent: true, direction: 'center' });
+
+      userMarker = L.marker([39.40, -3.12]).addTo(leafletMap)
+        .bindPopup('<b>🌾 Campo de Criptana</b><br>Molinos de Viento · 100% Totalidad (20:28 CEST)')
+        .openPopup();
+    }
   }
 
   /* ─── 6. Custom "Sunset Mode" & Stars Twinkle Effect ──────────────────── */
@@ -792,9 +1337,12 @@
 
     document.documentElement.setAttribute('lang', lang);
 
-    // Refresh dynamic sunset text based on language
+    // Refresh dynamic sunset and eclipse text based on language
     if (window.updateSunsetTimer) {
       window.updateSunsetTimer();
+    }
+    if (window.updateEclipseTimer) {
+      window.updateEclipseTimer();
     }
 
     // Refresh drawer content if open to update labels instantly
@@ -844,8 +1392,13 @@
           applyLanguage(activeLang);
         }
 
-        if (data && data.daily && data.daily.sunset && data.daily.sunset[0]) {
-          cachedSunsetTime = new Date(data.daily.sunset[0]);
+        if (data && data.daily) {
+          if (data.daily.sunset && data.daily.sunset[0]) {
+            cachedSunsetTime = new Date(data.daily.sunset[0]);
+          }
+          if (data.daily.sunrise && data.daily.sunrise[0]) {
+            cachedSunriseTime = new Date(data.daily.sunrise[0]);
+          }
           if (window.updateSunsetTimer) {
             window.updateSunsetTimer();
           }
@@ -2345,6 +2898,11 @@
     initCategoryTabs();
     initDetailDrawer();
     initSunsetCountdown();
+    initEclipseCountdown();
+    initEclipseModal();
+    initFeriaModal();
+    initAstroBannerCanvas();
+    initEclipseLocationCalculator();
     fetchLiveWeatherData();
     initSunsetToggle();
     initPublicityModal();

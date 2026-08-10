@@ -508,6 +508,351 @@ a {
   }
 }
 
+/* ─── Astronomical Utility & Eclipse Banner ─────────────────────────── */
+/* ─── Astronomical Utility & Eclipse Banner ─────────────────────────── */
+.astro-link-btn {
+  background: #0f172a;
+  border: 1px solid #ffd700;
+  color: #ffd700;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-left: 0.4rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+.astro-link-btn:hover {
+  background: #ffd700;
+  color: #0f172a;
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.5);
+}
+
+.astro-banner-section {
+  background: var(--bg-deep);
+  padding: 2.5rem 0 1rem 0;
+}
+
+.astro-banner-card {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%) !important;
+  border: 1px solid rgba(212, 175, 55, 0.4) !important;
+  border-radius: 16px;
+  padding: 1.75rem 2rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(212, 175, 55, 0.08) !important;
+  color: #f8fafc !important;
+}
+
+.astro-banner-card::before {
+  content: '';
+  position: absolute;
+  top: -50px;
+  right: -50px;
+  width: 150px;
+  height: 150px;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+  pointer-events: none;
+}
+
+.astro-banner-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #ffd700 !important;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+  position: relative;
+  z-index: 2;
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #ff4500;
+  border-radius: 50%;
+  animation: pulseGlow 1.5s infinite;
+}
+
+@keyframes pulseGlow {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 69, 0, 0.7); }
+  70% { transform: scale(1.2); box-shadow: 0 0 0 8px rgba(255, 69, 0, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 69, 0, 0); }
+}
+
+.astro-banner-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 2;
+}
+
+.astro-banner-info {
+  flex: 1 1 450px;
+}
+
+.astro-banner-info h3 {
+  font-family: var(--font-display, 'Playfair Display', serif) !important;
+  font-size: 1.45rem !important;
+  color: #ffffff !important;
+  margin: 0 0 0.5rem 0;
+  font-weight: 700 !important;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.astro-banner-info p {
+  font-size: 0.92rem !important;
+  color: #cbd5e1 !important;
+  margin: 0;
+  line-height: 1.55;
+}
+
+.astro-banner-card .hl-btn-primary {
+  background: linear-gradient(135deg, #0044bb, #1d4ed8) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255,255,255,0.2) !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 14px rgba(29, 78, 216, 0.4) !important;
+  padding: 0.75rem 1.25rem !important;
+  font-size: 0.85rem !important;
+}
+
+.astro-banner-card .hl-btn-primary:hover {
+  background: linear-gradient(135deg, #1d4ed8, #2563eb) !important;
+  transform: translateY(-1px);
+}
+
+.astro-banner-card .hl-btn-secondary {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  padding: 0.75rem 1.25rem !important;
+  font-size: 0.85rem !important;
+}
+
+.astro-banner-card .hl-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+}
+
+.astro-banner-action {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.astro-countdown-box {
+  background: rgba(15, 23, 42, 0.9) !important;
+  border: 1px solid rgba(255, 215, 0, 0.35) !important;
+  padding: 0.65rem 1.25rem;
+  border-radius: 10px;
+  text-align: right;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.astro-countdown-label {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #94a3b8 !important;
+  margin-bottom: 0.2rem;
+}
+
+.astro-countdown-digits {
+  font-family: monospace;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #ffd700 !important;
+  letter-spacing: 0.5px;
+}
+
+/* Modal Astro Customizations */
+.astro-modal-card {
+  max-width: 780px !important;
+  width: 100% !important;
+  max-height: 88vh !important;
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch;
+  background: #0f172a !important;
+  border: 1px solid rgba(212, 175, 55, 0.4) !important;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 30px rgba(212, 175, 55, 0.15) !important;
+  color: #e2e8f0 !important;
+  margin: auto !important;
+  padding: 2rem !important;
+}
+
+.astro-modal-card .modal-title {
+  color: #ffffff !important;
+  font-family: var(--font-display, serif) !important;
+  font-size: 1.6rem !important;
+  font-weight: 700 !important;
+  margin-top: 0.4rem !important;
+  margin-bottom: 0.4rem !important;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5) !important;
+}
+
+.astro-modal-card .modal-subtitle {
+  color: #cbd5e1 !important;
+}
+
+.astro-modal-card .btn-close-modal {
+  color: #ffffff !important;
+  opacity: 0.85;
+}
+
+.astro-modal-card .btn-close-modal:hover {
+  opacity: 1;
+  color: #ffd700 !important;
+}
+
+.astro-modal-header {
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.astro-header-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #ffd700 !important;
+  margin-bottom: 0.4rem;
+}
+
+.astro-modal-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: 0.5rem;
+}
+
+.astro-tab-btn {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.astro-tab-btn.active, .astro-tab-btn:hover {
+  background: rgba(212, 175, 55, 0.15);
+  color: #ffd700;
+}
+
+.astro-tab-content {
+  display: none;
+}
+
+.astro-tab-content.active {
+  display: block;
+}
+
+.astro-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 640px) {
+  .publicity-modal {
+    padding: 0.5rem 0.35rem !important;
+  }
+  .astro-modal-card {
+    padding: 1.25rem 1rem !important;
+    max-height: 94vh !important;
+    border-radius: 12px !important;
+  }
+  .astro-modal-tabs {
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+  .astro-tab-btn {
+    font-size: 0.82rem;
+    padding: 0.5rem 0.75rem;
+    width: 100%;
+    text-align: left;
+  }
+  .astro-grid {
+    grid-template-columns: 1fr;
+  }
+  .astro-banner-body {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .astro-banner-action {
+    align-items: stretch;
+    width: 100%;
+  }
+  .astro-countdown-box {
+    text-align: center;
+  }
+  #eclipse-map-container {
+    height: 210px !important;
+  }
+}
+
+.astro-card {
+  background: rgba(30, 41, 59, 0.7);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+
+.astro-card.full-width {
+  grid-column: 1 / -1;
+}
+
+.astro-card h4 {
+  font-size: 0.95rem;
+  color: #ffd700;
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+}
+
+.astro-card ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #cbd5e1;
+}
+
+.astro-card ul li {
+  margin-bottom: 0.4rem;
+}
+
+.astro-card p {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #cbd5e1;
+  margin: 0;
+}
+
+.astro-modal-footer {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 1rem;
+}
+
 /* ─── Directory Section ────────────────────────────────────────────── */
 .directory-section {
   background-color: var(--bg-deep);
@@ -1419,6 +1764,8 @@ body.sunset-mode .starry-sky {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow-y: auto;
+  padding: 1.5rem 1rem;
 }
 
 .publicity-modal.open {
@@ -5561,5 +5908,159 @@ body.sunset-mode .insider-teaser-btn:hover {
     font-size: 0.95rem;
   }
 }
+
+/* ─── Festive Feria y Fiestas Standalone Module (Deep Background + White Cards) ─ */
+.feria-banner-section {
+  background: linear-gradient(135deg, #1b0e3e 0%, #2e1065 50%, #3b0764 100%) !important;
+  border-top: 2px solid #facc15 !important;
+  border-bottom: 2px solid #facc15 !important;
+  box-shadow: inset 0 0 50px rgba(250, 204, 21, 0.15);
+  color: #f8fafc !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.feria-banner-section::before {
+  content: '🎉 🌸 🍷 🎺 🎆 🌾';
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  font-size: 1.6rem;
+  opacity: 0.25;
+  letter-spacing: 12px;
+  pointer-events: none;
+}
+
+.feria-timeline-card {
+  background: #ffffff !important;
+  border: 2px solid #e2e8f0 !important;
+  border-radius: 14px !important;
+  padding: 1.35rem !important;
+  color: #0f172a !important;
+  cursor: pointer !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25) !important;
+  position: relative;
+}
+
+.feria-timeline-card:hover {
+  transform: translateY(-5px) !important;
+  background: #ffffff !important;
+  border-color: #facc15 !important;
+  box-shadow: 0 12px 35px rgba(250, 204, 21, 0.35) !important;
+}
+
+.feria-timeline-card.featured-card {
+  background: #ffffff !important;
+  border: 3px solid #facc15 !important;
+  box-shadow: 0 8px 25px rgba(250, 204, 21, 0.3) !important;
+}
+
+.feria-timeline-card .card-more-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #d97706 !important;
+  margin-top: 0.85rem;
+  transition: gap 0.2s ease;
+}
+
+.feria-timeline-card:hover .card-more-badge {
+  gap: 0.6rem;
+  color: #b45309 !important;
+}
+
+/* Deep Purple Festive Modal Container & Top Alignment Fix */
+.publicity-modal.feria-modal {
+  align-items: flex-start !important;
+  padding-top: 2.5rem !important;
+  padding-bottom: 2.5rem !important;
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+.feria-modal-card {
+  background: linear-gradient(135deg, #180d38 0%, #2b0e5c 60%, #3b0764 100%) !important;
+  border: 3px solid #facc15 !important;
+  color: #f8fafc !important;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8), 0 0 40px rgba(250, 204, 21, 0.3) !important;
+  margin: 0 auto !important;
+  max-height: calc(88vh - 2rem) !important;
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+.feria-modal-card .modal-title {
+  color: #ffffff !important;
+  font-weight: 900 !important;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5) !important;
+}
+
+.feria-modal-card .modal-subtitle {
+  color: #cbd5e1 !important;
+}
+
+.feria-modal-card .btn-close-modal {
+  color: #ffffff !important;
+  opacity: 0.9 !important;
+}
+
+.feria-modal-card .btn-close-modal:hover {
+  color: #facc15 !important;
+}
+
+.feria-period-card {
+  background: #ffffff !important;
+  border: 2px solid #e2e8f0 !important;
+  border-radius: 14px !important;
+  padding: 1.35rem !important;
+  color: #0f172a !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25) !important;
+  cursor: pointer !important;
+  transition: all 0.25s ease !important;
+}
+
+.feria-period-card:hover {
+  border-color: #facc15 !important;
+  box-shadow: 0 10px 30px rgba(250, 204, 21, 0.3) !important;
+  background: #ffffff !important;
+}
+
+.feria-period-card.expanded {
+  border: 3px solid #facc15 !important;
+  box-shadow: 0 12px 35px rgba(250, 204, 21, 0.4) !important;
+  background: #ffffff !important;
+}
+
+.feria-card-badge {
+  display: inline-block;
+  padding: 0.35rem 0.8rem;
+  background: #fef3c7;
+  color: #b45309;
+  font-size: 0.78rem;
+  font-weight: 800;
+  border-radius: 20px;
+  border: 1px solid #fde68a;
+  transition: all 0.2s ease;
+}
+
+.feria-period-card:hover .feria-card-badge, .feria-period-card.expanded .feria-card-badge {
+  background: #d97706;
+  color: #ffffff;
+  border-color: #b45309;
+}
+
+.feria-card-accordion {
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+
+.feria-period-card.expanded .feria-card-accordion {
+  display: block !important;
+}
+
+
 
 

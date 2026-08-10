@@ -221,18 +221,14 @@
         <!-- Will be dynamically translated via local dictionary below -->
       </div>
 
-      <!-- Action Callout Card (Gymkana interactive game booking hook) -->
+      <!-- Action Callout Card (CJ Booking.com Hook) -->
       <div class="blog-callout ticket-callout">
-        <span class="ticket-badge" data-key="blog.g1.ticket.badge">⚔️ RECOMENDADO</span>
-        <h3 data-key="blog.g1.call.title">Gymkana Interactiva</h3>
-        <p data-key="blog.g1.call.desc">Explora los molinos y monumentos históricos a tu propio ritmo con esta aventura autoguiada en tu móvil.</p>
-        <div class="ticket-price-box">
-          <span class="price-lbl" data-key="blog.g1.ticket.price.label">Precio:</span>
-          <span class="price-val">7.90€</span>
-        </div>
-        <div class="ticket-btn-row">
-          <a href="https://zevallosandro.gumroad.com/l/xdwnjt" target="_blank" rel="noopener" class="blog-callout-btn btn-civitatis" data-key="blog.g1.call.btn" id="blog-civitatis-tour-click">⚔️ Empezar Gymkana &rarr;</a>
-          <a href="../index.html#guia" class="blog-callout-btn btn-secondary-guide" data-key="blog.g1.call.btn.explore">Ver Ficha en Guía &rarr;</a>
+        <span class="ticket-badge" data-key="blog.g1.ticket.badge">🏨 ALOJAMIENTOS CON ENCANTO</span>
+        <h3 data-key="blog.g1.call.title">Encuentra Tu Estancia cerca de los Molinos</h3>
+        <p data-key="blog.g1.call.desc">Descubre casas cueva tradicionales, hoteles rurales y apartamentos históricos en Campo de Criptana al mejor precio.</p>
+        <div class="ticket-btn-row" style="margin-top: 1.25rem;">
+          <a href="https://www.jdoqocy.com/click-101761861-11891543?url=https%3A%2F%2Fwww.booking.com%2Fsearchresults.html%3Fss%3Dcampo%2Bde%2Bcriptana" target="_blank" rel="noopener" class="blog-callout-btn btn-civitatis" data-key="blog.g1.call.btn" id="blog-civitatis-tour-click">🏨 Reservar en Booking.com &rarr;</a>
+          <a href="../index.html#guia" class="blog-callout-btn btn-secondary-guide" data-key="blog.g1.call.btn.explore">Ver Directorio Local &rarr;</a>
         </div>
       </div>
 
@@ -273,12 +269,12 @@
           'blog.g1.author': 'Por LUZE Media · Especialista Local',
           'blog.g1.readtime': '5 Min de Lectura',
           
-          'blog.g1.ticket.badge': '⚔️ RECOMENDADO',
-          'blog.g1.ticket.price.label': 'Precio:',
-          'blog.g1.call.title': 'Gymkana Interactiva',
-          'blog.g1.call.desc': 'Explora los molinos y monumentos históricos a tu propio ritmo con esta aventura autoguiada en tu móvil.',
-          'blog.g1.call.btn': '⚔️ Empezar Gymkana &rarr;',
-          'blog.g1.call.btn.explore': 'Ver Ficha en Guía &rarr;',
+          'blog.g1.ticket.badge': '🏨 ALOJAMIENTOS CON ENCANTO',
+          'blog.g1.ticket.price.label': 'Garantía:',
+          'blog.g1.call.title': 'Encuentra Tu Estancia cerca de los Molinos',
+          'blog.g1.call.desc': 'Descubre casas cueva tradicionales, hoteles rurales y apartamentos históricos en Campo de Criptana al mejor precio.',
+          'blog.g1.call.btn': '🏨 Reservar en Booking.com &rarr;',
+          'blog.g1.call.btn.explore': 'Ver Directorio Local &rarr;',
           
           'blog.g1.content': `
             <p>Corría el año 1605 cuando Miguel de Cervantes Saavedra inmortalizó en el capítulo VIII del Don Quijote de la Mancha una de las batallas más cómicas y universales de la literatura universal. Frente a los ojos alucinados del hidalgo manchego, treinta o cuarenta "desaforados gigantes" se erguían desafiantes. Aquellos gigantes no eran otros que los molinos de viento de Campo de Criptana.</p>
@@ -300,12 +296,12 @@
           'blog.g1.author': 'By LUZE Media · Local Guide Specialist',
           'blog.g1.readtime': '5 Min Read',
           
-          'blog.g1.ticket.badge': '⚔️ RECOMMENDED',
-          'blog.g1.ticket.price.label': 'Price:',
-          'blog.g1.call.title': 'Interactive Gymkana',
-          'blog.g1.call.desc': 'Explore the windmills and historic landmarks at your own pace with this self-guided adventure on your phone.',
-          'blog.g1.call.btn': '⚔️ Start Gymkana &rarr;',
-          'blog.g1.call.btn.explore': 'View Details in Guide &rarr;',
+          'blog.g1.ticket.badge': '🏨 CHARMING ACCOMMODATIONS',
+          'blog.g1.ticket.price.label': 'Guarantee:',
+          'blog.g1.call.title': 'Find Your Stay Near the Windmills',
+          'blog.g1.call.desc': 'Discover traditional cave houses, rural boutique hotels, and historic apartments in Campo de Criptana.',
+          'blog.g1.call.btn': '🏨 Book on Booking.com &rarr;',
+          'blog.g1.call.btn.explore': 'View Local Directory &rarr;',
           
           'blog.g1.content': `
             <p>It was the year 1605 when Miguel de Cervantes Saavedra immortalized in Chapter VIII of Don Quixote one of the most comical and universal battles in world literature. Before the deluded eyes of the noble knight, thirty or forty "monstrous giants" stood defiantly. Those giants were none other than the wooden windmills of Campo de Criptana.</p>
@@ -365,10 +361,10 @@
         if (civBtn) {
           civBtn.addEventListener('click', function() {
             if (window.gtag) {
-              window.gtag('event', 'click_affiliate_tour', {
+              window.gtag('event', 'click_affiliate_booking', {
                 'spot_id': 'blog_windmills',
-                'spot_name': 'Blog Gigantes - Gymkana',
-                'destination': 'gymkana'
+                'spot_name': 'Blog Gigantes - Booking',
+                'destination': 'booking_com'
               });
             }
           });

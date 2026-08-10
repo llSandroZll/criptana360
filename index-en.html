@@ -12,6 +12,10 @@
   <meta name="mylead-verification" content="997e18cb0da2f78c5b9ca45e8da59596">
   <!-- mylead-verification: 997e18cb0da2f78c5b9ca45e8da59596 -->
   
+  <!-- Leaflet Interactive Map Engine -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  
   <!-- Canonical URL (Duplicate Content Prevention) -->
   <link rel="canonical" href="https://www.criptana360.com/index-en.html">
   <link rel="alternate" hreflang="es" href="https://www.criptana360.com/">
@@ -198,7 +202,6 @@
         <a href="#guia" data-key="nav.directorio">Guía Local</a>
         <a href="#articulos" data-key="nav.articulos">Reportajes</a>
         <a href="ruta-ia.html" data-key="nav.rutaia" style="font-weight:600;">AI Planner</a>
-        <a href="gymkana.html" data-key="nav.gymkana" style="font-weight:600;">Gymkana</a>
         <a href="ruta-ia.html" class="nav-cta hl-btn hl-btn-primary" data-key="nav.planner" style="padding: 0.5rem 1.25rem;">Plan Your Route <span class="material-symbols-outlined" style="margin-left: 0.5rem; font-size: 1rem; vertical-align: middle;">auto_awesome</span></a>
       </nav>
       <div class="header-actions">
@@ -230,7 +233,7 @@
       
       <div class="hero-inner">
         <p class="hero-overline hl-label-sm fade-in" style="color: var(--hl-sunset-gold); font-size: 0.85rem;" data-key="hero.overline">Discover Campo de Criptana • Your Local Guide & Directory</p>
-        <h1 class="hero-title hl-display-lg fade-in" data-key="hero.title">“They are not giants, but windmills.”<br><span class="hero-attribution">— Don Quixote</span></h1>
+        <h1 class="hero-title hl-display-lg fade-in" data-key="hero.title">They are not giants, but windmills.<br><span class="hero-attribution">— Don Quixote</span></h1>
         <p class="hero-subtitle hl-body-lg fade-in" data-key="hero.subtitle">Descubre la esencia de Campo de Criptana. Una guía independiente completa y actualizada con los horarios de apertura, localizaciones exactas en Google Maps y contactos directos de las mejores bodegas, restaurantes y monumentos históricos.</p>
         <div class="hero-cta-row fade-in" style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; align-items: center;">
           <a href="#guia" class="hl-btn hl-btn-secondary" style="padding: 0.875rem 1.75rem;" data-key="hero.cta1">Ver Directorio</a>
@@ -248,21 +251,64 @@
     </section>
 
     <!-- ═══════════════════════════════════════════════════════════════
-         LIVE UTILITY BAR (Weather & Sunset Countdown)
+         ASTRO EVENT FEATURE BANNER (Eclipse 2026 & Perseids)
+         ═══════════════════════════════════════════════════════════════ -->
+    <section class="astro-banner-section fade-in" id="eclipse">
+      <div class="section-inner">
+        <div class="astro-banner-card">
+          <div class="astro-banner-badge">
+            <span class="pulse-dot"></span>
+            <span data-key="astro.banner.badge">HISTORIC ASTRONOMICAL EVENT · AUGUST 12, 2026</span>
+          </div>
+          <div class="astro-banner-body">
+            <div class="astro-banner-info">
+              <h3 data-key="astro.banner.title">Total Solar Eclipse & Perseids Night at the Windmills</h3>
+              <p data-key="astro.banner.desc">Campo de Criptana is directly in the path of totality for the sunset Total Solar Eclipse over the giant windmills, followed by the peak night of the Perseids meteor shower.</p>
+            </div>
+            <div class="astro-banner-action">
+              <div class="astro-countdown-box">
+                <span class="astro-countdown-label" data-key="astro.banner.countdownlabel">Countdown to Totality:</span>
+                <span class="astro-countdown-digits" id="astro-banner-timer">Calculating...</span>
+              </div>
+              <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.75rem;">
+                <button class="hl-btn hl-btn-primary trigger-eclipse-modal" style="border-radius: 8px;" data-key="astro.banner.btn">View Full Astronomical Guide &rarr;</button>
+                <a href="#guia" class="hl-btn hl-btn-secondary" style="border-radius: 8px; text-decoration: none;" data-key="astro.banner.explore">Explore the Town &darr;</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         LIVE UTILITY BAR (Weather, Sun Timings & Solar Eclipse Countdown)
          ═══════════════════════════════════════════════════════════════ -->
     <section class="live-utility-bar hl-glass fade-in">
       <div class="utility-inner">
         <div class="utility-item weather-widget">
           <span class="utility-icon">☀️</span>
-          <span class="utility-text" data-key="widget.weather">Campo de Criptana · Despejado · 24°C</span>
+          <span class="utility-text" data-key="widget.weather">Campo de Criptana · Clear · 24°C</span>
         </div>
         <div class="utility-divider"></div>
         <div class="utility-item sunset-widget">
           <span class="utility-icon">🌅</span>
-          <span class="utility-text" id="sunset-timer" data-key="widget.sunset">Calculando atardecer...</span>
+          <span class="utility-text" id="sunset-timer" data-key="widget.sunset">Calculating sunrise & sunset...</span>
+        </div>
+        <div class="utility-divider"></div>
+        <div class="utility-item eclipse-widget">
+          <span class="utility-icon">🌘</span>
+          <span class="utility-text" id="eclipse-timer" data-key="widget.eclipse">Solar Eclipse & Perseids · Aug 12</span>
+          <button class="astro-link-btn trigger-eclipse-modal" data-key="widget.eclipse.link">Guide ℹ️</button>
+        </div>
+        <div class="utility-divider"></div>
+        <div class="utility-item feria-widget">
+          <span class="utility-icon">🎉</span>
+          <span class="utility-text" data-key="widget.feria">Town Fair & Festival · Aug 23-28</span>
+          <button class="astro-link-btn trigger-feria-modal" data-key="widget.feria.link">Guide ℹ️</button>
         </div>
       </div>
     </section>
+
 
     <!-- ═══════════════════════════════════════════════════════════════
          CURATED DIRECTORY EXPLORER
@@ -313,7 +359,6 @@
                 <div class="card-actions" style="display: flex; gap: 0.8rem; align-items: center; margin-top: 1.25rem;">
                   <button class="btn-more-details" data-spot="spot1" data-key="btn.more">Learn More &rarr;</button>
                   <button class="btn-add-to-route" onclick="event.stopPropagation(); toggleSpotInItinerary('spot1')" data-spot="spot1" title="Add to my route">+</button>
-                  <a href="https://zevallosandro.gumroad.com/l/xdwnjt" target="_blank" rel="noopener" class="affiliate-tour-btn btn-reserve" data-affiliate="gymkana" data-key="btn.tour">⚔️ Interactive Gymkana &rarr;</a>
                   <a href="#" class="share-feature-hook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href), '_blank')">Share Listing</a>
                   </div>
               </div>
@@ -364,7 +409,7 @@
             <!-- Spot: Molino Culebro (Sara Montiel) -->
             <div class="explorer-card active-category" data-category="monumento" data-spot="spot_sara_montiel" data-zone="molinos">
               <div class="card-visual">
-                <img src="images/attraction_windmills.png" alt="Sara Montiel Museum" class="card-img" loading="lazy">
+                <img src="images/real_sara_montiel.png" alt="Sara Montiel Museum" class="card-img" loading="lazy">
                 <span class="card-category-badge badge-monumento" data-key="tag.monumento">Sight</span>
               </div>
               <div class="card-info">
@@ -377,7 +422,6 @@
                 <div class="card-actions" style="display: flex; gap: 0.8rem; align-items: center; margin-top: 1.25rem;">
                   <button class="btn-more-details" data-spot="spot_sara_montiel" data-key="btn.more">Learn More &rarr;</button>
                   <button class="btn-add-to-route" onclick="event.stopPropagation(); toggleSpotInItinerary('spot_sara_montiel')" data-spot="spot_sara_montiel" title="Add to my route">+</button>
-                  <a href="https://zevallosandro.gumroad.com/l/xdwnjt" target="_blank" rel="noopener" class="affiliate-tour-btn btn-reserve" data-affiliate="gymkana" data-key="btn.tour">⚔️ Interactive Gymkana &rarr;</a>
                   <a href="#" class="share-feature-hook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href), '_blank')">Share Listing</a>
                   </div>
               </div>
@@ -386,7 +430,7 @@
             <!-- Spot: Centro de Interpretación Molinos de Viento -->
             <div class="explorer-card active-category" data-category="monumento" data-spot="spot_ci_molinos" data-zone="molinos">
               <div class="card-visual">
-                <img src="images/attraction_windmills.png" alt="Windmills Visitor Center" class="card-img" loading="lazy">
+                <img src="images/real_ci_molinos.png" alt="Windmills Visitor Center" class="card-img" loading="lazy">
                 <span class="card-category-badge badge-monumento" data-key="tag.monumento">Sight</span>
               </div>
               <div class="card-info">
@@ -407,7 +451,7 @@
             <!-- Spot: Sala de los Carros -->
             <div class="explorer-card active-category" data-category="monumento" data-spot="spot_sala_carros" data-zone="molinos">
               <div class="card-visual">
-                <img src="images/attraction_windmills.png" alt="Historic Carriage Exhibition" class="card-img" loading="lazy">
+                <img src="images/real_sala_carros.png" alt="Historic Carriage Exhibition" class="card-img" loading="lazy">
                 <span class="card-category-badge badge-monumento" data-key="tag.monumento">Sight</span>
               </div>
               <div class="card-info">
@@ -470,7 +514,7 @@
             <!-- Spot: Patrimonio Religioso -->
             <div class="explorer-card active-category" data-category="monumento" data-spot="spot_patrimonio_religioso" data-zone="centro">
               <div class="card-visual">
-                <img src="images/centro_historico.png" alt="Religious Heritage" class="card-img" loading="lazy">
+                <img src="images/real_convento_carmelitas.jpg" alt="Religious Heritage" class="card-img" loading="lazy">
                 <span class="card-category-badge badge-monumento" data-key="tag.monumento">Sight</span>
               </div>
               <div class="card-info">
@@ -491,7 +535,7 @@
             <!-- Spot: Fuente del Caño -->
             <div class="explorer-card active-category" data-category="monumento" data-spot="spot_fuente_cano" data-zone="centro">
               <div class="card-visual">
-                <img src="images/centro_historico.png" alt="Fuente del Caño" class="card-img" loading="lazy">
+                <img src="images/real_fuente_cano.png" alt="Fuente del Caño" class="card-img" loading="lazy">
                 <span class="card-category-badge badge-monumento" data-key="tag.monumento">Sight</span>
               </div>
               <div class="card-info">
@@ -512,7 +556,7 @@
             <!-- Spot: Fachadas Históricas -->
             <div class="explorer-card active-category" data-category="monumento" data-spot="spot_fachadas" data-zone="centro">
               <div class="card-visual">
-                <img src="images/centro_historico.png" alt="Historic Facades" class="card-img" loading="lazy">
+                <img src="images/real_fachadas.png" alt="Historic Facades" class="card-img" loading="lazy">
                 <span class="card-category-badge badge-monumento" data-key="tag.monumento">Sight</span>
               </div>
               <div class="card-info">
@@ -533,7 +577,7 @@
             <!-- Spot: Ruta de los Escudos -->
             <div class="explorer-card active-category" data-category="monumento" data-spot="spot_escudos" data-zone="centro">
               <div class="card-visual">
-                <img src="images/centro_historico.png" alt="Coats of Arms Route" class="card-img" loading="lazy">
+                <img src="images/real_escudos.png" alt="Coats of Arms Route" class="card-img" loading="lazy">
                 <span class="card-category-badge badge-monumento" data-key="tag.monumento">Sight</span>
               </div>
               <div class="card-info">
@@ -554,7 +598,7 @@
             <!-- Spot: Museo Eloy Teno -->
             <div class="explorer-card active-category" data-category="monumento" data-spot="spot_eloy_teno" data-zone="centro">
               <div class="card-visual">
-                <img src="images/centro_historico.png" alt="Eloy Teno Museum" class="card-img" loading="lazy">
+                <img src="images/real_eloy_teno.png" alt="Eloy Teno Museum" class="card-img" loading="lazy">
                 <span class="card-category-badge badge-monumento" data-key="tag.monumento">Sight</span>
               </div>
               <div class="card-info">
@@ -596,7 +640,7 @@
             <!-- Spot: Plaza Mayor -->
             <div class="explorer-card active-category" data-category="monumento" data-spot="spot_plaza_mayor_park" data-zone="centro">
               <div class="card-visual">
-                <img src="images/centro_historico.png" alt="Plaza Mayor" class="card-img" loading="lazy">
+                <img src="images/real_plaza_mayor.png" alt="Plaza Mayor" class="card-img" loading="lazy">
                 <span class="card-category-badge badge-monumento" data-key="tag.monumento">Sight</span>
               </div>
               <div class="card-info">
@@ -722,7 +766,7 @@
             <!-- Spot: Piscina Municipal de Verano -->
             <div class="explorer-card active-category" data-category="monumento" data-spot="spot_piscina_municipal" data-zone="fuera">
               <div class="card-visual">
-                <img src="images/fuera_nucleo_urbano.png" alt="Municipal Pool" class="card-img" loading="lazy">
+                <img src="images/piscina_municipal.jpg" alt="Municipal Pool" class="card-img" loading="lazy">
                 <span class="card-category-badge badge-monumento" data-key="tag.monumento">Sight</span>
               </div>
               <div class="card-info">
@@ -1244,7 +1288,7 @@
                 <div class="card-actions">
                   <button class="btn-more-details" data-spot="spot11" data-key="btn.more">Saber Más &rarr;</button>
                   <button class="btn-add-to-route" onclick="event.stopPropagation(); toggleSpotInItinerary('spot11')" data-spot="spot11" title="Añadir a mi ruta">+</button>
-                  <a href="https://www.booking.com/searchresults.html?ss=campo+de+criptana" target="_blank" rel="noopener" class="affiliate-booking-btn" data-affiliate="booking" data-key="btn.booking">Consultar Disponibilidad &rarr;</a>
+                  <a href="https://www.jdoqocy.com/click-101761861-11891543?url=https%3A%2F%2Fwww.booking.com%2Fsearchresults.html%3Fss%3Dcampo%2Bde%2Bcriptana" target="_blank" rel="noopener" class="affiliate-booking-btn" data-affiliate="booking" data-key="btn.booking">Consultar Disponibilidad &rarr;</a>
                   <a href="#" class="share-feature-hook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href), '_blank')">Share Listing</a>
                   </div>
               </div>
@@ -1266,7 +1310,7 @@
                 <div class="card-actions">
                   <button class="btn-more-details" data-spot="spot12" data-key="btn.more">Saber Más &rarr;</button>
                   <button class="btn-add-to-route" onclick="event.stopPropagation(); toggleSpotInItinerary('spot12')" data-spot="spot12" title="Añadir a mi ruta">+</button>
-                  <a href="https://www.booking.com/searchresults.html?ss=campo+de+criptana" target="_blank" rel="noopener" class="affiliate-booking-btn" data-affiliate="booking" data-key="btn.booking">Consultar Disponibilidad &rarr;</a>
+                  <a href="https://www.jdoqocy.com/click-101761861-11891543?url=https%3A%2F%2Fwww.booking.com%2Fsearchresults.html%3Fss%3Dcampo%2Bde%2Bcriptana" target="_blank" rel="noopener" class="affiliate-booking-btn" data-affiliate="booking" data-key="btn.booking">Consultar Disponibilidad &rarr;</a>
                   <a href="#" class="share-feature-hook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href), '_blank')">Share Listing</a>
                   </div>
               </div>
@@ -1288,7 +1332,7 @@
                 <div class="card-actions">
                   <button class="btn-more-details" data-spot="spot13" data-key="btn.more">Saber Más &rarr;</button>
                   <button class="btn-add-to-route" onclick="event.stopPropagation(); toggleSpotInItinerary('spot13')" data-spot="spot13" title="Añadir a mi ruta">+</button>
-                  <a href="https://www.booking.com/searchresults.html?ss=campo+de+criptana" target="_blank" rel="noopener" class="affiliate-booking-btn" data-affiliate="booking" data-key="btn.booking">Consultar Disponibilidad &rarr;</a>
+                  <a href="https://www.jdoqocy.com/click-101761861-11891543?url=https%3A%2F%2Fwww.booking.com%2Fsearchresults.html%3Fss%3Dcampo%2Bde%2Bcriptana" target="_blank" rel="noopener" class="affiliate-booking-btn" data-affiliate="booking" data-key="btn.booking">Consultar Disponibilidad &rarr;</a>
                   <a href="#" class="share-feature-hook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href), '_blank')">Share Listing</a>
                   </div>
               </div>
@@ -1310,7 +1354,7 @@
                 <div class="card-actions">
                   <button class="btn-more-details" data-spot="spot14" data-key="btn.more">Saber Más &rarr;</button>
                   <button class="btn-add-to-route" onclick="event.stopPropagation(); toggleSpotInItinerary('spot14')" data-spot="spot14" title="Añadir a mi ruta">+</button>
-                  <a href="https://www.booking.com/searchresults.html?ss=campo+de+criptana" target="_blank" rel="noopener" class="affiliate-booking-btn" data-affiliate="booking" data-key="btn.booking">Consultar Disponibilidad &rarr;</a>
+                  <a href="https://www.jdoqocy.com/click-101761861-11891543?url=https%3A%2F%2Fwww.booking.com%2Fsearchresults.html%3Fss%3Dcampo%2Bde%2Bcriptana" target="_blank" rel="noopener" class="affiliate-booking-btn" data-affiliate="booking" data-key="btn.booking">Consultar Disponibilidad &rarr;</a>
                   <a href="#" class="share-feature-hook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href), '_blank')">Share Listing</a>
                   </div>
               </div>
@@ -1332,7 +1376,7 @@
                 <div class="card-actions">
                   <button class="btn-more-details" data-spot="spot15" data-key="btn.more">Saber Más &rarr;</button>
                   <button class="btn-add-to-route" onclick="event.stopPropagation(); toggleSpotInItinerary('spot15')" data-spot="spot15" title="Añadir a mi ruta">+</button>
-                  <a href="https://www.booking.com/searchresults.html?ss=campo+de+criptana" target="_blank" rel="noopener" class="affiliate-booking-btn" data-affiliate="booking" data-key="btn.booking">Consultar Disponibilidad &rarr;</a>
+                  <a href="https://www.jdoqocy.com/click-101761861-11891543?url=https%3A%2F%2Fwww.booking.com%2Fsearchresults.html%3Fss%3Dcampo%2Bde%2Bcriptana" target="_blank" rel="noopener" class="affiliate-booking-btn" data-affiliate="booking" data-key="btn.booking">Consultar Disponibilidad &rarr;</a>
                   <a href="#" class="share-feature-hook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href), '_blank')">Share Listing</a>
                   </div>
               </div>
@@ -1354,7 +1398,7 @@
                 <div class="card-actions">
                   <button class="btn-more-details" data-spot="spot16" data-key="btn.more">Saber Más &rarr;</button>
                   <button class="btn-add-to-route" onclick="event.stopPropagation(); toggleSpotInItinerary('spot16')" data-spot="spot16" title="Añadir a mi ruta">+</button>
-                  <a href="https://www.booking.com/searchresults.html?ss=campo+de+criptana" target="_blank" rel="noopener" class="affiliate-booking-btn" data-affiliate="booking" data-key="btn.booking">Consultar Disponibilidad &rarr;</a>
+                  <a href="https://www.jdoqocy.com/click-101761861-11891543?url=https%3A%2F%2Fwww.booking.com%2Fsearchresults.html%3Fss%3Dcampo%2Bde%2Bcriptana" target="_blank" rel="noopener" class="affiliate-booking-btn" data-affiliate="booking" data-key="btn.booking">Consultar Disponibilidad &rarr;</a>
                   <a href="#" class="share-feature-hook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href), '_blank')">Share Listing</a>
                   </div>
               </div>
@@ -1470,7 +1514,7 @@
                     <span class="bento-btn-subtitle" data-key="bento.tour.subtitle">Official Scavenger Hunt</span>
                   </div>
                 </a>
-                <a href="https://www.booking.com/searchresults.html?ss=campo+de+criptana" target="_blank" rel="noopener" class="bento-action-item cta-booking">
+                <a href="https://www.jdoqocy.com/click-101761861-11891543?url=https%3A%2F%2Fwww.booking.com%2Fsearchresults.html%3Fss%3Dcampo%2Bde%2Bcriptana" target="_blank" rel="noopener" class="bento-action-item cta-booking">
                   <span class="bento-icon">🏨</span>
                   <div class="bento-text-wrapper">
                     <span class="bento-btn-title" data-key="bento.hotel.title">Hoteles y Casas Cueva</span>
@@ -1490,6 +1534,91 @@
             </div>
             <a href="guía-enoturismo-bodegas-campo-de-criptana.html#sabores-pueblo" class="insider-teaser-btn" data-key="teaser.cta">MORE FLAVORS →</a>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         LUZE MEDIA B2B AGENCY BANNER (High Impact Mid-Page Placement)
+         ═══════════════════════════════════════════════════════════════ -->
+    <section class="luze-agency-banner fade-in" style="background: linear-gradient(135deg, #0b1329 0%, #1e293b 100%); border-top: 1px solid rgba(212, 175, 55, 0.3); border-bottom: 1px solid rgba(212, 175, 55, 0.3); padding: 3.5rem 0; color: #f8fafc; position: relative; overflow: hidden;">
+      <div class="section-inner" style="display: flex; justify-content: space-between; align-items: center; gap: 2rem; flex-wrap: wrap; position: relative; z-index: 2;">
+        <div style="flex: 1 1 480px;">
+          <span style="display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.78rem; font-weight: 700; color: #ffd700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 0.75rem;" data-key="luze.banner.tag">⚡ DIGITAL AGENCY & MARKETING · LUZE MEDIA</span>
+          <h3 style="font-family: var(--font-display, serif); font-size: 1.65rem; margin: 0 0 0.75rem 0; color: #ffffff; line-height: 1.3;" data-key="luze.banner.title">Grow Your Business in La Mancha with LUZE Media</h3>
+          <p style="font-size: 0.95rem; color: #cbd5e1; margin: 0; line-height: 1.6;" data-key="luze.banner.desc">Boost your revenue and attract local customers & travelers with bespoke web design, local SEO, and high-converting marketing campaigns.</p>
+        </div>
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;">
+          <a href="https://www.luzemediamarketing.com/" target="_blank" rel="noopener" class="hl-btn hl-btn-primary" style="padding: 0.95rem 1.85rem; border-radius: 8px; background: linear-gradient(135deg, #ffd700, #ff8c00); color: #0f172a; font-weight: 800; border: none; text-decoration: none; display: inline-block; box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);" data-key="luze.banner.btn">Grow Your Business with LUZE Media &rarr;</a>
+          <a href="anunciate.html" class="hl-btn hl-btn-secondary" style="padding: 0.95rem 1.5rem; border-radius: 8px; background: rgba(255,255,255,0.08); color: #ffffff; border: 1px solid rgba(255,255,255,0.2); text-decoration: none; font-weight: 600;" data-key="luze.banner.b2b">Advertise on Criptana 360</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         STANDALONE FERIA 2026 INTERACTIVE DATE CARDS SECTION
+         ═══════════════════════════════════════════════════════════════ -->
+    <section class="feria-banner-section fade-in" id="feria" style="background: linear-gradient(135deg, #1b0e3e 0%, #2e1065 50%, #3b0764 100%); border-top: 2px solid #facc15; border-bottom: 2px solid #facc15; padding: 4rem 0; color: #f8fafc; position: relative;">
+      <div class="section-inner">
+        <div style="text-center: center; margin-bottom: 2.5rem; text-align: center;">
+          <span style="display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; font-weight: 800; color: #facc15; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem;">🎉 TOWN FAIR & FESTIVAL IN HONOR OF CRISTO DE VILLAJOS</span>
+          <h2 style="font-family: var(--font-display, serif); font-size: 2.25rem; margin: 0 0 0.75rem 0; color: #ffffff; line-height: 1.2;">Feria y Fiestas of Campo de Criptana 2026</h2>
+          <p style="font-size: 1.05rem; color: #cbd5e1; margin: 0 auto; max-width: 720px; line-height: 1.6;">Click on any date card below to open the complete official program with all events, schedules, and details.</p>
+        </div>
+
+        <!-- Prominent Interactive Date Cards Grid -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1.3rem;">
+          
+          <div class="feria-timeline-card trigger-feria-modal" data-period="period-1">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+              <span style="font-size: 0.78rem; font-weight: 800; color: #d97706; text-transform: uppercase; letter-spacing: 1px;">AUGUST 1 - 12</span>
+              <span style="font-size: 1.3rem;">🎨</span>
+            </div>
+            <h3 style="margin: 0 0 0.4rem 0; color: #0f172a; font-size: 1.15rem; font-family: var(--font-display, serif);">Pre-Fair & Cultural August</h3>
+            <p style="font-size: 0.88rem; color: #475569; margin: 0; line-height: 1.5;">Sunset Music at the Windmills, Open-Air Painting Contest, and Total Solar Eclipse peak on Aug 12.</p>
+            <span class="card-more-badge">Open Aug 1-12 Program &rarr;</span>
+          </div>
+
+          <div class="feria-timeline-card trigger-feria-modal" data-period="period-2">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+              <span style="font-size: 0.78rem; font-weight: 800; color: #d97706; text-transform: uppercase; letter-spacing: 1px;">AUGUST 14 - 22</span>
+              <span style="font-size: 1.3rem;">🌾</span>
+            </div>
+            <h3 style="margin: 0 0 0.4rem 0; color: #0f172a; font-size: 1.15rem; font-family: var(--font-display, serif);">Folklore, Harvest & Wine Tasting</h3>
+            <p style="font-size: 0.88rem; color: #475569; margin: 0; line-height: 1.5;">International Folklore Festival, D.O. La Mancha Wine Tasting, and traditional live wheat threshing.</p>
+            <span class="card-more-badge">Open Aug 14-22 Program &rarr;</span>
+          </div>
+
+          <div class="feria-timeline-card featured-card trigger-feria-modal" data-period="period-3" style="border: 3px solid #e11d48 !important; box-shadow: 0 8px 25px rgba(225, 29, 72, 0.22) !important;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+              <span style="font-size: 0.78rem; font-weight: 900; color: #be123c; text-transform: uppercase; letter-spacing: 1px;">AUGUST 23 (PEAK DAY)</span>
+              <span style="font-size: 1.3rem;">🎺🌸</span>
+            </div>
+            <h3 style="margin: 0 0 0.4rem 0; color: #0f172a; font-size: 1.2rem; font-family: var(--font-display, serif);">"La Traída" & The Great Fiesta Yeyé</h3>
+            <p style="font-size: 0.88rem; color: #334155; margin: 0; line-height: 1.5; font-weight: 600;">07:00 AM "La Traída" procession, giant puppets parade, fairground opening, and <strong>THE FIESTA YEYÉ (Pp. 32-34)</strong> late night.</p>
+            <span class="card-more-badge" style="color: #be123c; font-weight: 800;">Open Peak Day & Fiesta Yeyé &rarr;</span>
+          </div>
+
+          <div class="feria-timeline-card trigger-feria-modal" data-period="period-4">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+              <span style="font-size: 0.78rem; font-weight: 800; color: #d97706; text-transform: uppercase; letter-spacing: 1px;">AUGUST 24 - 28</span>
+              <span style="font-size: 1.3rem;">🍷</span>
+            </div>
+            <h3 style="margin: 0 0 0.4rem 0; color: #0f172a; font-size: 1.15rem; font-family: var(--font-display, serif);">Vermouth, Migas & Concerts</h3>
+            <p style="font-size: 0.88rem; color: #475569; margin: 0; line-height: 1.5;">Midday vermouth street parties in Plaza Mayor, Manchegan "migas" cooking contest, and major concerts.</p>
+            <span class="card-more-badge">Open Fair Days &rarr;</span>
+          </div>
+
+          <div class="feria-timeline-card trigger-feria-modal" data-period="period-5">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+              <span style="font-size: 0.78rem; font-weight: 800; color: #d97706; text-transform: uppercase; letter-spacing: 1px;">SEPTEMBER 1 - 7</span>
+              <span style="font-size: 1.3rem;">🙏</span>
+            </div>
+            <h3 style="margin: 0 0 0.4rem 0; color: #0f172a; font-size: 1.15rem; font-family: var(--font-display, serif);">Novena & "La Lleva" Pilgrimage</h3>
+            <p style="font-size: 0.88rem; color: #475569; margin: 0; line-height: 1.5;">Solemn patronal novena services and traditional running pilgrimage carrying the patron saint back to the sanctuary.</p>
+            <span class="card-more-badge">Open "La Lleva" Pilgrimage &rarr;</span>
+          </div>
+
         </div>
       </div>
     </section>
@@ -1724,6 +1853,22 @@
       </div>
     </section>
 
+    <!-- ═══════════════════════════════════════════════════════════════
+         LUZE MEDIA B2B AGENCY BANNER
+         ═══════════════════════════════════════════════════════════════ -->
+    <section class="luze-agency-banner fade-in" style="background: linear-gradient(135deg, #0b1329, #1e293b); border-top: 1px solid rgba(212, 175, 55, 0.2); border-bottom: 1px solid rgba(212, 175, 55, 0.2); padding: 3rem 0; color: #f8fafc;">
+      <div class="section-inner" style="display: flex; justify-content: space-between; align-items: center; gap: 2rem; flex-wrap: wrap;">
+        <div style="flex: 1 1 450px;">
+          <span style="display: inline-block; font-size: 0.75rem; font-weight: 700; color: #ffd700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 0.5rem;" data-key="luze.banner.tag">DIGITAL AGENCY & MARKETING</span>
+          <h3 style="font-family: var(--font-display, serif); font-size: 1.5rem; margin: 0 0 0.5rem 0; color: #ffffff;" data-key="luze.banner.title">Grow Your Business in La Mancha with LUZE Media</h3>
+          <p style="font-size: 0.9rem; color: #94a3b8; margin: 0; line-height: 1.6;" data-key="luze.banner.desc">Boost your revenue and attract local customers & travelers with bespoke web design, local SEO, and high-converting marketing campaigns.</p>
+        </div>
+        <div>
+          <a href="https://www.luzemediamarketing.com/" target="_blank" rel="noopener" class="hl-btn hl-btn-primary" style="padding: 0.85rem 1.75rem; border-radius: 8px; background: linear-gradient(135deg, #ffd700, #ff8c00); color: #0f172a; font-weight: 800; border: none; text-decoration: none; display: inline-block;" data-key="luze.banner.btn">Grow Your Business with LUZE Media &rarr;</a>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <!-- ═══════════════════════════════════════════════════════════════
@@ -1922,5 +2067,260 @@
       </div>
     </div>
 
+  <!-- ═══════════════════════════════════════════════════════════════
+       ASTRONOMICAL GUIDE MODAL (Solar Eclipse 2026 & Perseids)
+       ═══════════════════════════════════════════════════════════════ -->
+  <div class="publicity-modal astro-modal" id="modal-eclipse">
+    <div class="modal-overlay" id="modal-eclipse-overlay"></div>
+    <div class="modal-card astro-modal-card">
+      <button class="btn-close-modal" id="btn-close-eclipse-modal" aria-label="Cerrar">&times;</button>
+      <div class="modal-header astro-modal-header">
+        <div class="astro-header-tag">✨ Rare Celestial Event</div>
+        <h3 class="modal-title" data-key="astro.modal.title">Total Solar Eclipse 2026 & Perseids Guide</h3>
+        <p class="modal-subtitle" style="color: #94a3b8;" data-key="astro.modal.subtitle">Everything you need to know to experience a historic astronomical event among Don Quixote's windmills.</p>
+      </div>
+
+      <div class="astro-modal-tabs">
+        <button class="astro-tab-btn active" data-tab="tab-eclipse" data-key="astro.tab.eclipse">☀️ Total Solar Eclipse (Aug 12)</button>
+        <button class="astro-tab-btn" data-tab="tab-perseids" data-key="astro.tab.perseids">🌠 Perseids Meteor Shower (Aug 12-13)</button>
+        <button class="astro-tab-btn" data-tab="tab-mizona" data-key="astro.tab.mizona">📍 Check My Location</button>
+      </div>
+
+      <div class="astro-tab-content active" id="tab-eclipse">
+        <div class="astro-grid">
+          <div class="astro-card">
+            <h4 data-key="astro.card1.title">🕒 Eclipse Schedule (August 12, 2026)</h4>
+            <ul>
+              <li data-key="astro.card1.li1"><strong>7:30 PM CEST:</strong> Partial eclipse begins. Sun starts to be covered by the Moon.</li>
+              <li data-key="astro.card1.li2"><strong>8:28 PM CEST:</strong> 🌟 <strong>Peak Totality (100%)</strong>. Sun is fully eclipsed creating the golden corona right over Sierra de los Molinos.</li>
+              <li data-key="astro.card1.li3"><strong>9:05 PM CEST:</strong> Final sunset during twilight.</li>
+            </ul>
+          </div>
+          <div class="astro-card">
+            <h4 data-key="astro.card2.title">📍 Best Viewing Locations</h4>
+            <ul>
+              <li data-key="astro.card2.li1"><strong>Sierra de los Molinos & Cerro de la Paz:</strong> Direct unobstructed western horizon view behind the giant windmills.</li>
+              <li data-key="astro.card2.li2"><strong>Albaicín Viewpoint:</strong> Historic whitewashed district, ideal for dramatic contrast photos.</li>
+            </ul>
+          </div>
+          <div class="astro-card full-width">
+            <h4 data-key="astro.card3.title">🕶️ Safety & Photography Tips</h4>
+            <p data-key="astro.card3.desc">It is essential to use <strong>ISO 12312-2 certified eclipse glasses</strong> during partial phases. For cameras, keep ND solar filters attached until totality, then remove briefly during complete darkness to capture the solar corona.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="astro-tab-content" id="tab-perseids">
+        <div class="astro-grid">
+          <div class="astro-card">
+            <h4 data-key="astro.card4.title">🌌 Celestial Coincidence</h4>
+            <p data-key="astro.card4.desc">The night following the eclipse (August 12-13) coincides with the peak of the <strong>Perseids meteor shower</strong>, with up to 100 shooting stars per hour under dark rural skies.</p>
+          </div>
+          <div class="astro-card">
+            <h4 data-key="astro.card5.title">🔭 Dark Sky Spots (Zero Light Pollution)</h4>
+            <ul>
+              <li data-key="astro.card5.li1"><strong>Laguna de Salicor Nature Reserve:</strong> A few kilometers away, offering a 360° open dark horizon and saline water reflections.</li>
+              <li data-key="astro.card5.li2"><strong>Virgen de Criptana Sanctuary:</strong> Peaceful hilltop surrounded by countryside.</li>
+            </ul>
+          </div>
+          <div class="astro-card full-width">
+            <h4 data-key="astro.card6.title">💡 Stargazing Tips</h4>
+            <p data-key="astro.card6.desc">No telescopes needed—naked eye viewing provides the best wide field. Bring a blanket or recliners, light warm clothing for cool night air, and avoid phone screens to preserve night vision.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="astro-tab-content" id="tab-mizona">
+        <div style="background: rgba(15, 23, 42, 0.7); padding: 1.25rem; border-radius: 12px; border: 1px solid rgba(212, 175, 55, 0.3); margin-bottom: 1rem;">
+          <h4 style="margin: 0 0 0.5rem 0; color: #ffd700; font-size: 1.15rem;" data-key="astro.mizona.title">📍 How will the 2026 Eclipse look in your area?</h4>
+          <p style="font-size: 0.88rem; color: #cbd5e1; margin: 0 0 1rem 0;" data-key="astro.mizona.subtitle">Detect your position by GPS or search any town/city in Spain to check if you're inside the 100% Path of Totality.</p>
+
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.75rem;">
+            <button id="btn-detect-gps" class="hl-btn hl-btn-primary" style="padding: 0.6rem 1.2rem; font-size: 0.82rem; border-radius: 8px;" data-key="astro.mizona.btn.gps">📍 Detect My Location GPS</button>
+            <div style="display: flex; flex: 1 1 280px; gap: 0.4rem;">
+              <input type="text" id="input-search-spain" placeholder="Type any town or city in Spain..." style="padding: 0.6rem 1rem; border-radius: 8px; background: #1e293b; color: #f8fafc; border: 1px solid rgba(212, 175, 55, 0.4); font-size: 0.85rem; flex: 1;" />
+              <button id="btn-search-spain" class="hl-btn hl-btn-secondary" style="padding: 0.6rem 1rem; border-radius: 8px; font-size: 0.82rem;">🔍 Search</button>
+            </div>
+          <div style="margin-bottom: 1rem;">
+            <select id="select-town-eclipse" style="padding: 0.5rem 0.8rem; border-radius: 8px; background: #0f172a; color: #cbd5e1; border: 1px solid rgba(255,255,255,0.15); font-size: 0.8rem; width: 100%;">
+              <option value="criptana">🌾 Quick Presets: Campo de Criptana (100% Totality · 20:28 CEST)</option>
+              <option value="alcazar">🏰 Alcázar de San Juan (100% Totality · 20:28 CEST)</option>
+              <option value="consuegra">🏰 Consuegra (100% Totality · 20:28 CEST)</option>
+              <option value="toboso">📖 El Toboso (100% Totality · 20:28 CEST)</option>
+              <option value="tomelloso">🍇 Tomelloso (100% Totality · 20:28 CEST)</option>
+              <option value="madrid">🏢 Madrid (100% Totality · 20:29 CEST)</option>
+              <option value="toledo">🏰 Toledo (100% Totality · 20:28 CEST)</option>
+              <option value="cuenca">🏞️ Cuenca (100% Totality · 20:27 CEST)</option>
+              <option value="valencia">🌊 Valencia (99.8% Partial · 20:26 CEST)</option>
+              <option value="barcelona">🏛️ Barcelona (100% Totality · 20:24 CEST)</option>
+              <option value="sevilla">💃 Sevilla (89.5% Partial · 20:29 CEST)</option>
+              <option value="malaga">☀️ Málaga (87.2% Partial · 20:29 CEST)</option>
+              <option value="bilbao">🏛️ Bilbao (100% Totality · 20:28 CEST)</option>
+              <option value="zaragoza">🏰 Zaragoza (100% Totality · 20:26 CEST)</option>
+              <option value="palma">🏖️ Palma de Mallorca (100% Totality · 20:23 CEST)</option>
+            </select>
+          </div>
+
+          <div id="eclipse-location-result" style="background: #0f172a; padding: 1.25rem; border-radius: 10px; border: 1px solid #ffd700; color: #f8fafc; margin-bottom: 1rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+              <span style="font-size: 0.8rem; font-weight: 700; color: #ffd700; text-transform: uppercase;">LOCATION RESULT</span>
+              <span id="res-status-badge" style="background: rgba(34, 197, 94, 0.2); color: #4ade80; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700;">☀️ 100% TOTAL ECLIPSE</span>
+            </div>
+            <h4 id="res-town-name" style="margin: 0.5rem 0 0.25rem 0; font-size: 1.25rem; color: #ffffff;">Campo de Criptana (La Mancha)</h4>
+            <p id="res-town-desc" style="font-size: 0.88rem; color: #cbd5e1; margin: 0 0 1rem 0;">Prime location! The sun will be 100% total right at sunset over the 16th-century windmills.</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.75rem; text-align: center;">
+              <div style="background: rgba(255,255,255,0.05); padding: 0.6rem; border-radius: 8px;">
+                <span style="display: block; font-size: 0.7rem; color: #94a3b8;">PEAK TIME</span>
+                <strong id="res-time" style="font-size: 1rem; color: #ffd700;">20:28:14 CEST</strong>
+              </div>
+              <div style="background: rgba(255,255,255,0.05); padding: 0.6rem; border-radius: 8px;">
+                <span style="display: block; font-size: 0.7rem; color: #94a3b8;">DURATION</span>
+                <strong id="res-duration" style="font-size: 1rem; color: #ffffff;">1m 45s</strong>
+              </div>
+              <div style="background: rgba(255,255,255,0.05); padding: 0.6rem; border-radius: 8px;">
+                <span style="display: block; font-size: 0.7rem; color: #94a3b8;">SUN POSITION</span>
+                <strong id="res-pos" style="font-size: 0.9rem; color: #ffffff;">Alt 5.2° · WNW 287°</strong>
+              </div>
+            </div>
+          </div>
+
+          <div id="eclipse-map-container" style="height: 280px; width: 100%; border-radius: 10px; border: 1px solid rgba(212,175,55,0.3); z-index: 1;"></div>
+        </div>
+      </div>
+
+      <div class="astro-modal-footer" style="display: flex; gap: 1rem; align-items: center; justify-content: space-between; flex-wrap: wrap;">
+        <a href="https://www.jdoqocy.com/click-101761861-11891543?url=https%3A%2F%2Fwww.booking.com%2Fsearchresults.html%3Fss%3Dcampo%2Bde%2Bcriptana" target="_blank" rel="noopener" class="hl-btn hl-btn-primary" style="background: linear-gradient(135deg, #003580, #0056b3); border: none; font-size: 0.85rem;" data-key="astro.modal.booking">🏨 Search Hotels for the Eclipse &rarr;</a>
+        <button class="hl-btn hl-btn-secondary" id="btn-close-eclipse-modal-bottom" data-key="astro.modal.close">Close Guide</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       STANDALONE FERIA Y FIESTAS 2026 MODAL
+       ═══════════════════════════════════════════════════════════════ -->
+  <div class="publicity-modal feria-modal" id="modal-feria">
+    <div class="modal-overlay" id="modal-feria-overlay"></div>
+    <div class="modal-card feria-modal-card">
+      <button class="btn-close-modal" id="btn-close-feria-modal" aria-label="Close">&times;</button>
+      <div class="modal-header astro-modal-header" style="border-bottom: 2px solid #f59e0b; padding-bottom: 1rem; margin-bottom: 1.25rem;">
+        <div class="astro-header-tag" style="color: #b45309 !important; font-weight: 800;">🎉 OFFICIAL PROGRAM & AUGUST CULTURAL FESTIVITIES · CAMPO DE CRIPTANA</div>
+        <h3 class="modal-title" style="color: #78350f !important; font-size: 1.8rem !important; font-weight: 900;">Complete Guide to Feria y Fiestas 2026</h3>
+        <p class="modal-subtitle" style="color: #92400e; font-size: 0.95rem; margin: 0.25rem 0 0 0;">Click on any event card below to expand official schedules, locations, and details.</p>
+      </div>
+
+      <div class="astro-grid" style="margin-bottom: 1.5rem;">
+        
+        <!-- Card 1: Pre-Fair & Cultural August -->
+        <div class="astro-card feria-period-card" data-period="period-1">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <h4 style="color: #0f172a !important; font-size: 1.15rem; margin: 0;">🎨 August 1 - 22: Pre-Fair & Cultural August</h4>
+            <span class="feria-card-badge">Expand ➕</span>
+          </div>
+          <p style="color: #475569; font-size: 0.9rem; margin-bottom: 0.5rem;">Fair Opening Speech by Peña Los Bartoleros (Aug 1), Arrival of Patron Statue (Aug 6), Folklore Festival (Aug 8), Arte Entre Gigantes (Aug 10-16), Burleta Awards (Aug 14), and Children's Day (Aug 22).</p>
+
+          <div class="feria-card-accordion" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px dashed #cbd5e1;">
+            <h5 style="color: #0f172a; font-size: 0.95rem; margin: 0 0 0.5rem 0; font-weight: 800;">📌 Key Events from the Official Program (Pp. 30-31):</h5>
+            <ul style="color: #334155; font-size: 0.88rem; padding-left: 1.2rem; margin: 0 0 0.8rem 0; line-height: 1.6;">
+              <li><strong>Saturday Aug 1 (23:00h):</strong> FAIR OPENING SPEECH by Déborah Escobar Carmona (40th Anniv. Peña Los Bartoleros) and Proclamation of Court of Honor + Jenasan Orchestra.</li>
+              <li><strong>Thursday Aug 6 (Christ Thursday - 21:00h):</strong> Arrival at "Las Portás" of the Patron Statue (Cristo de Villajos) with procession and fireworks + Laura García Concert (22:30h).</li>
+              <li><strong>Saturday Aug 8 (21:00h):</strong> XLIV National Folklore Festival of La Mancha in Plaza Mayor.</li>
+              <li><strong>Aug 10 - 16:</strong> Arte Entre Gigantes Festival (Concerts by Yamandú Costa, Jorge Glem, Miron Rafajlovic, Antonio Lizana, Diego Guerrero).</li>
+              <li><strong>Friday Aug 14 (23:00h):</strong> XXXIV Burleta Awards Gala at Municipal Auditorium.</li>
+              <li><strong>Aug 15 - 23 (20:00h):</strong> Solemn Patronal Novena at the Parish Church.</li>
+              <li><strong>Saturday Aug 22 (Children's Day - 21:00h):</strong> Reduced price fairground rides (NO-NOISE SLOT 21:00h - 22:30h).</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Card 2: Peak Day, Fireworks & Fiesta Yeyé -->
+        <div class="astro-card full-width feria-period-card" data-period="period-2" style="background: #ffffff !important; border: 3px solid #e11d48 !important; box-shadow: 0 8px 25px rgba(225, 29, 72, 0.2) !important;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <h4 style="color: #be123c !important; font-size: 1.25rem; margin: 0;">🎺🌸 AUGUST 23 (PEAK DAY): PROCESSION, FIREWORKS & FIESTA YE-YÉ</h4>
+            <span class="feria-card-badge" style="background: #ffe4e6; color: #be123c; border-color: #fecdd3; font-weight: 800;">Peak Day & Fiesta Yeyé 🕺 (P. 32)</span>
+          </div>
+          <p style="color: #334155; font-size: 0.95rem; margin-bottom: 0.5rem; font-weight: 600;">Day of Fireworks and Sports (Page 32 of Brochure): Pre-Yeyé in Plaza Mayor, Patron Procession, Opening Rocket Launch, Pyromusical Show, and the legendary <strong>FIESTA YE-YÉ</strong> late night at the windmills.</p>
+
+          <div class="feria-card-accordion" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px dashed #f43f5e;">
+            <h5 style="color: #be123c; font-size: 0.95rem; margin: 0 0 0.5rem 0; font-weight: 800;">⏱️ Official Schedule for Sunday August 23:</h5>
+            <ul style="color: #334155; font-size: 0.88rem; padding-left: 1.2rem; margin: 0 0 0.8rem 0; line-height: 1.7;">
+              <li><strong>09:30 AM — Entry into Town:</strong> Mass reception at Puertas de la Virgen and procession to the main parish.</li>
+              <li><strong>22:30 PM — Giant Puppets Parade:</strong> Festive parade accompanied by the Filarmónica Beethoven band to the fairgrounds.</li>
+              <li><strong>23:00 PM — Fairground Opening & Fireworks:</strong> Grand light-up of the fair entrance, rocket launch, and fireworks show.</li>
+              <li><strong>🌸 23:30 PM — THE GREAT FIESTA YEYÉ (Windmills Hill):</strong> The flagship retro party on August 23rd! Thousands gather in 60s/70s vintage costumes, hippie wigs, and retro sunglasses with live pop-rock music under illuminated windmills.</li>
+            </ul>
+            <p style="font-size: 0.85rem; color: #9f1239; margin: 0; background: #fff1f2; padding: 0.6rem 0.8rem; border-radius: 8px; border-left: 3px solid #e11d48;">🌸 <strong>August 23 Yeyé Tradition:</strong> Get your 60s/70s costume ready! It is Criptana's biggest party night where all generations celebrate together in vintage attire.</p>
+          </div>
+        </div>
+
+        <!-- Card 3: August 24 & 25 -->
+        <div class="astro-card feria-period-card" data-period="period-3">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <h4 style="color: #0f172a !important; font-size: 1.15rem; margin: 0;">🍷 August 24 & 25: Patron Mass, DePol, Calderetas & La Mundial</h4>
+            <span class="feria-card-badge">Expand ➕</span>
+          </div>
+          <p style="color: #475569; font-size: 0.9rem; margin-bottom: 0.5rem;">Patron Solemn Mass (Aug 24), Europa FM DePol Concert, Manchego Day (Aug 25), Calderetas Stew Contest, and La Mundial Orchestra.</p>
+
+          <div class="feria-card-accordion" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px dashed #cbd5e1;">
+            <h5 style="color: #0f172a; font-size: 0.95rem; margin: 0 0 0.5rem 0; font-weight: 800;">📌 August 24 & 25 Events (Pp. 32-33):</h5>
+            <ul style="color: #334155; font-size: 0.88rem; padding-left: 1.2rem; margin: 0 0 0.8rem 0; line-height: 1.6;">
+              <li><strong>Monday Aug 24 (12:00h):</strong> Patron Mass + Midday Vermouth Party in Plaza Mayor (13:00h) and "La Caseta" Opening (17:30h).</li>
+              <li><strong>Monday Aug 24 (23:30h):</strong> 🎤 <strong>EUROPA FM CONCERT: DePOL</strong> at Municipal Auditorium (Free Entry).</li>
+              <li><strong>Tuesday Aug 25 (Manchego Day - 08:00h):</strong> Traditional mule plowing, hoe throwing contest, and San Isidro breakfast.</li>
+              <li><strong>Tuesday Aug 25 (12:00h):</strong> VI Calderetas Lamb Stew Contest at El Pósito + Solidarity Manchego Scarves Sale.</li>
+              <li><strong>Tuesday Aug 25 (23:55h):</strong> 💃 <strong>ORQUESTA LA MUNDIAL (Charity Gala)</strong> at Municipal Auditorium (5€ for Zaragüelles, Aspana & Asmicrip).</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Card 4: August 26 to 28 -->
+        <div class="astro-card feria-period-card" data-period="period-4">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <h4 style="color: #0f172a !important; font-size: 1.15rem; margin: 0;">🎪 August 26 - 28: Paellas, Manuel Carrasco, La Misión & Gran Prix</h4>
+            <span class="feria-card-badge">Expand ➕</span>
+          </div>
+          <p style="color: #475569; font-size: 0.9rem; margin-bottom: 0.5rem;">Paella Contest (Aug 26), Manuel Carrasco Tribute, Street Brass Bands (Aug 27), La Misión Orchestra at Windmills, Gran Prix, and Millennial Festival (Aug 28).</p>
+
+          <div class="feria-card-accordion" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px dashed #cbd5e1;">
+            <h5 style="color: #0f172a; font-size: 0.95rem; margin: 0 0 0.5rem 0; font-weight: 800;">📌 August 26 - 28 Events (Pp. 33-34):</h5>
+            <ul style="color: #334155; font-size: 0.88rem; padding-left: 1.2rem; margin: 0 0 0.8rem 0; line-height: 1.6;">
+              <li><strong>Wednesday Aug 26 (12:00h):</strong> VI Paella Cooking Contest + Polichinela Musical Bingo (17:00h) and Culture Gala (21:00h).</li>
+              <li><strong>Wednesday Aug 26 (23:30h):</strong> 🎵 <strong>MANUEL CARRASCO TRIBUTE</strong> at Municipal Auditorium (5€ for Cáritas Charity).</li>
+              <li><strong>Thursday Aug 27 (12:30h):</strong> VII Fair Pub Crawl with Los Monigotes Brass Band + V Gachas Contest (21:30h).</li>
+              <li><strong>Thursday Aug 27 (00:30h):</strong> 🎺 <strong>ORQUESTA LA MISIÓN</strong> at Windmills Hill (Free Entry).</li>
+              <li><strong>Friday Aug 28 (19:30h):</strong> 🐮 <strong>GRAN PRIX 2026</strong> at Athletics Track.</li>
+              <li><strong>Friday Aug 28 (23:00h):</strong> 🎸 <strong>Millennial Festival "Aquellos Años"</strong> (Tributes to Pereza, Leiva, El Canto del Loco, La Oreja de Van Gogh) + CLOSING FIREWORKS SHOW.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Card 5: September Pilgrimage -->
+        <div class="astro-card full-width feria-period-card" data-period="period-5">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <h4 style="color: #0f172a !important; font-size: 1.15rem; margin: 0;">🙏 Aug 29 - Sept 6: Grape Harvest Festival & "La Lleva" Pilgrimage</h4>
+            <span class="feria-card-badge">Expand ➕</span>
+          </div>
+          <p style="color: #475569; font-size: 0.9rem; margin-bottom: 0.5rem;">Grape Harvest Festival in Plaza Mayor (Sept 4), Running Pilgrimage "La Lleva" returning the Patron statue to sanctuary (Sept 5), and Octava Mass & Procession (Sept 6).</p>
+
+          <div class="feria-card-accordion" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px dashed #cbd5e1;">
+            <h5 style="color: #0f172a; font-size: 0.95rem; margin: 0 0 0.5rem 0; font-weight: 800;">📌 Patronal Finale (Page 35 of Brochure):</h5>
+            <ul style="color: #334155; font-size: 0.88rem; padding-left: 1.2rem; margin: 0 0 0.8rem 0; line-height: 1.6;">
+              <li><strong>Saturday Aug 29 (21:00h):</strong> Night Route "Criptana Under the Stars".</li>
+              <li><strong>Friday Sept 4 (21:00h):</strong> GRAPE HARVEST FESTIVAL at Plaza Mayor.</li>
+              <li><strong>Saturday Sept 5 (19:30h):</strong> 🏃 <strong>"La Lleva" Running Pilgrimage</strong> carrying the Patron statue back to Villajos Sanctuary + Traditional Milling (20:00h).</li>
+              <li><strong>Sunday Sept 6 (Cristo Octava - 11:00h):</strong> Octava Mass & PROCESSION around the Sanctuary grounds.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="astro-modal-footer" style="display: flex; gap: 1rem; align-items: center; justify-content: space-between; flex-wrap: wrap;">
+        <a href="https://www.jdoqocy.com/click-101761861-11891543?url=https%3A%2F%2Fwww.booking.com%2Fsearchresults.html%3Fss%3Dcampo%2Bde%2Bcriptana" target="_blank" rel="noopener" class="hl-btn hl-btn-primary" style="background: linear-gradient(135deg, #d97706, #b45309); border: none; font-size: 0.85rem;">🏨 Book Hotel for the Fair &rarr;</a>
+        <button class="hl-btn hl-btn-secondary" id="btn-close-feria-modal-bottom">Close Guide</button>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>
+
