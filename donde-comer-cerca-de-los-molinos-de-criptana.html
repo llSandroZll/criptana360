@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <!-- Google tag (gtag.js) -->
+  <!-- Google tag (gtag.js) + Universal Click & Interaction Telemetry -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-QTSYHZVYY7"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -9,6 +9,62 @@
     gtag('js', new Date());
 
     gtag('config', 'G-QTSYHZVYY7');
+
+    document.addEventListener('click', function(e) {
+      if (!window.gtag) return;
+      var el = e.target.closest('a, button, [role="button"], .tap-card, .pill, .explorer-card, .guide-article-card, .bento-action-item, input[type="submit"]');
+      if (!el) return;
+
+      var rawText = (el.getAttribute('aria-label') || el.getAttribute('title') || el.innerText || el.value || '').replace(/\s+/g, ' ').trim();
+      var elText = rawText.substring(0, 100) || el.tagName.toLowerCase();
+      var href = el.getAttribute('href') || '';
+      var elId = el.id || el.getAttribute('data-key') || el.getAttribute('data-val') || el.getAttribute('data-value') || '';
+      var elClasses = (typeof el.className === 'string' ? el.className : '').substring(0, 100);
+
+      var spotContainer = el.closest('[data-spot]');
+      var spotId = el.getAttribute('data-spot') || (spotContainer ? spotContainer.getAttribute('data-spot') : '');
+      var spotTitleEl = (spotContainer && spotContainer.querySelector('.card-spot-title, .timeline-card-title')) ||
+                        (el.closest('.detail-drawer') && document.querySelector('.drawer-spot-title')) ||
+                        (el.closest('.timeline-card') && el.closest('.timeline-card').querySelector('.timeline-card-title')) ||
+                        (el.closest('.timeline-stop') && el.closest('.timeline-stop').querySelector('.timeline-stop__name'));
+      var spotName = spotTitleEl ? spotTitleEl.innerText.replace(/\s+/g, ' ').trim() : '';
+
+      var sectionEl = el.closest('header, nav, .hero, .ruta-hero, #detail-drawer, .bento-actions-grid, .luze-agency-banner, #planificador, .wizard-section, #articulos, .native-ad-banner, #publicity-modal, #planner-fullscreen-modal, #email-modal, footer, main, article');
+      var uiSection = sectionEl ? (sectionEl.id || (typeof sectionEl.className === 'string' && sectionEl.className.split(' ')[0]) || sectionEl.tagName.toLowerCase()) : 'page_body';
+
+      var payload = {
+        'element_text': elText,
+        'element_tag': el.tagName.toLowerCase(),
+        'element_id': elId,
+        'element_classes': elClasses,
+        'ui_section': uiSection,
+        'spot_id': spotId,
+        'spot_name': spotName,
+        'link_url': href,
+        'page_path': window.location.pathname,
+        'page_lang': document.documentElement.lang || 'es'
+      };
+
+      window.gtag('event', 'click_any', payload);
+
+      if (!window.spotsData) {
+        if (href.indexOf('tel:') === 0) window.gtag('event', 'click_call_button', payload);
+        else if (href.indexOf('google.com/maps') !== -1 || href.indexOf('maps.app.goo.gl') !== -1) window.gtag('event', 'click_map_button', payload);
+        else if (href.indexOf('booking.com') !== -1 || href.indexOf('jdoqocy.com') !== -1) window.gtag('event', 'click_affiliate_booking', payload);
+        else if (href.indexOf('low-prices.eu') !== -1 || href.indexOf('bodeboca') !== -1) window.gtag('event', 'click_affiliate_wine', payload);
+        else if (href.indexOf('civitatis') !== -1) window.gtag('event', 'click_affiliate_tour', payload);
+      }
+
+      if (href.indexOf('luzemediamarketing.com') !== -1 || href.indexOf('anunciate') !== -1 || el.classList.contains('open-publicity-btn') || el.classList.contains('ad-cta-btn')) {
+        window.gtag('event', 'click_b2b_cta', payload);
+      }
+      if (href.indexOf('blog/') !== -1 || href.indexOf('donde-') !== -1 || href.indexOf('ruta-') !== -1 || href.indexOf('guía-') !== -1 || href.indexOf('guia-') !== -1) {
+        window.gtag('event', 'click_guide_or_article', payload);
+      }
+      if (el.id === 'sunset-toggle-btn' || el.classList.contains('lang-btn') || el.classList.contains('pill') || el.classList.contains('tap-card')) {
+        window.gtag('event', 'click_ui_preference', payload);
+      }
+    }, true);
   </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">

@@ -246,9 +246,9 @@
           
           <div class="drawer-actions">
             ${bookingCtaHtml}
-            <a href="tel:${spot.phone}" class="drawer-btn-outline">📞 ${callBtnLabel}</a>
+            <a href="tel:${spot.phone}" class="drawer-btn-outline drawer-btn-call" data-spot="${spotId}">📞 ${callBtnLabel}</a>
             <button class="drawer-btn-outline btn-share-drawer" data-spot="${spotId}">🔗 ${shareBtnLabel}</button>
-            <a href="${mapsUrl}" target="_blank" rel="noopener" class="drawer-btn-primary routing-btn">
+            <a href="${mapsUrl}" target="_blank" rel="noopener" class="drawer-btn-primary routing-btn" data-spot="${spotId}">
               ${mapBtnLabel}
               <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 5px; display: inline-block; vertical-align: middle;"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
             </a>
@@ -258,6 +258,16 @@
 
       contentContainer.innerHTML = html;
 
+      // GA4 Telemetry: Track Listing Details View regardless of how drawer was opened
+      if (window.gtag) {
+        window.gtag('event', 'view_listing_details', {
+          'spot_id': spotId,
+          'spot_name': spotTitle || spotId,
+          'category': spot.category || 'unknown',
+          'page_lang': activeLang
+        });
+      }
+
       // Bind share button event listener
       const shareBtn = contentContainer.querySelector('.btn-share-drawer');
       if (shareBtn) {
@@ -265,6 +275,14 @@
           e.preventDefault();
           const hashSegment = spotId.startsWith('spot_') ? spotId.substring(5).replace(/_/g, '-') : spotId.replace(/_/g, '-');
           const shareUrl = window.location.origin + window.location.pathname + '#' + hashSegment;
+
+          if (window.gtag) {
+            window.gtag('event', 'click_share_listing', {
+              'spot_id': spotId,
+              'spot_name': spotTitle || spotId,
+              'ui_section': 'detail_drawer'
+            });
+          }
 
           if (navigator.share) {
             navigator.share({
@@ -370,42 +388,38 @@
       if (spotBtn) {
         const spotId = spotBtn.getAttribute('data-spot');
         openDrawer(spotId);
-        
-        // GA4 Telemetry: Track Details View
-        const spot = spotsData[spotId];
-        if (spot && window.gtag) {
-          const dict = translations[activeLang];
-          const spotTitle = dict[`${spotId}.name`] || 'Unknown';
-          window.gtag('event', 'view_listing_details', {
-            'spot_id': spotId,
-            'spot_name': spotTitle,
-            'category': spot.category
-          });
-        }
       }
 
-      // 3. Phone Call Click inside Drawer (B2B Lead Conversion)
-      const callBtn = e.target.closest('.drawer-btn-primary');
+      // 3. Phone Call Click inside Drawer or Timeline (B2B Lead Conversion)
+      const callBtn = e.target.closest('.drawer-btn-call, a[href^="tel:"]');
       if (callBtn) {
-        const spotTitleEl = document.querySelector('.drawer-spot-title');
-        const spotTitle = spotTitleEl ? spotTitleEl.innerText : 'Unknown';
+        const spotId = callBtn.getAttribute('data-spot') || 'Unknown';
+        const spotTitleEl = document.querySelector('.drawer-spot-title') || (callBtn.closest('.timeline-card') && callBtn.closest('.timeline-card').querySelector('.timeline-card-title'));
+        const spotTitle = spotTitleEl ? spotTitleEl.innerText.trim() : 'Unknown';
         if (window.gtag) {
           window.gtag('event', 'click_call_button', {
             'event_category': 'B2B_Conversion',
-            'event_label': spotTitle
+            'event_label': spotTitle,
+            'spot_id': spotId,
+            'spot_name': spotTitle,
+            'phone_number': (callBtn.getAttribute('href') || '').replace('tel:', '')
           });
         }
       }
 
-      // 4. Map Navigation Click inside Drawer (B2B Lead Conversion)
-      const mapBtn = e.target.closest('.drawer-btn-outline');
+      // 4. Map Navigation Click inside Drawer or Timeline (B2B Lead Conversion)
+      const mapBtn = e.target.closest('.routing-btn, a[href*="google.com/maps"]');
       if (mapBtn) {
-        const spotTitleEl = document.querySelector('.drawer-spot-title');
-        const spotTitle = spotTitleEl ? spotTitleEl.innerText : 'Unknown';
+        const spotId = mapBtn.getAttribute('data-spot') || 'Unknown';
+        const spotTitleEl = document.querySelector('.drawer-spot-title') || (mapBtn.closest('.timeline-card') && mapBtn.closest('.timeline-card').querySelector('.timeline-card-title'));
+        const spotTitle = spotTitleEl ? spotTitleEl.innerText.trim() : 'Unknown';
         if (window.gtag) {
           window.gtag('event', 'click_map_button', {
             'event_category': 'B2B_Conversion',
-            'event_label': spotTitle
+            'event_label': spotTitle,
+            'spot_id': spotId,
+            'spot_name': spotTitle,
+            'destination_url': mapBtn.getAttribute('href') || ''
           });
         }
       }
@@ -476,17 +490,34 @@
         }
       }
 
+      // 8b. Dynamic Drawer Wine / Official Website CTA Click
+      const drawerWineBtn = e.target.closest('.drawer-btn-wine, .ad-slot-button');
+      if (drawerWineBtn) {
+        const spotId = drawerWineBtn.getAttribute('data-spot') || 'bodeboca_banner';
+        const spotTitleEl = document.querySelector('.drawer-spot-title');
+        const spotTitle = spotTitleEl ? spotTitleEl.innerText : 'Bodeboca Vinos D.O. La Mancha';
+        
+        if (window.gtag) {
+          window.gtag('event', 'click_affiliate_wine', {
+            'spot_id': spotId,
+            'spot_name': spotTitle,
+            'destination_url': drawerWineBtn.getAttribute('href') || ''
+          });
+        }
+      }
+
       // 9. Bento Action Item Click
       const bentoItem = e.target.closest('.bento-action-item');
       if (bentoItem) {
         const bentoTitleEl = bentoItem.querySelector('.bento-btn-title');
         const bentoTitle = bentoTitleEl ? bentoTitleEl.innerText : 'Escapada';
+        const isBooking = bentoItem.classList.contains('cta-booking') || (bentoItem.getAttribute('href') || '').includes('booking');
         
         if (window.gtag) {
-          window.gtag('event', 'click_affiliate_booking', {
-            'spot_id': 'bento_escapada',
+          window.gtag('event', isBooking ? 'click_affiliate_booking' : 'click_route_zone', {
+            'spot_id': isBooking ? 'bento_escapada' : 'bento_route_zone',
             'spot_name': bentoTitle,
-            'destination': 'booking_com'
+            'destination': isBooking ? 'booking_com' : (bentoItem.getAttribute('href') || '')
           });
         }
       }
@@ -719,6 +750,14 @@
         email: document.getElementById('ad-email').value,
         message: document.getElementById('ad-message').value
       };
+
+      if (window.gtag) {
+        window.gtag('event', 'b2b_lead_submission', {
+          'event_category': 'B2B_Conversion',
+          'business_name': formData.bizName,
+          'page_lang': activeLang
+        });
+      }
 
       fetch('https://formspree.io/f/xaqklzvw', {
         method: 'POST',
@@ -1604,6 +1643,15 @@
       ? companions.split(',').map(function (c) { return c.trim(); }).filter(function (c) { return c.length > 0; })
       : [];
 
+    if (window.gtag) {
+      window.gtag('event', 'share_itinerary_email', {
+        'subscribe_newsletter': subscribeNewsletter,
+        'spots_count': selectedSpots.length,
+        'companions_count': companionsArray.length,
+        'page_lang': activeLang
+      });
+    }
+
     fetch(`${baseApiUrl}/send-itinerary`, {
       method: 'POST',
       headers: {
@@ -1665,6 +1713,16 @@
     const party = partySelect ? partySelect.value : 'familia';
     const budget = budgetSelect ? budgetSelect.value : 'estandar';
     const nextDestination = nextSelect ? nextSelect.value : 'none';
+
+    if (window.gtag) {
+      window.gtag('event', 'generate_ai_itinerary', {
+        'travel_party': party,
+        'budget_tier': budget,
+        'next_destination': nextDestination,
+        'steering_modifier': steeringModifier || 'initial',
+        'page_lang': activeLang
+      });
+    }
 
     // Scrape real-time weather temperature and condition from header widget
     const weatherEl = document.querySelector('.weather-widget .utility-text');
@@ -2122,6 +2180,14 @@
         const spotTitleEl = spotCard.querySelector('.card-spot-title');
         const spotTitle = spotTitleEl ? spotTitleEl.innerText : 'Criptana 360';
         
+        if (window.gtag) {
+          window.gtag('event', 'click_share_listing', {
+            'spot_id': spotId,
+            'spot_name': spotTitle,
+            'ui_section': 'directory_card'
+          });
+        }
+
         // Construct the exact deep link
         const hashSegment = spotId.startsWith('spot_') ? spotId.substring(5).replace(/_/g, '-') : spotId.replace(/_/g, '-');
         const shareUrl = window.location.origin + window.location.pathname + '#' + hashSegment;
