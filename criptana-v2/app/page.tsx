@@ -28,6 +28,7 @@ import { ItineraryCard } from "@/components/itinerary-card"
 import { LocalGemsGrid } from "@/components/local-gems-grid"
 import { FeedbackSurvey } from "@/components/survey"
 import { WeekendAgendaSection } from "@/components/weekend-agenda"
+import { EditorialFooter } from "@/components/editorial-footer"
 import { ModeToggle } from "@/app/providers"
 
 export default function Page() {
@@ -45,7 +46,7 @@ export default function Page() {
   }
 
   return (
-    <div className="min-h-screen w-full">
+    <div id="top" className="min-h-screen w-full">
       {/* Editorial Top Navigation Bar */}
       <header className="sticky top-0 z-40 w-full backdrop-blur-xl bg-[#FAFAFA]/90 dark:bg-neutral-950/90 border-b border-neutral-200/80 dark:border-neutral-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
@@ -241,6 +242,9 @@ export default function Page() {
           <FeedbackSurvey dict={t.feedback} />
         </div>
       </div>
+
+      {/* Editorial Footer with Local Business & Monetization Callouts */}
+      <EditorialFooter dict={t.footer} nav={t.nav} lang={lang} />
     </div>
   )
 }

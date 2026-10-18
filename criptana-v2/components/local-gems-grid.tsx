@@ -41,11 +41,18 @@ export function LocalGemsGrid({ gems, dict, lang }: LocalGemsGridProps) {
 
   const categories = [
     { key: "all", label: dict.allCategories },
-    { key: "patrimonio", label: "Patrimonio", match: "Patrimonio Vivo" },
-    { key: "arquitectura", label: "Arquitectura", match: "Arquitectura & Vermut" },
-    { key: "gastronomia", label: "Gastronomía", match: "Gastronomía" },
-    { key: "vino", label: "Bodegas & Vino", match: "Bodegas & Vino" },
+    { key: "patrimonio", label: dict.catHeritage, match: "Patrimonio Vivo" },
+    { key: "arquitectura", label: dict.catArchitecture, match: "Arquitectura & Vermut" },
+    { key: "gastronomia", label: dict.catDining, match: "Gastronomía" },
+    { key: "vino", label: dict.catWine, match: "Bodegas & Vino" },
   ]
+
+  const categoryLabels: Record<string, string> = {
+    "Patrimonio Vivo": dict.catHeritage,
+    "Arquitectura & Vermut": dict.catArchitecture,
+    "Gastronomía": dict.catDining,
+    "Bodegas & Vino": dict.catWine,
+  }
 
   const visibleGems =
     activeCategory === "all"
@@ -138,7 +145,7 @@ export function LocalGemsGrid({ gems, dict, lang }: LocalGemsGridProps) {
               <div className="px-3">
                 <div className="flex items-center justify-between text-xs text-muted-foreground mb-1">
                   <span className="font-medium uppercase tracking-wider text-[10px] text-amber-700 dark:text-amber-400">
-                    {gem.category}
+                    {categoryLabels[gem.category] || gem.category}
                   </span>
                   <span>{gem.price}</span>
                 </div>

@@ -126,7 +126,7 @@ export function WeekendAgendaSection({ events, dict }: WeekendAgendaSectionProps
               <div className="rounded-xl bg-amber-500/10 border border-amber-500/20 p-2.5 space-y-1 text-xs">
                 <span className="font-bold text-amber-900 dark:text-amber-300 flex items-center gap-1">
                   <Sparkles className="size-3 shrink-0" />
-                  Tip local:
+                  {dict.tipLabel}
                 </span>
                 <p className="text-neutral-700 dark:text-neutral-300 text-[11px] leading-snug line-clamp-2">
                   {ev.insiderTip}
@@ -215,7 +215,7 @@ export function WeekendAgendaSection({ events, dict }: WeekendAgendaSectionProps
                 <div className="p-3 rounded-xl bg-neutral-100/70 dark:bg-neutral-900 flex items-start gap-2.5 border border-neutral-200/50 dark:border-neutral-800">
                   <Clock className="size-4 text-amber-600 shrink-0 mt-0.5" />
                   <div>
-                    <span className="font-bold text-foreground block">Horario</span>
+                    <span className="font-bold text-foreground block">{dict.timeLabel}</span>
                     <span className="text-neutral-600 dark:text-neutral-400">
                       {selectedEvent.time}
                     </span>
@@ -225,7 +225,7 @@ export function WeekendAgendaSection({ events, dict }: WeekendAgendaSectionProps
                 <div className="p-3 rounded-xl bg-neutral-100/70 dark:bg-neutral-900 flex items-start gap-2.5 border border-neutral-200/50 dark:border-neutral-800">
                   <MapPin className="size-4 text-amber-600 shrink-0 mt-0.5" />
                   <div>
-                    <span className="font-bold text-foreground block">Ubicación</span>
+                    <span className="font-bold text-foreground block">{dict.locationLabel}</span>
                     <span className="text-neutral-600 dark:text-neutral-400 truncate block max-w-[180px]">
                       {selectedEvent.location}
                     </span>
@@ -251,7 +251,7 @@ export function WeekendAgendaSection({ events, dict }: WeekendAgendaSectionProps
               <div className="rounded-2xl bg-amber-500/10 border border-amber-500/25 p-3.5 space-y-1 text-xs">
                 <span className="font-black text-amber-900 dark:text-amber-300 flex items-center gap-1.5 text-xs">
                   <Sparkles className="size-3.5 text-amber-600" />
-                  Consejo de Local:
+                  {dict.tipLabel}
                 </span>
                 <p className="text-neutral-800 dark:text-neutral-200 leading-relaxed text-xs">
                   {selectedEvent.insiderTip}
@@ -302,7 +302,7 @@ export function WeekendAgendaSection({ events, dict }: WeekendAgendaSectionProps
                   className="flex-1 inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-xs font-black bg-amber-400 hover:bg-amber-500 text-neutral-950 transition-colors shadow-sm cursor-pointer"
                 >
                   <Compass className="size-4" />
-                  <span>{selectedEvent.actionLabel || "Abrir en Google Maps"}</span>
+                  <span>{selectedEvent.actionLabel || dict.openMapsLabel}</span>
                 </a>
               )}
               <Button

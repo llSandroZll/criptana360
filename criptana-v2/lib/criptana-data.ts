@@ -102,6 +102,10 @@ export interface EditorialDictionary {
     admissionLabel: string
     pairingLabel: string
     closeLabel: string
+    timeLabel: string
+    locationLabel: string
+    tipLabel: string
+    openMapsLabel: string
   }
   gemsSection: {
     badge: string
@@ -112,6 +116,10 @@ export interface EditorialDictionary {
     readSecret: string
     planRedondo: string
     pairingTitle: string
+    catHeritage: string
+    catArchitecture: string
+    catDining: string
+    catWine: string
   }
   itinerarySection: {
     timelineTitle: string
@@ -128,6 +136,14 @@ export interface EditorialDictionary {
     yesBtn: string
     noBtn: string
     thankYou: string
+  }
+  footer: {
+    tagline: string
+    madeWith: string
+    partnerTitle: string
+    partnerCta: string
+    bookingCta: string
+    rights: string
   }
 }
 
@@ -167,6 +183,10 @@ export const DICTIONARY: Record<Language, EditorialDictionary> = {
       admissionLabel: "Entradas y Acceso",
       pairingLabel: "Plan recomendado antes o después",
       closeLabel: "Cerrar",
+      timeLabel: "Horario",
+      locationLabel: "Ubicación",
+      tipLabel: "Consejo de Local:",
+      openMapsLabel: "Abrir en Google Maps",
     },
     gemsSection: {
       badge: "Imprescindibles del Pueblo",
@@ -178,6 +198,10 @@ export const DICTIONARY: Record<Language, EditorialDictionary> = {
       readSecret: "Ver detalles",
       planRedondo: "El Plan Redondo:",
       pairingTitle: "Cómo completar la visita",
+      catHeritage: "Patrimonio",
+      catArchitecture: "Arquitectura",
+      catDining: "Gastronomía",
+      catWine: "Bodegas & Vino",
     },
     itinerarySection: {
       timelineTitle: "Hoja de Ruta Paso a Paso",
@@ -196,6 +220,14 @@ export const DICTIONARY: Record<Language, EditorialDictionary> = {
       noBtn: "Me ha faltado algo",
       thankYou:
         "¡Gracias! Tu opinión nos ayuda a seguir mejorando la guía cada semana.",
+    },
+    footer: {
+      tagline: "La guía editorial y de fin de semana independiente de Campo de Criptana.",
+      madeWith: "Hecho con criterio local en Campo de Criptana · Tierra de Gigantes.",
+      partnerTitle: "¿Tienes una bodega, alojamiento o restaurante en Criptana?",
+      partnerCta: "Contactar para colaboraciones",
+      bookingCta: "Buscar Alojamientos en Booking.com",
+      rights: "© 2026 Criptana360. Todos los derechos reservados.",
     },
   },
   en: {
@@ -233,6 +265,10 @@ export const DICTIONARY: Record<Language, EditorialDictionary> = {
       admissionLabel: "Admission & Tickets",
       pairingLabel: "Recommended Pre/Post Plan",
       closeLabel: "Close",
+      timeLabel: "Hours & Schedule",
+      locationLabel: "Location",
+      tipLabel: "Local Tip:",
+      openMapsLabel: "Open in Google Maps",
     },
     gemsSection: {
       badge: "Town Essentials",
@@ -244,6 +280,10 @@ export const DICTIONARY: Record<Language, EditorialDictionary> = {
       readSecret: "View details",
       planRedondo: "The Perfect Pairing:",
       pairingTitle: "How to pair this stop",
+      catHeritage: "Heritage",
+      catArchitecture: "Architecture",
+      catDining: "Dining & Tapas",
+      catWine: "Wineries & Wine",
     },
     itinerarySection: {
       timelineTitle: "Step-by-Step Itinerary",
@@ -262,6 +302,14 @@ export const DICTIONARY: Record<Language, EditorialDictionary> = {
       noBtn: "Missing something",
       thankYou:
         "Thank you! Your feedback helps us improve the guide every week.",
+    },
+    footer: {
+      tagline: "The independent editorial and weekend discovery guide to Campo de Criptana.",
+      madeWith: "Crafted with local pride and editorial care in Campo de Criptana · Land of Giants.",
+      partnerTitle: "Own a winery, boutique stay, or restaurant in Criptana?",
+      partnerCta: "Get in touch to partner with us",
+      bookingCta: "Find Stays on Booking.com",
+      rights: "© 2026 Criptana360. All rights reserved.",
     },
   },
 }
