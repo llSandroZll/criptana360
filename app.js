@@ -791,7 +791,7 @@
 
     document.querySelectorAll('[data-key]').forEach(function (el) {
       const key = el.getAttribute('data-key');
-      if (dict[key]) {
+      if (dict[key] && el.innerHTML !== dict[key]) {
         el.innerHTML = dict[key];
       }
     });

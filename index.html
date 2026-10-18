@@ -71,7 +71,7 @@
   <title>Criptana 360 | La Guía Independiente Definitiva & Directorio Local · Campo de Criptana</title>
   <meta name="description" content="La guía independiente definitiva de Campo de Criptana. Encuentra las mejores bodegas, gastronomía tradicional y monumentos con horarios, direcciones y contacto.">
   <meta name="theme-color" content="#FAF8F5">
-  <link rel="icon" type="image/png" href="images/favicon.png">
+  <link rel="icon" type="image/png" href="images/favicon-64.png">
   
   <!-- Affiliate Network Verification (MyLead) -->
   <meta name="mylead-verification" content="997e18cb0da2f78c5b9ca45e8da59596">
@@ -85,6 +85,9 @@
 
   <!-- Open Graph / Facebook Social Metadata -->
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Criptana 360">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:locale:alternate" content="en_US">
   <meta property="og:url" content="https://www.criptana360.com/">
   <meta property="og:title" content="Criptana360 | La Guía Digital Inteligente & Directorio Local">
   <meta property="og:description" content="Descubre la esencia de Campo de Criptana. Horarios, ubicaciones verificadas en Google Maps y contacto directo de las mejores bodegas, restaurantes y monumentos.">
@@ -239,8 +242,12 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Manrope:wght@200..800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0&icon_names=auto_awesome&display=swap" media="print" onload="this.media='all'" />
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0&icon_names=auto_awesome&display=swap" />
+  </noscript>
   <link rel="stylesheet" href="style.css?v=19.0">
   <link rel="stylesheet" href="heritage-lux.css">
   <script src="assets/js/data.js?v=19.0" defer></script>
@@ -293,10 +300,10 @@
       <div class="starry-sky" id="starry-sky"></div>
       
       <div class="hero-inner">
-        <p class="hero-overline hl-label-sm fade-in" style="color: var(--hl-sunset-gold); font-size: 0.85rem;" data-key="hero.overline">Descubre Campo de Criptana • Tu Guía y Directorio Local</p>
-        <h1 class="hero-title hl-display-lg fade-in" data-key="hero.title">No son gigantes, sino molinos de viento.<br><span class="hero-attribution">— Don Quijote</span></h1>
-        <p class="hero-subtitle hl-body-lg fade-in" data-key="hero.subtitle">Descubre la esencia de Campo de Criptana. Una guía independiente completa y actualizada con los horarios de apertura, localizaciones exactas en Google Maps y contactos directos de las mejores bodegas, restaurantes y monumentos históricos.</p>
-        <div class="hero-cta-row fade-in" style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; align-items: center;">
+        <p class="hero-overline hl-label-sm fade-in visible" style="color: var(--hl-sunset-gold); font-size: 0.85rem;" data-key="hero.overline">Descubre Campo de Criptana • Tu Guía y Directorio Local</p>
+        <h1 class="hero-title hl-display-lg fade-in visible" data-key="hero.title">No son gigantes, sino molinos de viento.<br><span class="hero-attribution">— Don Quijote</span></h1>
+        <p class="hero-subtitle hl-body-lg fade-in visible" data-key="hero.subtitle">Descubre la esencia de Campo de Criptana. Una guía independiente completa y actualizada con los horarios de apertura, localizaciones exactas en Google Maps y contactos directos de las mejores bodegas, restaurantes y monumentos históricos.</p>
+        <div class="hero-cta-row fade-in visible" style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; align-items: center;">
           <a href="#guia" class="hl-btn hl-btn-secondary" style="padding: 0.875rem 1.75rem;" data-key="hero.cta1">Ver Directorio</a>
           <a href="#articulos" class="hl-btn hl-btn-secondary" style="padding: 0.875rem 1.75rem;" data-key="hero.cta2">Leer Reportajes</a>
           <a href="ruta-ia.html" class="hl-btn hl-btn-primary" style="padding: 0.875rem 1.75rem; background-color: var(--hl-albaicin-blue);">
@@ -305,7 +312,7 @@
           </a>
         </div>
       </div>
-      <div class="hero-scroll-hint fade-in">
+      <div class="hero-scroll-hint fade-in visible">
         <span data-key="hero.scroll">Descubrir</span>
         <div class="scroll-line"></div>
       </div>
@@ -314,7 +321,7 @@
     <!-- ═══════════════════════════════════════════════════════════════
          LIVE UTILITY BAR (Weather & Sun Timings)
          ═══════════════════════════════════════════════════════════════ -->
-    <section class="live-utility-bar hl-glass fade-in">
+    <section class="live-utility-bar hl-glass fade-in visible">
       <div class="utility-inner">
         <div class="utility-item weather-widget">
           <span class="utility-icon">☀️</span>
@@ -324,6 +331,10 @@
         <div class="utility-item sunset-widget">
           <span class="utility-icon">🌅</span>
           <span class="utility-text" id="sunset-timer" data-key="widget.sunset">Calculando amanecer y atardecer...</span>
+        </div>
+        <div class="utility-divider"></div>
+        <div class="utility-item agenda-widget">
+          <a href="agenda.html" class="hl-btn hl-btn-primary" style="padding: 0.45rem 1.1rem; font-size: 0.75rem;">📅 Agenda del Fin de Semana &rarr;</a>
         </div>
       </div>
     </section>
@@ -337,6 +348,13 @@
         <p class="story-overline text-center fade-in" data-key="directory.overline">Joyas Locales</p>
         <h2 class="story-title text-center fade-in" data-key="directory.title">Nuestros Favoritos</h2>
 
+        <!-- Prominent Weekend Agenda Hub Callout -->
+        <div class="text-center fade-in" style="margin-bottom: 2.5rem;">
+          <a href="agenda.html" class="hl-btn hl-btn-primary" style="padding: 0.85rem 1.85rem; font-size: 0.82rem; box-shadow: 0 6px 20px rgba(11, 79, 200, 0.15);">
+            📅 Planes para este Fin de Semana en Criptana &rarr;
+          </a>
+        </div>
+
         <!-- Curated Directory Grid -->
         <div class="directory-explorer-grid fade-in">
           
@@ -346,7 +364,7 @@
             <!-- 1. La Pulpe (La Pulpería) - Modern local favorite -->
             <div class="explorer-card active-category" data-category="restaurante" data-spot="spot7">
               <div class="card-visual">
-                <img src="images/real_lapulpe.jpg" alt="La Pulpe (La Pulpería)" class="card-img" loading="lazy">
+                <img src="images/real_lapulpe.webp" alt="La Pulpe (La Pulpería) en Campo de Criptana" width="680" height="680" decoding="async" class="card-img" loading="lazy">
                 <span class="card-category-badge badge-restaurante" data-key="tag.restaurante">Favorito Local</span>
               </div>
               <div class="card-info">
@@ -367,7 +385,7 @@
             <!-- 2. Mirasol - Local favorite -->
             <div class="explorer-card active-category" data-category="restaurante" data-spot="spot_mirasol">
               <div class="card-visual">
-                <img src="images/centro_historico.png" alt="Mirasol" class="card-img" loading="lazy">
+                <img src="images/centro_historico.webp" alt="Restaurante Mirasol en Campo de Criptana" width="680" height="680" decoding="async" class="card-img" loading="lazy">
                 <span class="card-category-badge badge-restaurante" data-key="tag.restaurante">Favorito Local</span>
               </div>
               <div class="card-info">
@@ -388,7 +406,7 @@
             <!-- 3. Padel Galán - Local secret burgers -->
             <div class="explorer-card active-category" data-category="restaurante" data-spot="spot_padel_galan">
               <div class="card-visual">
-                <img src="images/parque_luis_cobos.png" alt="Padel Galán" class="card-img" loading="lazy">
+                <img src="images/parque_luis_cobos.webp" alt="Padel Galán Burgers & Terraza en Campo de Criptana" width="680" height="680" decoding="async" class="card-img" loading="lazy">
                 <span class="card-category-badge badge-restaurante" data-key="tag.restaurante">Favorito Local</span>
               </div>
               <div class="card-info">
@@ -409,7 +427,7 @@
             <!-- 4. Restaurante Las Musas - Historic tourist staple -->
             <div class="explorer-card active-category" data-category="restaurante" data-spot="spot3">
               <div class="card-visual">
-                <img src="images/real_las_musas.jpg" alt="Restaurante Las Musas" class="card-img" loading="lazy">
+                <img src="images/real_las_musas.webp" alt="Restaurante Las Musas junto a los Molinos de Criptana" width="680" height="453" decoding="async" class="card-img" loading="lazy">
                 <span class="card-category-badge badge-restaurante" data-key="tag.restaurante">Favorito Local</span>
               </div>
               <div class="card-info">
@@ -430,7 +448,7 @@
             <!-- 5. Restaurante Cueva La Martina - Historic tourist staple -->
             <div class="explorer-card active-category" data-category="restaurante" data-spot="spot4">
               <div class="card-visual">
-                <img src="images/real_cueva_martina.jpg" alt="Restaurante Cueva La Martina" class="card-img" loading="lazy">
+                <img src="images/real_cueva_martina.webp" alt="Restaurante Cueva La Martina en Campo de Criptana" width="680" height="452" decoding="async" class="card-img" loading="lazy">
                 <span class="card-category-badge badge-restaurante" data-key="tag.restaurante">Favorito Local</span>
               </div>
               <div class="card-info">
@@ -451,7 +469,7 @@
             <!-- 6. Sierra de los Molinos - Main Historical Monument -->
             <div class="explorer-card active-category" data-category="monumento" data-spot="spot1" data-zone="molinos">
               <div class="card-visual">
-                <img src="images/attraction_windmills.png" alt="Sierra de los Molinos" class="card-img" loading="lazy">
+                <img src="images/attraction_windmills.webp" alt="Sierra de los Molinos de Viento de Campo de Criptana" width="680" height="680" decoding="async" class="card-img" loading="lazy">
                 <span class="card-category-badge badge-monumento" data-key="tag.monumento">Monumento</span>
               </div>
               <div class="card-info">
@@ -472,7 +490,7 @@
             <!-- 7. Barrio del Albaicín - Main Historical Monument -->
             <div class="explorer-card active-category" data-category="monumento" data-spot="spot_albaicin" data-zone="albaicin">
               <div class="card-visual">
-                <img src="images/real_barrio_albaicin.jpg" alt="Barrio del Albaicín" class="card-img" loading="lazy">
+                <img src="images/real_barrio_albaicin.webp" alt="Barrio del Albaicín en Campo de Criptana" width="680" height="510" decoding="async" class="card-img" loading="lazy">
                 <span class="card-category-badge badge-monumento" data-key="tag.monumento">Monumento</span>
               </div>
               <div class="card-info">
@@ -493,7 +511,7 @@
             <!-- 8. Pósito Real - Main Historical Monument -->
             <div class="explorer-card active-category" data-category="monumento" data-spot="spot_posito" data-zone="centro">
               <div class="card-visual">
-                <img src="images/real_posito_real.jpg" alt="Pósito Real" class="card-img" loading="lazy">
+                <img src="images/real_posito_real.webp" alt="Pósito Real de Campo de Criptana" width="425" height="283" decoding="async" class="card-img" loading="lazy">
                 <span class="card-category-badge badge-monumento" data-key="tag.monumento">Monumento</span>
               </div>
               <div class="card-info">
@@ -514,7 +532,7 @@
             <!-- 9. Museo Sara Montiel - Main Historical Monument -->
             <div class="explorer-card active-category" data-category="monumento" data-spot="spot_sara_montiel" data-zone="molinos">
               <div class="card-visual">
-                <img src="images/real_sara_montiel.png" alt="Museo Sara Montiel" class="card-img" loading="lazy">
+                <img src="images/real_sara_montiel.webp" alt="Museo Sara Montiel en el Molino Culebro" width="680" height="680" decoding="async" class="card-img" loading="lazy">
                 <span class="card-category-badge badge-monumento" data-key="tag.monumento">Monumento</span>
               </div>
               <div class="card-info">
@@ -535,7 +553,7 @@
             <!-- 10. Centro de Interpretación - Main Historical Monument -->
             <div class="explorer-card active-category" data-category="monumento" data-spot="spot_ci_molinos" data-zone="molinos">
               <div class="card-visual">
-                <img src="images/real_ci_molinos.png" alt="Centro de Interpretación" class="card-img" loading="lazy">
+                <img src="images/real_ci_molinos.webp" alt="Centro de Interpretación de los Molinos de Criptana" width="680" height="680" decoding="async" class="card-img" loading="lazy">
                 <span class="card-category-badge badge-monumento" data-key="tag.monumento">Monumento</span>
               </div>
               <div class="card-info">
@@ -556,7 +574,7 @@
             <!-- 11. Iglesia Parroquial - Main Historical Monument -->
             <div class="explorer-card active-category" data-category="monumento" data-spot="spot_iglesia_parroquial" data-zone="centro">
               <div class="card-visual">
-                <img src="images/real_iglesia_asuncion.jpg" alt="Iglesia Parroquial" class="card-img" loading="lazy">
+                <img src="images/real_iglesia_asuncion.webp" alt="Iglesia Parroquial de Nuestra Señora de la Asunción" width="680" height="907" decoding="async" class="card-img" loading="lazy">
                 <span class="card-category-badge badge-monumento" data-key="tag.monumento">Monumento</span>
               </div>
               <div class="card-info">
@@ -577,7 +595,7 @@
             <!-- 12. Casa-Cueva de la Pastora Marcela - Main Historical Monument -->
             <div class="explorer-card active-category" data-category="monumento" data-spot="spot2" data-zone="molinos">
               <div class="card-visual">
-                <img src="images/attraction_cave.png" alt="Casa-Cueva de la Pastora Marcela" class="card-img" loading="lazy">
+                <img src="images/attraction_cave.webp" alt="Casa-Cueva de la Pastora Marcela en Campo de Criptana" width="680" height="680" decoding="async" class="card-img" loading="lazy">
                 <span class="card-category-badge badge-monumento" data-key="tag.monumento">Monumento</span>
               </div>
               <div class="card-info">
@@ -601,14 +619,14 @@
           <div class="ads-banner-column">
             <div class="premium-ad-card">
               <span class="ad-label" data-key="ad.label">ANUNCIO / SPONSORED</span>
-              <h4 class="ad-title" data-key="ad.title">Anuncia Tu Establecimiento</h4>
+              <h3 class="ad-title" data-key="ad.title">Anuncia Tu Establecimiento</h3>
               <p class="ad-desc" data-key="ad.desc">Aparece en las primeras posiciones de nuestra guía independiente y atrae clientes locales y turistas de forma natural a tu negocio.</p>
               <a href="anunciate.html" class="ad-cta-btn" data-key="ad.cta">Ver Planes de Patrocinio &rarr;</a>
             </div>
 
             <div class="premium-ad-card weekend-bento-card">
               <span class="ad-label" data-key="bento.label">RUTA POR ZONAS</span>
-              <h4 class="ad-title" data-key="bento.title">Recorrido Recomendado en 2 Zonas</h4>
+              <h3 class="ad-title" data-key="bento.title">Recorrido Recomendado en 2 Zonas</h3>
               <p class="ad-desc" data-key="bento.desc">Organiza tu visita a pie según la geografía física del municipio, de la meseta alta al centro histórico.</p>
               <div class="bento-actions-grid">
                 <a href="ruta-completa-molinos-campo-de-criptana.html" class="bento-action-item cta-tour">
@@ -686,9 +704,9 @@
             <!-- Premium Glassmorphism AI Planner Invitation Card -->
             <div class="ai-planner-panel" style="margin-bottom: 2.5rem; padding: 2.5rem 2rem; background: linear-gradient(135deg, rgba(11, 79, 200, 0.05), rgba(11, 79, 200, 0.01)); border: 1px solid rgba(11, 79, 200, 0.15); border-radius: 20px; box-shadow: 0 10px 40px rgba(11, 79, 200, 0.03); text-align: center; position: relative; overflow: hidden; backdrop-filter: blur(10px); transition: all 0.4s ease;">
               <div style="position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; background: radial-gradient(circle, rgba(11, 79, 200, 0.08) 0%, transparent 70%); pointer-events: none;"></div>
-              <h4 style="font-family: var(--font-display); font-size: 1.35rem; font-weight: 800; color: var(--anil-blue); margin-top: 0; margin-bottom: 0.75rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+              <h3 style="font-family: var(--font-display); font-size: 1.35rem; font-weight: 800; color: var(--anil-blue); margin-top: 0; margin-bottom: 0.75rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
                 ✨ <span data-key="ai.panel.title">Planificador de Ruta Inteligente IA</span>
-              </h4>
+              </h3>
               <p style="font-size: 0.88rem; color: var(--text-muted); max-width: 540px; margin: 0 auto 1.75rem; line-height: 1.6;" data-key="ai.panel.subtitle">
                 Diseña una escapada personalizada en segundos. Selecciona quién te acompaña y tu presupuesto en nuestro asistente móvil.
               </p>
@@ -724,14 +742,14 @@
             <!-- Premium Souvenir Takeaway (Hidden on live mobile screens, active on Print/Email) -->
             <div id="premium-takeaway-container" style="display: none; font-family: 'Arial', sans-serif; max-width: 1200px; margin: 0 auto; padding: 20px; background: #fcf8f2;">
               <div style="text-align: center; margin-bottom: 25px;">
-                <h1 style="color: #3e2723; margin: 0; font-size: 28px; letter-spacing: 2px;">CAMPO DE CRIPTANA</h1>
+                <h2 style="color: #3e2723; margin: 0; font-size: 28px; letter-spacing: 2px;">CAMPO DE CRIPTANA</h2>
                 <p style="color: #d4af37; margin: 5px 0 0 0; font-weight: bold; font-size: 13px; letter-spacing: 1px;">GUÍA ILUSTRADA DE LA SERRA MÁGICA</p>
               </div>
 
               <div style="display: grid; grid-template-columns: 1fr 350px; gap: 20px; align-items: start;">
                 <!-- Left Panel: Hand-Painted Image Workspace -->
                 <div style="position: relative; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.15);">
-                  <img src="images/criptana_watercolor_clean.png?v=19.0" alt="Mapa Pictórico" style="width: 100%; display: block;" />
+                  <img src="images/criptana_watercolor_clean.webp" alt="Mapa Pictórico de Campo de Criptana" width="1000" height="1000" loading="lazy" decoding="async" style="width: 100%; height: auto; display: block;" />
                   <svg viewBox="0 0 100 100" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;">
                     <path id="souvenir-route-line" d="" fill="none" stroke="#d4af37" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1.5,1" />
                   </svg>
@@ -770,7 +788,7 @@
 
             <!-- Restart Wizard Link -->
             <div class="restart-wizard-wrapper" style="text-align: center; margin-top: 2rem;">
-              <a onclick="restartWizard()" class="restart-wizard-link" data-key="wizard.restart">🔄 Reiniciar Asistente de Viaje</a>
+              <a href="#planificador" onclick="restartWizard(); return false;" class="restart-wizard-link" data-key="wizard.restart">🔄 Reiniciar Asistente de Viaje</a>
             </div>
 
           </div>
@@ -837,7 +855,7 @@
           <!-- Article 1: Windmills -->
           <a class="guide-article-card fade-in" href="blog/giants-windmills.html" style="text-decoration: none; color: inherit;">
             <div class="article-visual">
-              <img src="images/attraction_windmills.png" alt="Molinos del Quijote" loading="lazy">
+              <img src="images/attraction_windmills.webp" alt="Molinos de Viento del Quijote en Campo de Criptana" width="680" height="680" decoding="async" loading="lazy">
             </div>
             <div class="article-body">
               <span class="article-meta"><span data-key="art.history">HISTORIA</span> · <span data-key="art.readtime5">5 MIN LECTURA</span></span>
@@ -849,7 +867,7 @@
           <!-- Article 2: Albaicín -->
           <a class="guide-article-card fade-in" href="blog/albaicin-manchego.html" style="text-decoration: none; color: inherit;">
             <div class="article-visual">
-              <img src="images/attraction_cave.png" alt="Barrio de Albaicín" loading="lazy">
+              <img src="images/attraction_cave.webp" alt="Calles encaladas y azul añil del Barrio del Albaicín" width="680" height="680" decoding="async" loading="lazy">
             </div>
             <div class="article-body">
               <span class="article-meta"><span data-key="art.tourism">TURISMO</span> · <span data-key="art.readtime4">4 MIN LECTURA</span></span>
@@ -861,7 +879,7 @@
           <!-- Article 3: Subterranean Caves -->
           <a class="guide-article-card fade-in" href="blog/wine-caves.html" style="text-decoration: none; color: inherit;">
             <div class="article-visual">
-              <img src="images/winery_castiblanque.jpg" alt="Enoturismo en La Mancha" loading="lazy">
+              <img src="images/winery_castiblanque.webp" alt="Enoturismo y Bodegas Subterráneas en Campo de Criptana" width="680" height="289" decoding="async" loading="lazy">
             </div>
             <div class="article-body">
               <span class="article-meta"><span data-key="art.winery">ENOTURISMO</span> · <span data-key="art.readtime6">6 MIN LECTURA</span></span>
@@ -887,7 +905,7 @@
               <div class="ad-slot-content-wrapper">
                 <div>
                   <div class="ad-slot-brand-mark">RECOMENDACIÓN CRIPTANA 360</div>
-                  <h4 class="ad-slot-headline" data-key="ad.native.headline">Compra los Mejores Vinos D.O. La Mancha Online</h4>
+                  <h3 class="ad-slot-headline" data-key="ad.native.headline">Compra los Mejores Vinos D.O. La Mancha Online</h3>
                   <p class="ad-slot-body" data-key="ad.native.body">¿Quieres degustar el auténtico sabor de Campo de Criptana en tu propia casa? Disfruta de la mayor selección de vinos de La Mancha, tintos crianza y blancos premium con descuentos exclusivos en Bodeboca.</p>
                 </div>
                 <a href="https://low-prices.eu/a/KrqGmc2m19spkV2" target="_blank" rel="noopener noreferrer" class="ad-slot-button" data-key="ad.native.button">Comprar Vinos en Bodeboca &rarr;</a>

@@ -1,0 +1,8 @@
+# Credentials & Secrets (Never commit to Git)
+ga4-credentials.json
+google cloud credentials/
+*credentials*.json
+*service-account*.json
+.env
+.env.*
+test_ga4_connection.py
