@@ -193,7 +193,7 @@ export const DICTIONARY: Record<Language, EditorialDictionary> = {
       subtitle:
         "Actualizamos nuestras rutas cada semana según vuestra experiencia en el pueblo.",
       yesBtn: "Sí, muy útil",
-      noBtn: "Echo en falta algo",
+      noBtn: "Me ha faltado algo",
       thankYou:
         "¡Gracias! Tu opinión nos ayuda a seguir mejorando la guía cada semana.",
     },

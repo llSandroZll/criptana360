@@ -56,24 +56,24 @@ export function FeedbackSurvey({ dict }: FeedbackSurveyProps) {
         </div>
 
         {feedback === null ? (
-          <div className="flex items-center gap-3 shrink-0">
+          <div className="flex w-full md:w-auto flex-col sm:flex-row items-stretch gap-3 shrink-0">
             <Button
               variant="default"
               onClick={() => handleVote("yes")}
               data-ph-capture-attribute-survey="itinerary-helpful-yes"
-              className="gap-2 cursor-pointer"
+              className="flex h-auto min-h-11 w-full sm:w-auto items-center justify-center gap-2 whitespace-normal rounded-xl px-5 py-3 text-center text-sm font-semibold leading-snug cursor-pointer"
             >
-              <ThumbsUp className="size-4 text-amber-400" />
-              {dict.yesBtn}
+              <ThumbsUp className="size-4 shrink-0 text-amber-400" />
+              <span>{dict.yesBtn}</span>
             </Button>
             <Button
               variant="secondary"
               onClick={() => handleVote("no")}
               data-ph-capture-attribute-survey="itinerary-helpful-no"
-              className="gap-2 cursor-pointer"
+              className="flex h-auto min-h-11 w-full sm:w-auto items-center justify-center gap-2 whitespace-normal rounded-xl px-5 py-3 text-center text-sm font-semibold leading-snug cursor-pointer"
             >
-              <ThumbsDown className="size-4" />
-              {dict.noBtn}
+              <ThumbsDown className="size-4 shrink-0" />
+              <span>{dict.noBtn}</span>
             </Button>
           </div>
         ) : (
