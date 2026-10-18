@@ -53,6 +53,8 @@ export interface AgendaEvent {
   time: string
   location: string
   insiderTip: string
+  actionLabel?: string
+  actionUrl?: string
 }
 
 export interface EditorialDictionary {
@@ -244,23 +246,41 @@ export const WEEKEND_AGENDA: Record<Language, AgendaEvent[]> = {
       badge: "Imprescindible",
       icon: "🎭",
       description:
-        "Representación teatral y música en vivo en el emblemático Teatro Cervantes. El punto de encuentro de las noches de sábado.",
+        "Representación teatral y música en vivo en el emblemático Teatro Cervantes. El punto de encuentro cultural de las noches de sábado.",
       time: "Sábado · 20:00h",
       location: "Teatro Cervantes (Plaza Mayor)",
       insiderTip:
         "Llega 20 minutos antes para tomar un vino rápido en las terrazas de la Plaza Mayor antes de entrar.",
+      actionLabel: "Cómo llegar (Mapa)",
+      actionUrl: "https://maps.google.com/?q=Teatro+Cervantes+Campo+de+Criptana",
     },
     {
-      category: "Deporte Local",
-      title: "Baloncesto Comarcal en Casa",
-      badge: "Ambiente Local",
+      category: "Baloncesto Local",
+      title: "Baloncesto Criptana en Casa",
+      badge: "Ambiente de Grada",
       icon: "🏀",
       description:
-        "Partido oficial de liga en el Pabellón Municipal. Gran ambiente de grada con familias y aficionados locales.",
+        "Partido oficial de liga en el Pabellón Municipal. Gran ambiente de grada con familias y aficionados locales animando.",
       time: "Sábado · 18:30h",
       location: "Pabellón Municipal de Deportes",
       insiderTip:
-        "Al salir, cruza hacia Padel Galán para probar sus aclamadas smash burgers informales.",
+        "Al salir, cruza hacia Pádel Galán para probar sus aclamadas smash burgers informales.",
+      actionLabel: "Ver Ubicación (Mapa)",
+      actionUrl: "https://maps.google.com/?q=Pabellon+Municipal+Campo+de+Criptana",
+    },
+    {
+      category: "Fútbol Comarcal",
+      title: "C.D. Criptanense: Domingo en el Agustín de la Fuente",
+      badge: "Pasión Manchega",
+      icon: "⚽",
+      description:
+        "El histórico C.D. Criptanense Tierra de Gigantes defiende el feudo local en su tradicional horario dominical.",
+      time: "Domingo · 17:00h",
+      location: "Campo Municipal Agustín de la Fuente",
+      insiderTip:
+        "El plan clásico de domingo: café y copa en los bares de alrededor antes del pitido inicial.",
+      actionLabel: "Ubicación del Estadio",
+      actionUrl: "https://maps.google.com/?q=Campo+de+Futbol+Agustin+de+la+Fuente+Campo+de+Criptana",
     },
     {
       category: "Patrimonio & Ocaso",
@@ -273,6 +293,8 @@ export const WEEKEND_AGENDA: Record<Language, AgendaEvent[]> = {
       location: "Sierra de los Molinos (Murete del Infanto)",
       insiderTip:
         "Si hace viento, lleva una chaqueta ligera; la brisa de la llanura siempre refresca en lo alto del cerro.",
+      actionLabel: "Ver en Joyas Locales",
+      actionUrl: "#joyas-locales",
     },
   ],
   en: [
@@ -287,10 +309,12 @@ export const WEEKEND_AGENDA: Record<Language, AgendaEvent[]> = {
       location: "Teatro Cervantes (Plaza Mayor)",
       insiderTip:
         "Arrive 20 minutes early for a quick glass of local wine at the open-air Plaza Mayor cafes.",
+      actionLabel: "Directions (Map)",
+      actionUrl: "https://maps.google.com/?q=Teatro+Cervantes+Campo+de+Criptana",
     },
     {
-      category: "Local Sports",
-      title: "Home League Basketball Match",
+      category: "Local Basketball",
+      title: "Baloncesto Criptana Home Game",
       badge: "Local Spirit",
       icon: "🏀",
       description:
@@ -299,6 +323,22 @@ export const WEEKEND_AGENDA: Record<Language, AgendaEvent[]> = {
       location: "Municipal Sports Complex",
       insiderTip:
         "Head straight to Pádel Galán after the final buzzer for surprisingly great smash burgers.",
+      actionLabel: "View Map Pin",
+      actionUrl: "https://maps.google.com/?q=Pabellon+Municipal+Campo+de+Criptana",
+    },
+    {
+      category: "Regional Football",
+      title: "C.D. Criptanense: Sunday Matchday",
+      badge: "Matchday Passion",
+      icon: "⚽",
+      description:
+        "The historic C.D. Criptanense Tierra de Gigantes takes the pitch at their traditional Sunday afternoon kickoff.",
+      time: "Sunday · 5:00 PM",
+      location: "Agustín de la Fuente Municipal Stadium",
+      insiderTip:
+        "The local Sunday tradition: coffee and aperitivo at nearby bars before heading to the stands.",
+      actionLabel: "Stadium Location (Map)",
+      actionUrl: "https://maps.google.com/?q=Campo+de+Futbol+Agustin+de+la+Fuente+Campo+de+Criptana",
     },
     {
       category: "Heritage & Sunset",
@@ -311,6 +351,8 @@ export const WEEKEND_AGENDA: Record<Language, AgendaEvent[]> = {
       location: "Sierra de los Molinos (Stone Wall)",
       insiderTip:
         "Bring a light sweater—the plains wind always picks up speed as the sun dips below the horizon.",
+      actionLabel: "View in Local Gems",
+      actionUrl: "#joyas-locales",
     },
   ],
 }

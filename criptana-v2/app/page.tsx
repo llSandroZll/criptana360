@@ -199,15 +199,15 @@ export default function Page() {
                 </p>
               </div>
 
-              {/* Itinerary Selector Tabs */}
-              <div className="flex flex-wrap gap-2">
+              {/* Itinerary Selector Tabs with Mobile Horizontal Scroll */}
+              <div className="flex items-center gap-2 overflow-x-auto pb-2 pt-1 -mx-4 px-4 sm:mx-0 sm:px-0 sm:overflow-visible no-scrollbar">
                 {itineraries.map((itin, idx) => {
                   const isSelected = selectedItineraryIndex === idx
                   return (
                     <button
                       key={itin.id}
                       onClick={() => setSelectedItineraryIndex(idx)}
-                      className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
+                      className={`whitespace-nowrap px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer border shrink-0 ${
                         isSelected
                           ? "bg-amber-400 text-neutral-950 border-amber-400 shadow-md scale-[1.02]"
                           : "bg-white hover:bg-neutral-100 text-neutral-700 dark:bg-neutral-900 dark:hover:bg-neutral-800 dark:text-neutral-300 border-neutral-200 dark:border-neutral-800"
