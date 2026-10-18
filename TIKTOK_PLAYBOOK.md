@@ -156,3 +156,22 @@ Any AI agent interacting with this repository must adhere to the following guard
 2. Format the response as a **30-second pacing table** (Time | Visual | Audio | Voiceover).
 3. Ensure every script maps to one of the **3 Core Pillars** and incorporates verified data from `assets/js/data.js`.
 4. Ensure every script concludes with an unambiguous **Monetization CTA** linking to Criptana360 guides, accommodations, or culinary reservations.
+
+---
+
+## The Open-Source Automation Stack
+
+To scale short-form video production and asset processing without manual timeline friction, Criptana360 utilizes a programmatic, open-source video infrastructure:
+
+### 1. Batch Video Generation (Remotion)
+- We will use **Remotion** to programmatically render standard format videos (like itinerary text over B-roll) using React and Tailwind CSS.
+- Standardizes automated visual cards, typography animations, and itinerary slides programmatically from data.
+
+### 2. Automated Trimming (Auto-Editor)
+- Any talking-head footage must be run through the `auto-editor` CLI tool to automatically remove silences and dead air before final assembly.
+- Enforces snappy pacing and zero dead air across raw spoken takes.
+
+### 3. Agent-Driven Asset Prep (FFmpeg & ImageMagick)
+- Antigravity is authorized to use **FFmpeg** and **ImageMagick** via the terminal to automatically resize images to WebP, crop videos to 9:16 vertical format, and stitch raw B-roll clips together based on prompt requests.
+- Enables autonomous batch processing of media, vertical re-framing (1080x1920), and assembly of modular B-roll sequences directly from the CLI.
+
