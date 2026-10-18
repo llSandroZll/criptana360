@@ -1,0 +1,5 @@
+file 'C:/Users/zeval/Documents/Criptana360/assets/social/output/clip_01_hook_mural.mp4'
+file 'C:/Users/zeval/Documents/Criptana360/assets/social/output/clip_02_quijote_marker.mp4'
+file 'C:/Users/zeval/Documents/Criptana360/assets/social/output/clip_03_fuente_cano.mp4'
+file 'C:/Users/zeval/Documents/Criptana360/assets/social/output/clip_04_sunset_picnic.mp4'
+file 'C:/Users/zeval/Documents/Criptana360/assets/social/output/clip_05_night_lights.mp4'
