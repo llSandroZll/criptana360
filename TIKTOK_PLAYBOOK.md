@@ -1,6 +1,7 @@
 # Criptana360 — TikTok & Short-Form Video Playbook (`TIKTOK_PLAYBOOK.md`)
 
 > **Status**: Active & Enforced  
+> **Official Account**: [@criptana360](https://www.tiktok.com/@criptana360) (`https://www.tiktok.com/@criptana360`)  
 > **Platform Focus**: TikTok, Instagram Reels, YouTube Shorts  
 > **Editorial Standard**: `STRATEGY.md` (Insider Local Voice, Zero Cognitive Load, Mandatory Monetization)  
 > **Data Ground Truth**: `assets/js/data.js`
