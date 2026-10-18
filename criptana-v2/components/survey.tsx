@@ -7,11 +7,11 @@ import { EditorialDictionary } from "@/lib/criptana-data"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 
-interface FormbricksMicroSurveyProps {
+interface FeedbackSurveyProps {
   dict: EditorialDictionary["feedback"]
 }
 
-export function FormbricksMicroSurvey({ dict }: FormbricksMicroSurveyProps) {
+export function FeedbackSurvey({ dict }: FeedbackSurveyProps) {
   const [feedback, setFeedback] = useState<"yes" | "no" | null>(null)
 
   const handleVote = (vote: "yes" | "no") => {

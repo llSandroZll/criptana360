@@ -13,9 +13,7 @@ export const fontSans = localFont({
   variable: "--font-sans",
 })
 
-const defaultUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : "http://localhost:3000"
+const defaultUrl = "https://www.criptana360.com"
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),

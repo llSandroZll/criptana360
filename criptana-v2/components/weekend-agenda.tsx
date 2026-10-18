@@ -258,7 +258,7 @@ export function WeekendAgendaSection({ events, dict }: WeekendAgendaSectionProps
                 </p>
               </div>
 
-              {/* Mandatory Monetization / Pairing Loop (Rule 3) */}
+              {/* Suggested pairing (dinner / drink before or after) */}
               {selectedEvent.pairing && (
                 <div className="rounded-2xl bg-gradient-to-br from-amber-500/15 via-orange-500/10 to-transparent border border-amber-500/30 p-4 space-y-2">
                   <div className="flex items-center gap-2">

@@ -26,7 +26,7 @@ import { Separator } from "@/components/ui/separator"
 import { GradientHeading } from "@/components/cult/gradient-heading"
 import { ItineraryCard } from "@/components/itinerary-card"
 import { LocalGemsGrid } from "@/components/local-gems-grid"
-import { FormbricksMicroSurvey } from "@/components/survey"
+import { FeedbackSurvey } from "@/components/survey"
 import { WeekendAgendaSection } from "@/components/weekend-agenda"
 import { ModeToggle } from "@/app/providers"
 
@@ -58,7 +58,7 @@ export default function Page() {
                 Criptana<span className="text-amber-600">360</span>
               </span>
               <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
-                Discovery &amp; Editorial
+                {lang === "es" ? "Guía local · La Mancha" : "Local guide · La Mancha"}
               </span>
             </div>
           </Link>
@@ -178,7 +178,7 @@ export default function Page() {
 
           <Separator className="my-4" />
 
-          {/* 3 Pre-Built Weekend Itineraries Selector (Rule 1 & Rule 3) */}
+          {/* 3 pre-built weekend itineraries selector */}
           <section id="itinerarios" className="pt-8 pb-4">
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-6 gap-4">
               <div>
@@ -237,8 +237,8 @@ export default function Page() {
           {/* Curated Local Gems Grid */}
           <LocalGemsGrid gems={gems} dict={t.gemsSection} lang={lang} />
 
-          {/* Targeted Traveler Micro-Survey */}
-          <FormbricksMicroSurvey dict={t.feedback} />
+          {/* Traveler feedback (sent to PostHog) */}
+          <FeedbackSurvey dict={t.feedback} />
         </div>
       </div>
     </div>

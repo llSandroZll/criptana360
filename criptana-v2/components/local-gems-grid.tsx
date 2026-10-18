@@ -35,7 +35,7 @@ interface LocalGemsGridProps {
   lang: Language
 }
 
-export function LocalGemsGrid({ gems, dict }: LocalGemsGridProps) {
+export function LocalGemsGrid({ gems, dict, lang }: LocalGemsGridProps) {
   const [selectedGem, setSelectedGem] = useState<LocalGem | null>(null)
   const [activeCategory, setActiveCategory] = useState<string>("all")
 
@@ -123,7 +123,7 @@ export function LocalGemsGrid({ gems, dict }: LocalGemsGridProps) {
                   {gem.featured && (
                     <Badge className="bg-amber-400 hover:bg-amber-400 text-black font-bold text-[11px] border-0">
                       <Flame className="size-3 mr-1 fill-black" />
-                      Insider Pick
+                      {lang === "es" ? "Favorito Local" : "Local Favorite"}
                     </Badge>
                   )}
                 </div>

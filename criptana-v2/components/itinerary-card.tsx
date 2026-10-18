@@ -67,7 +67,7 @@ export function ItineraryCard({ itinerary, dict }: ItineraryCardProps) {
                   variant="outline"
                   className="border-white/30 bg-black/40 text-white backdrop-blur-md text-xs"
                 >
-                  {dict.rule1Badge}
+                  {dict.routeBadge}
                 </Badge>
               </div>
 
@@ -92,7 +92,7 @@ export function ItineraryCard({ itinerary, dict }: ItineraryCardProps) {
             </div>
           </div>
 
-          {/* Right Column: Curated Stop-by-Stop Timeline + Rule 3 Monetization Loop */}
+          {/* Right column: stop-by-stop timeline + booking CTA */}
           <div className="lg:col-span-7 flex flex-col justify-between">
             <CardHeader className="p-6 md:p-8 pb-4">
               <div className="flex items-center justify-between flex-wrap gap-2 mb-1">
@@ -146,7 +146,7 @@ export function ItineraryCard({ itinerary, dict }: ItineraryCardProps) {
               <Separator />
             </div>
 
-            {/* CRITICAL (Rule 3): Prominent Monetization Loop */}
+            {/* Booking.com affiliate CTA */}
             <CardFooter className="p-6 md:p-8 pt-5 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-5 bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-transparent dark:from-amber-500/15">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">

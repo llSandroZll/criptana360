@@ -115,7 +115,7 @@ export interface EditorialDictionary {
   }
   itinerarySection: {
     timelineTitle: string
-    rule1Badge: string
+    routeBadge: string
     updatedBadge: string
     headline: string
     accommodationBadge: string
@@ -134,134 +134,134 @@ export interface EditorialDictionary {
 export const DICTIONARY: Record<Language, EditorialDictionary> = {
   es: {
     nav: {
-      itineraries: "3 Fines de Semana",
+      itineraries: "Rutas de Fin de Semana",
       agenda: "Agenda del Finde",
       gems: "Joyas Locales",
       feedback: "Opinión Viajera",
       stayBtn: "Dormir en Criptana",
     },
     hero: {
-      weekendBadge: "Edición Fin de Semana · Tierra de Gigantes",
+      weekendBadge: "Guía Local · Tierra de Gigantes",
       sunBadge: "Puesta de sol hoy: ~19:32h en Sierra de los Molinos",
-      title: "Campo de Criptana sin trampas para turistas.",
+      title: "Campo de Criptana con mirada local.",
       description:
-        "Hemos eliminado los buscadores interminables y los planificadores complejos. Aquí tienes nuestras 3 rutas de fin de semana cerradas y los secretos reales de los locales: a qué hora subir a los molinos cuando se van los autobuses, dónde pedir el mejor pulpo a la brasa y qué mesa reservar con vistas a la sierra.",
-      ctaItinerary: "Ver Itinerarios Cerrados",
+        "Tres rutas de fin de semana diseñadas paso a paso por locales: a qué hora subir a los molinos cuando se van los autobuses, dónde pedir el mejor pulpo a la brasa y qué mesa reservar al atardecer con vistas a la sierra.",
+      ctaItinerary: "Ver Rutas de Fin de Semana",
       locationTag: "A 90 min de Madrid (Tren / A-4)",
-      curatedTag: "Curado por locales",
+      curatedTag: "Recomendado por locales",
     },
     itinerariesSelector: {
-      badge: "Rule 1 · Cero Decisiones",
-      title: "3 Fines de Semana Perfectos (Sin Pensar)",
+      badge: "Rutas de Fin de Semana",
+      title: "3 Planes Perfectos en Criptana",
       subtitle:
-        "Elige el plan que mejor encaje con tu escapada. Cada ruta incluye el paso a paso exacto y enlaces directos para reservar alojamiento y mesa.",
+        "Elige el plan que mejor encaje con tu escapada. Cada ruta incluye el recorrido hora a hora y enlaces directos para reservar alojamiento y mesa.",
     },
     agendaSection: {
       badge: "Actualizado cada jueves",
       title: "Agenda del Fin de Semana",
       subtitle:
-        "Lo que pasa en el pueblo estos días: teatro, baloncesto comarcal y los mejores puntos de encuentro.",
-      quickUpdateNotice: "Edición Jueves a Domingo",
-      clickToExpand: "Toca para ver cartelera y estado",
-      viewDetails: "Ver cartelera y estado",
+        "Lo que pasa en el pueblo estos días: teatro, deporte local y los mejores miradores al atardecer.",
+      quickUpdateNotice: "Jueves a Domingo",
+      clickToExpand: "Toca para ver horarios y detalles",
+      viewDetails: "Ver horarios y detalles",
       admissionLabel: "Entradas y Acceso",
-      pairingLabel: "Plan previo o tercer tiempo recomendado",
+      pairingLabel: "Plan recomendado antes o después",
       closeLabel: "Cerrar",
     },
     gemsSection: {
-      badge: "Selección Editorial · Cero Relleno",
-      insiderTag: "Voz Insider (Rule 2)",
+      badge: "Imprescindibles del Pueblo",
+      insiderTag: "Consejo de Local",
       title: "Joyas Locales",
       subtitle:
-        "Nada de fechas de Wikipedia ni folletos municipales. A qué hora ir para tener la mejor luz, por qué puerta entrar sin colas y con qué vino o tapa empalmar cada parada.",
+        "A qué hora ir para tener la mejor luz, cómo evitar las horas punta y con qué vino o tapa acompañar cada parada.",
       allCategories: "Todos",
-      readSecret: "Leer secreto",
-      planRedondo: "El Plan Redondo (Tip Local):",
-      pairingTitle: "Cómo empalmar la parada (Insider Pairing)",
+      readSecret: "Ver detalles",
+      planRedondo: "El Plan Redondo:",
+      pairingTitle: "Cómo completar la visita",
     },
     itinerarySection: {
-      timelineTitle: "Hoja de Ruta Curada Minuto a Minuto",
-      rule1Badge: "Rule 1 · Sin Planificadores Complejos",
-      updatedBadge: "Actualizado para este fin de semana",
-      headline: "Curado minuto a minuto, cero incertidumbre",
+      timelineTitle: "Hoja de Ruta Paso a Paso",
+      routeBadge: "Ruta Recomendada",
+      updatedBadge: "Edición de este fin de semana",
+      headline: "El recorrido ideal, hora a hora",
       accommodationBadge: "Alojamiento Recomendado",
     },
     feedback: {
-      badge: "Feedback de Viajeros",
-      anonymous: "1 clic · Anónimo",
+      badge: "Tu Opinión",
+      anonymous: "Respuesta rápida",
       title: "¿Te han servido estos itinerarios?",
       subtitle:
-        "Ajustamos nuestras rutas cada jueves según lo que realmente os funciona sobre el terreno.",
-      yesBtn: "Sí, plan cerrado",
-      noBtn: "Me faltó algo",
+        "Actualizamos nuestras rutas cada semana según vuestra experiencia en el pueblo.",
+      yesBtn: "Sí, muy útil",
+      noBtn: "Echo en falta algo",
       thankYou:
-        "¡Gracias! Tu respuesta se ha registrado en nuestro panel editorial.",
+        "¡Gracias! Tu opinión nos ayuda a seguir mejorando la guía cada semana.",
     },
   },
   en: {
     nav: {
-      itineraries: "3 Weekend Plans",
+      itineraries: "Weekend Plans",
       agenda: "Weekend Agenda",
       gems: "Local Gems",
-      feedback: "Traveler Reviews",
+      feedback: "Traveler Feedback",
       stayBtn: "Stay in Criptana",
     },
     hero: {
-      weekendBadge: "Weekend Edition · Land of Giants",
+      weekendBadge: "Local Guide · Land of Giants",
       sunBadge: "Sunset today: ~7:32 PM at Sierra de los Molinos",
-      title: "Campo de Criptana without the tourist traps.",
+      title: "Experience Campo de Criptana like a local.",
       description:
-        "No endless search matrices or complicated planners. Here are our 3 signature turnkey weekend plans and genuine local knowledge: when to visit the windmills after tour buses leave, where to get grilled octopus, and which table to book for sunset over the plains.",
-      ctaItinerary: "View Weekend Plans",
+        "Three weekend itineraries designed step-by-step by locals: when to climb up to the windmills after the tour buses leave, where to order wood-grilled octopus, and which terrace table to book for sunset over the plains.",
+      ctaItinerary: "Explore Weekend Plans",
       locationTag: "90 min from Madrid (Direct Train / A-4)",
-      curatedTag: "Curated by locals",
+      curatedTag: "Recommended by locals",
     },
     itinerariesSelector: {
-      badge: "Rule 1 · Zero Guesswork",
-      title: "3 Perfect Weekends (Zero Stress)",
+      badge: "Weekend Itineraries",
+      title: "3 Curated Weekend Plans",
       subtitle:
-        "Pick the vibe that matches your getaway. Each route gives you the exact timeline and direct links to book verified boutique stays.",
+        "Pick the plan that matches your trip. Each route gives you an hour-by-hour timeline and direct links to book charming local stays.",
     },
     agendaSection: {
       badge: "Updated every Thursday",
       title: "This Weekend's Local Agenda",
       subtitle:
         "What's happening in town right now: theater, local sports, and the best sunset viewpoints.",
-      quickUpdateNotice: "Thursday through Sunday Edition",
-      clickToExpand: "Tap to view schedule & status",
+      quickUpdateNotice: "Thursday through Sunday",
+      clickToExpand: "Tap to view schedule & details",
       viewDetails: "View schedule & details",
       admissionLabel: "Admission & Tickets",
-      pairingLabel: "Recommended Pre/Post Event Plan",
+      pairingLabel: "Recommended Pre/Post Plan",
       closeLabel: "Close",
     },
     gemsSection: {
-      badge: "Editorial Curation · No Fluff",
-      insiderTag: "Insider Voice (Rule 2)",
+      badge: "Town Essentials",
+      insiderTag: "Local Tips",
       title: "Local Gems",
       subtitle:
-        "No dry Wikipedia dates or tourist board brochures. Exact times for the best golden light, uncrowded entrances, and which wine or tapa to pair with each stop.",
+        "Exact times for the best golden-hour light, quiet entrances, and which local wine or tapa to pair with each stop.",
       allCategories: "All",
-      readSecret: "Read insider tip",
-      planRedondo: "The Perfect Pairing (Local Tip):",
-      pairingTitle: "How to connect this stop (Insider Pairing)",
+      readSecret: "View details",
+      planRedondo: "The Perfect Pairing:",
+      pairingTitle: "How to pair this stop",
     },
     itinerarySection: {
-      timelineTitle: "Curated Minute-by-Minute Roadmap",
-      rule1Badge: "Rule 1 · Zero Cognitive Load",
-      updatedBadge: "Updated for this weekend",
-      headline: "Minute-by-minute curated flow, zero guesswork",
+      timelineTitle: "Step-by-Step Itinerary",
+      routeBadge: "Curated Route",
+      updatedBadge: "This weekend's edition",
+      headline: "The ideal route, hour by hour",
       accommodationBadge: "Recommended Boutique Stay",
     },
     feedback: {
-      badge: "Traveler Feedback",
-      anonymous: "1 click · Anonymous",
+      badge: "Your Feedback",
+      anonymous: "Quick response",
       title: "Did these weekend itineraries help you?",
       subtitle:
-        "We refine our routes every Thursday based on what actually works on the ground.",
-      yesBtn: "Yes, trip planned!",
+        "We update our routes every week based on real traveler experiences.",
+      yesBtn: "Yes, very helpful",
       noBtn: "Missing something",
       thankYou:
-        "Thank you! Your feedback has been logged in our editorial dashboard.",
+        "Thank you! Your feedback helps us improve the guide every week.",
     },
   },
 }
@@ -503,7 +503,7 @@ export const LOCAL_GEMS: Record<Language, LocalGem[]> = {
       id: "spot1",
       name: "Sierra de los Molinos",
       category: "Patrimonio Vivo",
-      badge: "Golden Hour Imprescindible",
+      badge: "Hora Dorada Imprescindible",
       insiderTiming: "45 min antes del atardecer",
       excerpt:
         "Olvida la postal turística de mediodía: sube media hora antes del atardecer, cuando la cal se tiñe de oro viejo y las aspas cortan el silencio de la llanura.",
@@ -789,8 +789,8 @@ export const ALL_ITINERARIES: Record<Language, CuratedItinerary[]> = {
           "https://www.booking.com/searchresults.es.html?ss=Campo+de+Criptana&aid=304142&label=criptana360-hedonista-weekend",
         recommendedStay: "Hotel Boutique Casa Treviño & Alojamientos con Encanto",
         stayHighlight:
-          "Spa en cueva subterránea en pleno centro histórico · Cancelación gratuita",
-        priceHint: "Últimas habitaciones para este fin de semana",
+          "Alojamiento boutique en el centro histórico · Revisa las condiciones de cancelación al reservar",
+        priceHint: "Consulta la disponibilidad de este fin de semana",
       },
     },
     {
@@ -848,8 +848,8 @@ export const ALL_ITINERARIES: Record<Language, CuratedItinerary[]> = {
           "https://www.booking.com/searchresults.es.html?ss=Campo+de+Criptana&aid=304142&label=criptana360-clasicos-weekend",
         recommendedStay: "Alojamientos Céntricos y Apartamentos Turísticos",
         stayHighlight:
-          "A pie de la Plaza Mayor y calles encaladas · Mejor precio garantizado",
-        priceHint: "Plazas libres para escapadas espontáneas",
+          "Cerca de la Plaza Mayor y de las calles encaladas del centro",
+        priceHint: "Ideal para escapadas de última hora",
       },
     },
     {
@@ -907,7 +907,7 @@ export const ALL_ITINERARIES: Record<Language, CuratedItinerary[]> = {
           "https://www.booking.com/searchresults.es.html?ss=Campo+de+Criptana&aid=304142&label=criptana360-familia-weekend&group_adults=4",
         recommendedStay: "Casas Rurales con Patio y Capacidad Familiar",
         stayHighlight:
-          "Casas completas con chimenea y barbacoa en la comarca de Criptana",
+          "Casas rurales completas para grupos en la comarca de Criptana",
         priceHint: "Ideales para escapadas en grupo",
       },
     },
@@ -968,8 +968,8 @@ export const ALL_ITINERARIES: Record<Language, CuratedItinerary[]> = {
           "https://www.booking.com/searchresults.en.html?ss=Campo+de+Criptana&aid=304142&label=criptana360-hedonista-weekend-en",
         recommendedStay: "Casa Treviño Boutique Hotel & Charming Stays",
         stayHighlight:
-          "Subterranean cave spa in the historical center · Free cancellation",
-        priceHint: "Last rooms available for this weekend",
+          "Boutique stay in the historic center · Check cancellation terms when booking",
+        priceHint: "Check availability for this weekend",
       },
     },
     {
@@ -1027,8 +1027,8 @@ export const ALL_ITINERARIES: Record<Language, CuratedItinerary[]> = {
           "https://www.booking.com/searchresults.en.html?ss=Campo+de+Criptana&aid=304142&label=criptana360-clasicos-weekend-en",
         recommendedStay: "Town Center Boutique Apartments & Hotels",
         stayHighlight:
-          "Steps away from Plaza Mayor and historic whitewashed alleys",
-        priceHint: "Best rates for spontaneous getaways",
+          "Close to Plaza Mayor and the whitewashed streets of the old town",
+        priceHint: "Great for last-minute getaways",
       },
     },
     {
@@ -1067,7 +1067,7 @@ export const ALL_ITINERARIES: Record<Language, CuratedItinerary[]> = {
           title: "Flamingo sightings at a protected saline wetland",
           spotName: "Salicor Lagoon Nature Reserve",
           insiderNote:
-            "Just 10 minutes outside the town center lies a protected steppe lagoon where flamingos and migratory birds feed in peace.",
+            "A short drive from the town center lies a protected steppe lagoon where flamingos and migratory birds feed in peace.",
           highlightTag: "Biosphere Reserve",
         },
         {
@@ -1086,7 +1086,7 @@ export const ALL_ITINERARIES: Record<Language, CuratedItinerary[]> = {
           "https://www.booking.com/searchresults.en.html?ss=Campo+de+Criptana&aid=304142&label=criptana360-familia-weekend-en&group_adults=4",
         recommendedStay: "Country Houses with Private Patios & Group Capacity",
         stayHighlight:
-          "Full holiday homes with fireplaces and patios in the Criptana countryside",
+          "Entire rural houses for groups in the Criptana countryside",
         priceHint: "Ideal for family and group bookings",
       },
     },
