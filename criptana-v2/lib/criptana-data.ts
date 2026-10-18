@@ -313,14 +313,14 @@ export const WEEKEND_AGENDA: Record<Language, AgendaEvent[]> = {
       location: "Pabellón Municipal de Deportes (C/ Lope de Vega)",
       admission: "Entrada libre y gratuita hasta completar aforo",
       insiderTip:
-        "Al salir, cruza hacia Pádel Galán para probar sus aclamadas smash burgers informales.",
+        "Para cenar tras el partido, desplázate 4 minutos en coche al Polígono Pozo Hondo: la cafetería de Pádel Galán prepara unas smash burgers espectaculares.",
       actionLabel: "Ver Ubicación (Mapa)",
       actionUrl: "https://maps.google.com/?q=Pabellon+Municipal+Campo+de+Criptana",
       pairing: {
-        title: "Tercer tiempo con smash burger",
+        title: "Cena informal con smash burger",
         description:
-          "Tras el pitido final, cruza a Pádel Galán: hamburguesas gourmet smash y cañas frías en ambiente distendido.",
-        ctaText: "Cómo llegar a Pádel Galán",
+          "Tras el pitido final, coge el coche (4 min hacia el Polígono Pozo Hondo en Av. Comunidad Valenciana): en Pádel Galán encuentras hamburguesas smash gourmet y cañas frías.",
+        ctaText: "Cómo llegar a Pádel Galán (4 min en coche)",
         ctaUrl: "https://maps.google.com/?q=Padel+Galan+Campo+de+Criptana",
       },
     },
@@ -427,14 +427,14 @@ export const WEEKEND_AGENDA: Record<Language, AgendaEvent[]> = {
       location: "Municipal Sports Complex (C/ Lope de Vega)",
       admission: "Free public admission until capacity is reached",
       insiderTip:
-        "Head straight to Pádel Galán after the final buzzer for surprisingly great smash burgers.",
+        "For dinner after the buzzer, take a 4-minute drive over to Polígono Pozo Hondo for acclaimed gourmet smash burgers at Pádel Galán.",
       actionLabel: "View Map Pin",
       actionUrl: "https://maps.google.com/?q=Pabellon+Municipal+Campo+de+Criptana",
       pairing: {
         title: "Post-match smash burger dinner",
         description:
-          "Cross over to Pádel Galán for craft draft beer and their signature smashed burgers.",
-        ctaText: "Get Directions to Pádel Galán",
+          "Take a 4-minute drive to the Pozo Hondo industrial area (Av. Comunidad Valenciana): Pádel Galán serves top-notch smash burgers and cold craft draft beer.",
+        ctaText: "Directions to Pádel Galán (4 min drive)",
         ctaUrl: "https://maps.google.com/?q=Padel+Galan+Campo+de+Criptana",
       },
     },
@@ -532,7 +532,7 @@ export const LOCAL_GEMS: Record<Language, LocalGem[]> = {
         "Cómo vivirlo como un local: entra gratis sobre las 12:30h para admirar sus descomunales arcos de piedra y el artesonado de madera noble en silencio absoluto (casi nunca hay colas).",
       ],
       insiderPairing:
-        "Cuando salgas por el gran arco de medio punto a la Plaza del Pósito, estás a tres minutos a pie de las mejores barras del centro para empalmar directamente con el aperitivo y unas tapas en La Pulpe o el Mirasol.",
+        "Cuando salgas por el gran arco de medio punto a la Plaza del Pósito, estás a 2 minutos a pie de la Plaza Mayor para el aperitivo tradicional en las terrazas del casco histórico. Si buscas pulpo a la brasa, camina 10 min hacia La Pulpe (en Calle República Argentina), o desplázate 4 minutos en coche hacia la salida de Pedro Muñoz para comer en Restaurante Mirasol junto a Bodegas Símbolo.",
       address: "Plaza del Pósito, 1, 13610 Campo de Criptana",
       hours: "Mar–Sáb: 11:30 - 14:00 & 18:30 - 21:00 | Dom: 11:30 - 14:00",
       price: "Entrada Gratuita",
@@ -607,7 +607,7 @@ export const LOCAL_GEMS: Record<Language, LocalGem[]> = {
       ],
       insiderPairing:
         "Entra al despacho de vinos antes de comer para probar el Símbolo Airén Selección y llévate unas botellas para acompañar el tapeo del fin de semana.",
-      address: "Calle Convento, 13610 Campo de Criptana (Despacho de Vinos)",
+      address: "Calle Concepción, 135, 13610 Campo de Criptana (Despacho de Vinos)",
       hours: "Lunes a Sábado: 09:30 - 13:30 & 16:30 - 19:30",
       price: "Vinos D.O. desde 4€ / botella",
       image: "/images/bodegas_simbolo.png",
@@ -648,7 +648,7 @@ export const LOCAL_GEMS: Record<Language, LocalGem[]> = {
         "How to do it like a local: duck in for free around 12:30 PM to take in the soaring stone arches and antique timber beams in total quiet (there is almost never a line).",
       ],
       insiderPairing:
-        "When you step back out through the grand archway onto Plaza del Pósito, you are a three-minute stroll from the best tapas bars in the center—perfectly timed for a vermouth and grilled octopus at La Pulpe or Mirasol.",
+        "When you step back out through the grand archway onto Plaza del Pósito, you are just a 2-minute stroll from Plaza Mayor for a classic local vermouth in the historic center. For grilled octopus, walk 10 minutes to La Pulpe (Calle República Argentina), or take a 4-minute drive toward the Pedro Muñoz exit to dine at Restaurante Mirasol next to Bodegas Símbolo.",
       address: "Plaza del Pósito, 1, 13610 Campo de Criptana",
       hours: "Tue–Sat: 11:30 AM - 2:00 PM & 6:30 PM - 9:00 PM | Sun: 11:30 AM - 2:00 PM",
       price: "Free Entry",
@@ -723,7 +723,7 @@ export const LOCAL_GEMS: Record<Language, LocalGem[]> = {
       ],
       insiderPairing:
         "Drop by the cellar door before lunch to sample the award-winning Símbolo Airén Selección and take a couple of bottles for your weekend tapas.",
-      address: "Calle Convento, 13610 Campo de Criptana",
+      address: "Calle Concepción, 135, 13610 Campo de Criptana (Wine Shop)",
       hours: "Monday to Saturday: 9:30 AM - 1:30 PM & 4:30 PM - 7:30 PM",
       price: "D.O. Wines from 4€ / bottle",
       image: "/images/bodegas_simbolo.png",
@@ -761,7 +761,7 @@ export const ALL_ITINERARIES: Record<Language, CuratedItinerary[]> = {
           title: "Pulpo a la brasa y despacho de Bodegas Símbolo",
           spotName: "La Pulpe & Bodegas Símbolo",
           insiderNote:
-            "Pide mesa alta en La Pulpe para su pulpo a la brasa y pásate por el despacho de Bodegas Símbolo para probar su Airén Selección.",
+            "Pide mesa alta en La Pulpe (C/ República Argentina) para su pulpo a la brasa y acércate después en coche o paseo al despacho de Bodegas Símbolo (C/ Concepción) para probar su Airén Selección.",
           highlightTag: "Favorito local",
         },
         {
@@ -816,12 +816,12 @@ export const ALL_ITINERARIES: Record<Language, CuratedItinerary[]> = {
         },
         {
           time: "SÁB · 13:30h",
-          period: "Aperitivo Tradicional",
-          title: "Cocina de producto y trato de toda la vida",
+          period: "Cocina Manchega Tradicional",
+          title: "Platos típicos manchegos y comida casera",
           spotName: "Restaurante Mirasol",
           insiderNote:
-            "Pide unas berenjenas de Almagro y raciones de cocina manchega honesta en uno de los comedores más queridos del centro.",
-          highlightTag: "Auténtico local",
+            "Desplázate 4 min en coche hacia la salida de Pedro Muñoz (Calle Concepción, junto a la gasolinera Repsol): pide berenjenas de Almagro y guisos tradicionales en este mítico restaurante de acceso a la villa.",
+          highlightTag: "Tradición manchega",
         },
         {
           time: "SÁB · 19:15h",
@@ -835,11 +835,11 @@ export const ALL_ITINERARIES: Record<Language, CuratedItinerary[]> = {
         {
           time: "SÁB · 21:30h",
           period: "Cena Casual & Burgers",
-          title: "Smash burgers y cerveza artesana",
-          spotName: "Padel Galán",
+          title: "Smash burgers gourmet y cañas frías",
+          spotName: "Pádel Galán (Polígono Pozo Hondo)",
           insiderNote:
-            "El secreto a voces local: hamburguesas gourmet sorprendentemente buenas en un ambiente relajado y cercano.",
-          highlightTag: "Secreto juvenil",
+            "Coge el coche 4 minutos hacia el Polígono Industrial Pozo Hondo: la cafetería de Pádel Galán es el secreto a voces local para una cena informal con hamburguesas smash espectaculares.",
+          highlightTag: "Cena informal (en coche)",
         },
       ],
       monetization: {
@@ -940,7 +940,7 @@ export const ALL_ITINERARIES: Record<Language, CuratedItinerary[]> = {
           title: "Grilled octopus and wine cellar door tasting",
           spotName: "La Pulpe & Bodegas Símbolo",
           insiderNote:
-            "Grab high-top tables at La Pulpe for their wood-grilled octopus, then stop by Bodegas Símbolo's historic shop to taste award-winning local Airén white wines.",
+            "Grab high-top tables at La Pulpe (Calle República Argentina) for wood-grilled octopus, then take a quick drive to Calle Concepción to visit Bodegas Símbolo's winery shop for award-winning Airén white wines.",
           highlightTag: "Local favorite",
         },
         {
@@ -995,12 +995,12 @@ export const ALL_ITINERARIES: Record<Language, CuratedItinerary[]> = {
         },
         {
           time: "SAT · 1:30 PM",
-          period: "Traditional Aperitivo",
-          title: "Generous Manchego comfort food",
-          spotName: "Mirasol Tavern",
+          period: "Traditional Manchego Cooking",
+          title: "Hearty Manchego recipes and roadside comfort food",
+          spotName: "Restaurante Mirasol",
           insiderNote:
-            "Order marinated Almagro eggplants and seasonal sharing plates in one of the most beloved traditional dining rooms downtown.",
-          highlightTag: "Local staple",
+            "Take a 4-minute drive toward the Pedro Muñoz exit (Calle Concepción, next to the Repsol station): order marinated Almagro eggplants and traditional Manchego dishes at this historic roadside dining landmark.",
+          highlightTag: "Manchego tradition (drive)",
         },
         {
           time: "SAT · 7:15 PM",
@@ -1015,10 +1015,10 @@ export const ALL_ITINERARIES: Record<Language, CuratedItinerary[]> = {
           time: "SAT · 9:30 PM",
           period: "Casual Dining & Beers",
           title: "Locally famous smash burgers",
-          spotName: "Padel Galán",
+          spotName: "Pádel Galán (Pozo Hondo Park)",
           insiderNote:
-            "The town's modern open secret: surprisingly fantastic gourmet smash burgers in a friendly, unpretentious venue.",
-          highlightTag: "Insider favorite",
+            "Take a 4-minute drive over to the Pozo Hondo industrial area: the cafe at Pádel Galán is the local open secret for top-tier gourmet smash burgers.",
+          highlightTag: "Casual dining (drive)",
         },
       ],
       monetization: {
