@@ -298,24 +298,24 @@ export const WEEKEND_AGENDA: Record<Language, AgendaEvent[]> = {
     },
     {
       id: "baloncesto-criptana",
-      category: "Baloncesto Local",
-      title: "Movialsa Baloncesto Criptana",
-      badge: "1ª Nacional FBCLM",
-      statusBadge: "🏀 Consulta Horarios en FBCLM",
+      category: "Baloncesto Comarcal",
+      title: "Club Baloncesto Criptana",
+      badge: "Masculino · Femenino · Cantera",
+      statusBadge: "🏀 Horarios en Web Oficial CB Criptana",
       statusType: "home",
-      subheading: "Competición oficial en el Pabellón Municipal",
+      subheading: "Partidos de liga en el Pabellón Municipal (desde 1979)",
       icon: "🏀",
       description:
-        "Partidos de liga federada en el Pabellón Polideportivo Municipal. Gran ambiente de grada con afición local.",
+        "Jornadas de baloncesto durante todo el fin de semana: sénior masculino y femenino, júnior y cantera en el Pabellón Municipal.",
       synopsis:
-        "El club de baloncesto criptanense disputa sus encuentros sénior y de cantera en las pistas del Pabellón Municipal. Los horarios definitivos de salto inicial (habitualmente sábados por la tarde) y la designación de rival se publican cada semana en el calendario oficial de la federación (FBCLM).",
-      time: "Habitualmente Sábados tarde (hora fijada por FBCLM)",
+        "Fundado en 1979, el Club Baloncesto Criptana llena de vida el Pabellón Municipal cada fin de semana con partidos de todas las categorías: 1ª Nacional y autonómica masculina y femenina, júnior y escuelas deportivas. La web oficial del club publica semanalmente la cartelera completa con todos los encuentros, pistas y horarios de juego.",
+      time: "Sábados y Domingos (consultar cartelera de partidos de la semana)",
       location: "Pabellón Municipal de Deportes (C/ Lope de Vega)",
       admission: "Entrada libre y gratuita hasta completar aforo",
       insiderTip:
         "Para cenar tras el partido, desplázate 4 minutos en coche al Polígono Pozo Hondo: la cafetería de Pádel Galán prepara unas smash burgers espectaculares.",
-      actionLabel: "Consultar Horarios (FBCLM)",
-      actionUrl: "https://fbclm.net",
+      actionLabel: "Ver Partidos y Horarios (Web Oficial)",
+      actionUrl: "https://clubbaloncestocriptana.com/",
       pairing: {
         title: "Cena informal con smash burger",
         description:
@@ -413,23 +413,23 @@ export const WEEKEND_AGENDA: Record<Language, AgendaEvent[]> = {
     {
       id: "baloncesto-criptana",
       category: "Local Basketball",
-      title: "Movialsa Baloncesto Criptana",
-      badge: "1st National FBCLM",
-      statusBadge: "🏀 Check Game Times on FBCLM",
+      title: "Club Baloncesto Criptana",
+      badge: "Men's · Women's · Youth",
+      statusBadge: "🏀 Game Schedule on Official CB Criptana",
       statusType: "home",
-      subheading: "Official league matches at the Municipal Pavilion",
+      subheading: "League matches at Municipal Sports Pavilion (Est. 1979)",
       icon: "🏀",
       description:
-        "Regional league basketball game at the Municipal Sports Pavilion with energetic local crowd support.",
+        "Full weekend of basketball action: senior men's and women's teams, junior leagues, and youth squads at the Municipal Pavilion.",
       synopsis:
-        "The local basketball club hosts regional division matches at the Municipal Sports Pavilion. Exact tip-off times (traditionally Saturday afternoons) and weekly opponents are designated weekly by the Castilla-La Mancha Basketball Federation (FBCLM).",
-      time: "Traditionally Saturday afternoons (set by FBCLM)",
+        "Founded in 1979, Club Baloncesto Criptana fills the Municipal Pavilion with grassroots basketball all weekend across all divisions: senior men's and women's leagues, juniors, and youth academy squads. The club's official website publishes the full weekly fixture slate, tip-off times, and court assignments.",
+      time: "Saturdays & Sundays (check weekly match schedule)",
       location: "Municipal Sports Complex (C/ Lope de Vega)",
-      admission: "Free public admission until capacity is reached",
+      admission: "Free admission to the Municipal Pavilion",
       insiderTip:
-        "For dinner after the buzzer, take a 4-minute drive over to Polígono Pozo Hondo for acclaimed gourmet smash burgers at Pádel Galán.",
-      actionLabel: "Check Game Times (FBCLM)",
-      actionUrl: "https://fbclm.net",
+        "For dinner after evening games, take a 4-minute drive over to Polígono Pozo Hondo for acclaimed gourmet smash burgers at Pádel Galán.",
+      actionLabel: "View Fixtures & Times (Official Site)",
+      actionUrl: "https://clubbaloncestocriptana.com/",
       pairing: {
         title: "Casual post-match smash burger dinner",
         description:
