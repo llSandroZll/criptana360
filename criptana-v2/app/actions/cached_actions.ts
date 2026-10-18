@@ -22,11 +22,16 @@ type TagData = {
   name: string
 }
 
-const client = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
+const supabaseUrl =
+  process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder-criptana360.supabase.co"
+const supabaseKey =
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "placeholder-anon-key"
+
+const client = createClient(supabaseUrl, supabaseKey)
 async function getFilters(): Promise<FilterData> {
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
+    return { categories: [], labels: [], tags: [] }
+  }
   const { data: categoriesData, error: categoriesError } = await client
     .from("categories")
     .select("name")

@@ -45,6 +45,7 @@ export interface CuratedItinerary {
 }
 
 export interface AgendaEvent {
+  id: string
   category: string
   title: string
   badge: string
@@ -55,6 +56,18 @@ export interface AgendaEvent {
   insiderTip: string
   actionLabel?: string
   actionUrl?: string
+  // Dynamic Weekly Status & Rich Preview Details
+  statusBadge?: string
+  statusType?: "home" | "away" | "cultural" | "outdoor"
+  subheading?: string
+  admission?: string
+  synopsis?: string
+  pairing?: {
+    title: string
+    description: string
+    ctaText: string
+    ctaUrl: string
+  }
 }
 
 export interface EditorialDictionary {
@@ -84,6 +97,11 @@ export interface EditorialDictionary {
     title: string
     subtitle: string
     quickUpdateNotice: string
+    clickToExpand: string
+    viewDetails: string
+    admissionLabel: string
+    pairingLabel: string
+    closeLabel: string
   }
   gemsSection: {
     badge: string
@@ -144,6 +162,11 @@ export const DICTIONARY: Record<Language, EditorialDictionary> = {
       subtitle:
         "Lo que pasa en el pueblo estos días: teatro, baloncesto comarcal y los mejores puntos de encuentro.",
       quickUpdateNotice: "Edición Jueves a Domingo",
+      clickToExpand: "Toca para ver cartelera y estado",
+      viewDetails: "Ver cartelera y estado",
+      admissionLabel: "Entradas y Acceso",
+      pairingLabel: "Plan previo o tercer tiempo recomendado",
+      closeLabel: "Cerrar",
     },
     gemsSection: {
       badge: "Selección Editorial · Cero Relleno",
@@ -205,6 +228,11 @@ export const DICTIONARY: Record<Language, EditorialDictionary> = {
       subtitle:
         "What's happening in town right now: theater, local sports, and the best sunset viewpoints.",
       quickUpdateNotice: "Thursday through Sunday Edition",
+      clickToExpand: "Tap to view schedule & status",
+      viewDetails: "View schedule & details",
+      admissionLabel: "Admission & Tickets",
+      pairingLabel: "Recommended Pre/Post Event Plan",
+      closeLabel: "Close",
     },
     gemsSection: {
       badge: "Editorial Curation · No Fluff",
@@ -241,118 +269,230 @@ export const DICTIONARY: Record<Language, EditorialDictionary> = {
 export const WEEKEND_AGENDA: Record<Language, AgendaEvent[]> = {
   es: [
     {
+      id: "teatro-cervantes",
       category: "Cultura & Escena",
-      title: "Teatro Cervantes: Temporada Cultural",
-      badge: "Imprescindible",
+      title: "Teatro Cervantes: Cartelera Semanal",
+      badge: "Sábado Noche",
+      statusBadge: "🎭 En Cartelera Este Sábado",
+      statusType: "cultural",
+      subheading: "Obra: «La Venganza de Don Mendo» (Cía. Regional de Teatro)",
       icon: "🎭",
       description:
         "Representación teatral y música en vivo en el emblemático Teatro Cervantes. El punto de encuentro cultural de las noches de sábado.",
-      time: "Sábado · 20:00h",
+      synopsis:
+        "Sátira clásica en verso con gran dinamismo escénico y elenco castellanomanchego. Una de las citas culturales con mayor afluencia de la comarca en el emblemático edificio de la Plaza Mayor. Duración aproximada: 85 minutos.",
+      time: "Sábado · 20:00h (Apertura de puertas 19:30h)",
       location: "Teatro Cervantes (Plaza Mayor)",
+      admission: "8€ patio de butacas / 6€ anfiteatro (Taquilla 1h antes y Globalentradas)",
       insiderTip:
         "Llega 20 minutos antes para tomar un vino rápido en las terrazas de la Plaza Mayor antes de entrar.",
       actionLabel: "Cómo llegar (Mapa)",
       actionUrl: "https://maps.google.com/?q=Teatro+Cervantes+Campo+de+Criptana",
+      pairing: {
+        title: "Cena maridaje post-función (21:45h)",
+        description:
+          "Al salir del teatro, sube en 4 minutos en coche al cerro para cenar en Las Musas con vistas nocturnas a los molinos iluminados.",
+        ctaText: "Ver Mesa en Las Musas",
+        ctaUrl: "#joyas-locales",
+      },
     },
     {
+      id: "baloncesto-criptana",
       category: "Baloncesto Local",
-      title: "Baloncesto Criptana en Casa",
-      badge: "Ambiente de Grada",
+      title: "Baloncesto Criptana",
+      badge: "Sábado Tarde",
+      statusBadge: "🟢 Juega en Casa (Pabellón Municipal)",
+      statusType: "home",
+      subheading: "1ª División Nacional CLM: Baloncesto Criptana vs C.B. Albacete",
       icon: "🏀",
       description:
         "Partido oficial de liga en el Pabellón Municipal. Gran ambiente de grada con familias y aficionados locales animando.",
+      synopsis:
+        "Duelo comarcal de alta intensidad entre dos clubes clásicos de Castilla-La Mancha. La afición de la grada joven criptanense convierte el pabellón en una caldera de baloncesto auténtico.",
       time: "Sábado · 18:30h",
-      location: "Pabellón Municipal de Deportes",
+      location: "Pabellón Municipal de Deportes (C/ Lope de Vega)",
+      admission: "Entrada libre y gratuita hasta completar aforo",
       insiderTip:
         "Al salir, cruza hacia Pádel Galán para probar sus aclamadas smash burgers informales.",
       actionLabel: "Ver Ubicación (Mapa)",
       actionUrl: "https://maps.google.com/?q=Pabellon+Municipal+Campo+de+Criptana",
+      pairing: {
+        title: "Tercer tiempo con smash burger",
+        description:
+          "Tras el pitido final, cruza a Pádel Galán: hamburguesas gourmet smash y cañas frías en ambiente distendido.",
+        ctaText: "Cómo llegar a Pádel Galán",
+        ctaUrl: "https://maps.google.com/?q=Padel+Galan+Campo+de+Criptana",
+      },
     },
     {
+      id: "criptanense-futbol",
       category: "Fútbol Comarcal",
-      title: "C.D. Criptanense: Domingo en el Agustín de la Fuente",
-      badge: "Pasión Manchega",
+      title: "C.D. Criptanense Tierra de Gigantes",
+      badge: "Domingo Tarde",
+      statusBadge: "🟢 Juega en Casa (Estadio Agustín de la Fuente)",
+      statusType: "home",
+      subheading: "Jornada 24 · Primera Preferente CLM vs C.F. La Solana",
       icon: "⚽",
       description:
         "El histórico C.D. Criptanense Tierra de Gigantes defiende el feudo local en su tradicional horario dominical.",
+      synopsis:
+        "El club casi centenario (fundado en 1925) disputa tres puntos cruciales en césped natural. Césped impecable, gradas con solera y el olor a café y copa que define el fútbol modesto manchego de domingo.",
       time: "Domingo · 17:00h",
       location: "Campo Municipal Agustín de la Fuente",
+      admission: "5€ entrada general en taquilla el día del partido (Socios gratis)",
       insiderTip:
         "El plan clásico de domingo: café y copa en los bares de alrededor antes del pitido inicial.",
       actionLabel: "Ubicación del Estadio",
       actionUrl: "https://maps.google.com/?q=Campo+de+Futbol+Agustin+de+la+Fuente+Campo+de+Criptana",
+      pairing: {
+        title: "El aperitivo dominguero previo (15:30h)",
+        description:
+          "Queda antes en los bares de la zona para tomar el aperitivo local y entrar con tiempo a la grada cubierta.",
+        ctaText: "Cómo llegar al Agustín de la Fuente",
+        ctaUrl: "https://maps.google.com/?q=Campo+de+Futbol+Agustin+de+la+Fuente+Campo+de+Criptana",
+      },
     },
     {
+      id: "atardecer-molinos",
       category: "Patrimonio & Ocaso",
       title: "El Mejor Atardecer desde los Molinos",
-      badge: "Puesta de Sol",
+      badge: "Todos los días",
+      statusBadge: "🌅 Acceso Libre · Sierra de los Molinos",
+      statusType: "outdoor",
+      subheading: "Hora dorada 19:45h · Encendido monumental de los 10 gigantes",
       icon: "🌅",
       description:
         "La hora dorada tiñe de cal blanca y teja árabe la Sierra de los Molinos cuando los gigantes encienden su iluminación nocturna.",
-      time: "Sábado & Domingo · 19:45h",
+      synopsis:
+        "El espectáculo visual definitivo de Campo de Criptana. Mientras los autobuses turísticos se marchan, la colina queda en silencio y el cielo de la llanura manchega se tiñe de morados y ocres.",
+      time: "Sábado & Domingo · 19:45h (Llegar sobre las 19:15h)",
       location: "Sierra de los Molinos (Murete del Infanto)",
+      admission: "Acceso libre y público",
       insiderTip:
         "Si hace viento, lleva una chaqueta ligera; la brisa de la llanura siempre refresca en lo alto del cerro.",
       actionLabel: "Ver en Joyas Locales",
       actionUrl: "#joyas-locales",
+      pairing: {
+        title: "Cata de vino local en el mirador",
+        description:
+          "Pide un vino joven de Bodegas Símbolo en la terraza de la sierra para ver la puesta de sol con copa en mano.",
+        ctaText: "Ver Bodegas Símbolo",
+        ctaUrl: "#joyas-locales",
+      },
     },
   ],
   en: [
     {
+      id: "teatro-cervantes",
       category: "Arts & Culture",
-      title: "Teatro Cervantes: Stage Season",
-      badge: "Must-See",
+      title: "Teatro Cervantes: Weekly Schedule",
+      badge: "Saturday Night",
+      statusBadge: "🎭 On Stage This Saturday",
+      statusType: "cultural",
+      subheading: "Stage Comedy: «La Venganza de Don Mendo» (Regional Theater Co.)",
       icon: "🎭",
       description:
         "Live stage plays and regional music concerts in the historic Teatro Cervantes right off the Plaza Mayor.",
-      time: "Saturday · 8:00 PM",
+      synopsis:
+        "A classic Spanish verse parody delivered by an acclaimed regional ensemble. One of the highest-energy Saturday night cultural staples in town. Run time: ~85 minutes.",
+      time: "Saturday · 8:00 PM (Doors open 7:30 PM)",
       location: "Teatro Cervantes (Plaza Mayor)",
+      admission: "€8 orchestra / €6 balcony (Box office 1h prior or online via Globalentradas)",
       insiderTip:
         "Arrive 20 minutes early for a quick glass of local wine at the open-air Plaza Mayor cafes.",
       actionLabel: "Directions (Map)",
       actionUrl: "https://maps.google.com/?q=Teatro+Cervantes+Campo+de+Criptana",
+      pairing: {
+        title: "Post-theater wine & dining (9:45 PM)",
+        description:
+          "Head up to Las Musas terrace right after the curtains close for local tapas and illuminated windmill views.",
+        ctaText: "View Las Musas Details",
+        ctaUrl: "#joyas-locales",
+      },
     },
     {
+      id: "baloncesto-criptana",
       category: "Local Basketball",
-      title: "Baloncesto Criptana Home Game",
-      badge: "Local Spirit",
+      title: "Baloncesto Criptana",
+      badge: "Saturday Afternoon",
+      statusBadge: "🟢 Home Game (Municipal Pavilion)",
+      statusType: "home",
+      subheading: "1st National Regional League: Baloncesto Criptana vs C.B. Albacete",
       icon: "🏀",
       description:
         "Lively regional league basketball game at the Municipal Sports Pavilion with energetic local crowd support.",
+      synopsis:
+        "High-stakes regional division matchup. The lively home crowd and youth academy drums give this match true grassroots basketball soul.",
       time: "Saturday · 6:30 PM",
-      location: "Municipal Sports Complex",
+      location: "Municipal Sports Complex (C/ Lope de Vega)",
+      admission: "Free public admission until capacity is reached",
       insiderTip:
         "Head straight to Pádel Galán after the final buzzer for surprisingly great smash burgers.",
       actionLabel: "View Map Pin",
       actionUrl: "https://maps.google.com/?q=Pabellon+Municipal+Campo+de+Criptana",
+      pairing: {
+        title: "Post-match smash burger dinner",
+        description:
+          "Cross over to Pádel Galán for craft draft beer and their signature smashed burgers.",
+        ctaText: "Get Directions to Pádel Galán",
+        ctaUrl: "https://maps.google.com/?q=Padel+Galan+Campo+de+Criptana",
+      },
     },
     {
+      id: "criptanense-futbol",
       category: "Regional Football",
-      title: "C.D. Criptanense: Sunday Matchday",
-      badge: "Matchday Passion",
+      title: "C.D. Criptanense Tierra de Gigantes",
+      badge: "Sunday Matchday",
+      statusBadge: "🟢 Home Game (Agustín de la Fuente Stadium)",
+      statusType: "home",
+      subheading: "Matchday 24 · Primera Preferente CLM vs C.F. La Solana",
       icon: "⚽",
       description:
         "The historic C.D. Criptanense Tierra de Gigantes takes the pitch at their traditional Sunday afternoon kickoff.",
+      synopsis:
+        "Founded in 1925, the local club defends their pristine natural grass pitch. Experience authentic Spanish lower-league football atmosphere with friendly local banter in the stands.",
       time: "Sunday · 5:00 PM",
       location: "Agustín de la Fuente Municipal Stadium",
+      admission: "€5 general ticket at the stadium gates (club members free)",
       insiderTip:
         "The local Sunday tradition: coffee and aperitivo at nearby bars before heading to the stands.",
       actionLabel: "Stadium Location (Map)",
       actionUrl: "https://maps.google.com/?q=Campo+de+Futbol+Agustin+de+la+Fuente+Campo+de+Criptana",
+      pairing: {
+        title: "Pre-match Sunday aperitivo (3:30 PM)",
+        description:
+          "Meet up at the local bars along Lope de Vega street for vermouth and tapas before kickoff.",
+        ctaText: "Directions to Stadium",
+        ctaUrl: "https://maps.google.com/?q=Campo+de+Futbol+Agustin+de+la+Fuente+Campo+de+Criptana",
+      },
     },
     {
+      id: "atardecer-molinos",
       category: "Heritage & Sunset",
       title: "The Signature Golden Hour Sunset",
-      badge: "Sunset Postcard",
+      badge: "Every Evening",
+      statusBadge: "🌅 Free Public Access · Windmill Hill",
+      statusType: "outdoor",
+      subheading: "Golden hour 7:45 PM · Floodlighting of the 10 giant windmills",
       icon: "🌅",
       description:
         "Golden-hour light washes over the whitewashed 16th-century windmills right as the floodlights turn on over the plains.",
-      time: "Saturday & Sunday · 7:45 PM",
+      synopsis:
+        "The crowning moment of any visit. As tour buses depart, silence returns to the hill and the La Mancha plains sky shifts into stunning purples and warm ambers.",
+      time: "Saturday & Sunday · 7:45 PM (Arrive ~7:15 PM)",
       location: "Sierra de los Molinos (Stone Wall)",
+      admission: "Free and open to the public",
       insiderTip:
         "Bring a light sweater—the plains wind always picks up speed as the sun dips below the horizon.",
       actionLabel: "View in Local Gems",
       actionUrl: "#joyas-locales",
+      pairing: {
+        title: "Sunset wine toast on the ridge",
+        description:
+          "Order a glass of chilled Bodegas Símbolo Airén wine on the hilltop terrace to toast the sun dipping beneath the horizon.",
+        ctaText: "View Bodegas Símbolo",
+        ctaUrl: "#joyas-locales",
+      },
     },
   ],
 }
